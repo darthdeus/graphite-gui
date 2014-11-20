@@ -5,6 +5,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "vertex.h"
+#include "edge.h"
 
 //class Arrow : public QGraphicsLineItem {
 //    QGraphicsRectItem* from;
@@ -33,29 +34,40 @@ MainWindow::MainWindow(QWidget *parent) :
 
 //    QGraphicsScene scene;
 
-    auto scene = new QGraphicsScene(this);
+    scene = new QGraphicsScene(this);
     ui->graphicsView->setScene(scene);
 
     auto r1 = new Vertex(0);
-    r1->setRect(-5, 10, 50, 50);
     r1->setBrush(QBrush(Qt::red));
-
     scene->addItem(r1);
 
     auto r2 = new Vertex(0);
-    r2->setRect(50, 10, 50, 50);
     r2->setBrush(QBrush(Qt::blue));
-
     scene->addItem(r2);
 
+    auto r3 = new Vertex(0);
+    r3->setBrush(QBrush(Qt::blue));
+    scene->addItem(r3);
 
-//    arrow = new Arrow(r1, r2, this);
-//    ui->graphicsView->setScene(&scene);
-//    ui->graphicsView->show();
+    auto r4 = new Vertex(0);
+    r4->setBrush(QBrush(Qt::blue));
+    scene->addItem(r4);
+
+    graphConnect(r1, r2);
+    graphConnect(r2, r3);
+    graphConnect(r4, r3);
 
 //    connect(ui->exitButton, SIGNAL(clicked(), SLOT(close())));
 //    connect(ui->exitButton, &QPushButton::clicked, this, &MainWindow::close);
 //    connect(ui->exitButton, &QPushButton::clicked, this, [this]() { this->close(); });
+}
+
+void MainWindow::graphConnect(Vertex* v1, Vertex* v2) {
+    Edge* edge = new Edge(v1, v2);
+    scene->addItem(edge);
+
+    v1->edges.push_back(edge);
+    v2->edges.push_back(edge);
 }
 
 MainWindow::~MainWindow()

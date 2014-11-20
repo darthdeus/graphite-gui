@@ -14,10 +14,12 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
     mainwindow.cpp \
-    vertex.cpp
+    vertex.cpp \
+    edge.cpp
 
 HEADERS  += \
-    mainwindow.h
+    mainwindow.h \
+    edge.h
 
 FORMS    += \
     mainwindow.ui
