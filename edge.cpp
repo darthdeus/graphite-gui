@@ -7,11 +7,17 @@
 
 Edge::Edge(Vertex* from, Vertex* to): from(from), to(to)
 {
-    setPen(QPen());
+    QPen pen;
+    pen.setWidth(3);
+    pen.setColor(QColor(90, 90, 90));
+    setPen(pen);
 }
 
 void Edge::updatePosition() {
     QLineF line(this->mapFromItem(from, 25, 25), this->mapFromItem(to, 25, 25));
+
+    setZValue(-1);
+
 
 //    QLineF line(rf.x(), rfy(), rt.x(), rt.y());
 //    QLineF line(, to->x(), to->y());

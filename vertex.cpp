@@ -10,7 +10,7 @@
 Vertex::Vertex(QGraphicsItem *parent) :
     QGraphicsEllipseItem(parent)
 {
-    setPen(QPen());
+    setPen(QPen(QColor(90, 90, 90)));
     setFlag(QGraphicsItem::ItemIsMovable);
     setFlag(QGraphicsItem::ItemSendsGeometryChanges);   
     setRect(0, 0, 50, 50);

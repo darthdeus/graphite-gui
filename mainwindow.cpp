@@ -8,42 +8,32 @@
 #include "vertex.h"
 #include "edge.h"
 
-//class Arrow : public QGraphicsLineItem {
-//    QGraphicsRectItem* from;
-//    QGraphicsRectItem* to;
+static QColor randomColor() {
+    auto r = 100 + rand() % 100;
+    auto g = 100 + rand() % 100;
+    auto b = 100 + rand() % 100;
 
-//    Arrow(QGraphicsRectItem* from, QGraphicsRectItem* to, QGraphicsItem *parent):
-//        from(from), to(to), parent(parent)
-//    {
-//        setPen(QPen(Qt::black, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
-//    }
-
-//    void updatePosition() {
-//        QLineF line(mapFromItem(from, 0, 0), mapFromItem(to, 0, 0));
-//        setLine(line);
-//    }
-
-////    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
-////    }
-//};
+    return QColor(r, g, b);
+}
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-    ui->setupUi(this);
-
+    ui->setupUi(this);   
 
     scene = new QGraphicsScene(this);
+
     ui->graphicsView->setScene(scene);
+    ui->graphicsView->setRenderHints(QPainter::Antialiasing);
 
     auto v1 = new Vertex(0);
-    v1->setBrush(QBrush(Qt::red));
+    v1->setBrush(QBrush(randomColor()));
     scene->addItem(v1);
 
     for (int i = 0; i < 20; i++) {
         auto v2 = new Vertex(0);
-        v2->setBrush(QBrush(Qt::blue));
+        v2->setBrush(QBrush(randomColor()));
         scene->addItem(v2);
         v2->setX(80 * (i / 5 + 1) * std::cos(i));
         v2->setY(80 * (i / 5 + 1) * std::sin(i));
