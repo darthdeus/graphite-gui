@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <vector>
 
 class QGraphicsLineItem;
 class QGraphicsScene;
@@ -25,6 +26,8 @@ private:
     Ui::MainWindow *ui;
     QGraphicsLineItem *arrow;
     QGraphicsScene *scene;
+
+    std::vector<Vertex*> _vertices;
 };
 
 #endif // MAINWINDOW_H

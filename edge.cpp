@@ -14,7 +14,8 @@ Edge::Edge(Vertex* from, Vertex* to): from(from), to(to)
 }
 
 void Edge::updatePosition() {
-    QLineF line(this->mapFromItem(from, 25, 25), this->mapFromItem(to, 25, 25));
+    int center = Vertex::GraphicSize / 2;
+    QLineF line(this->mapFromItem(from, center, center), this->mapFromItem(to, center, center));
 
     setZValue(-1);
 

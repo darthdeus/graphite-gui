@@ -13,7 +13,7 @@ Vertex::Vertex(QGraphicsItem *parent) :
     setPen(QPen(QColor(90, 90, 90)));
     setFlag(QGraphicsItem::ItemIsMovable);
     setFlag(QGraphicsItem::ItemSendsGeometryChanges);   
-    setRect(0, 0, 50, 50);
+    setRect(0, 0, GraphicSize, GraphicSize);
 }
 
 QVariant Vertex::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant& value)
@@ -24,6 +24,14 @@ QVariant Vertex::itemChange(QGraphicsItem::GraphicsItemChange change, const QVar
     }
     return value;
 }
+
+void Vertex::mouseReleaseEvent(QGraphicsSceneMouseEvent * event)
+{
+    QGraphicsItem::mouseReleaseEvent(event);
+    repaintEdges();
+}
+
+
 
 void Vertex::repaintEdges()
 {

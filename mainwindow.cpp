@@ -1,7 +1,9 @@
 #include <QGraphicsItem>
 #include <QGraphicsScene>
 #include <QGraphicsView>
+
 #include <cmath>
+#include <vector>
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"

@@ -10,9 +10,11 @@
 class Vertex : public QGraphicsEllipseItem
 {
 public:
+    static const int GraphicSize = 44;
     explicit Vertex(QGraphicsItem *parent = 0);
 
-    QVariant itemChange(GraphicsItemChange change, const QVariant &value);
+    QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent * event) override;
 
     std::vector<Edge*> edges;
     void repaintEdges();
