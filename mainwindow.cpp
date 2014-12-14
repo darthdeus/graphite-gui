@@ -1,6 +1,7 @@
 #include <QGraphicsItem>
 #include <QGraphicsScene>
 #include <QGraphicsView>
+#include <cmath>
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -32,30 +33,30 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-//    QGraphicsScene scene;
 
     scene = new QGraphicsScene(this);
     ui->graphicsView->setScene(scene);
 
-    auto r1 = new Vertex(0);
-    r1->setBrush(QBrush(Qt::red));
-    scene->addItem(r1);
+    auto v1 = new Vertex(0);
+    v1->setBrush(QBrush(Qt::red));
+    scene->addItem(v1);
 
-    auto r2 = new Vertex(0);
-    r2->setBrush(QBrush(Qt::blue));
-    scene->addItem(r2);
+    for (int i = 0; i < 20; i++) {
+        auto v2 = new Vertex(0);
+        v2->setBrush(QBrush(Qt::blue));
+        scene->addItem(v2);
+        v2->setX(80 * (i / 5 + 1) * std::cos(i));
+        v2->setY(80 * (i / 5 + 1) * std::sin(i));
 
-    auto r3 = new Vertex(0);
-    r3->setBrush(QBrush(Qt::blue));
-    scene->addItem(r3);
+        graphConnect(v1, v2);
 
-    auto r4 = new Vertex(0);
-    r4->setBrush(QBrush(Qt::blue));
-    scene->addItem(r4);
+        v1->repaintEdges();
+        v2->repaintEdges();
 
-    graphConnect(r1, r2);
-    graphConnect(r2, r3);
-    graphConnect(r4, r3);
+        v1 = v2;
+    }
+
+    repaint();
 
 //    connect(ui->exitButton, SIGNAL(clicked(), SLOT(close())));
 //    connect(ui->exitButton, &QPushButton::clicked, this, &MainWindow::close);

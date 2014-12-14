@@ -1,5 +1,5 @@
 #include <QDebug>
-#include <QGraphicsRectItem>
+#include <QGraphicsEllipseItem>
 #include <QPen>
 #include <QVariant>
 #include <iostream>
@@ -8,11 +8,11 @@
 #include "vertex.h"
 
 Vertex::Vertex(QGraphicsItem *parent) :
-    QGraphicsRectItem(parent)
+    QGraphicsEllipseItem(parent)
 {
     setPen(QPen());
     setFlag(QGraphicsItem::ItemIsMovable);
-    setFlag(QGraphicsItem::ItemSendsGeometryChanges);
+    setFlag(QGraphicsItem::ItemSendsGeometryChanges);   
     setRect(0, 0, 50, 50);
 }
 
@@ -20,9 +20,14 @@ QVariant Vertex::itemChange(QGraphicsItem::GraphicsItemChange change, const QVar
 {
     if (change == QGraphicsItem::ItemPositionChange) {
         qDebug() << value;
-        for (Edge* edge: edges) {
-            edge->updatePosition();
-        }
+        repaintEdges();
     }
     return value;
+}
+
+void Vertex::repaintEdges()
+{
+    for (Edge* edge: edges) {
+        edge->updatePosition();
+    }
 }

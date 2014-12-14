@@ -11,10 +11,8 @@ Edge::Edge(Vertex* from, Vertex* to): from(from), to(to)
 }
 
 void Edge::updatePosition() {
-//    auto rf = from->rect();
-//    auto rt = to->rect();
+    QLineF line(this->mapFromItem(from, 25, 25), this->mapFromItem(to, 25, 25));
 
-    QLineF line(this->mapFromItem(from, 0, 0), this->mapFromItem(to, 0, 0));
 //    QLineF line(rf.x(), rfy(), rt.x(), rt.y());
 //    QLineF line(, to->x(), to->y());
 //    from->mapToItem(this);

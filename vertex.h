@@ -7,7 +7,7 @@
 #include <vector>
 #include "edge.h"
 
-class Vertex : public QGraphicsRectItem
+class Vertex : public QGraphicsEllipseItem
 {
 public:
     explicit Vertex(QGraphicsItem *parent = 0);
@@ -15,6 +15,7 @@ public:
     QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 
     std::vector<Edge*> edges;
+    void repaintEdges();
 
 private:
 //    Arrow* arrow;
