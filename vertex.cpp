@@ -19,7 +19,7 @@ Vertex::Vertex(QGraphicsItem *parent) :
 QVariant Vertex::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant& value)
 {
     if (change == QGraphicsItem::ItemPositionChange) {
-        qDebug() << value;
+//        qDebug() << value;
         repaintEdges();
     }
     return value;
@@ -31,11 +31,14 @@ void Vertex::mouseReleaseEvent(QGraphicsSceneMouseEvent * event)
     repaintEdges();
 }
 
-
-
 void Vertex::repaintEdges()
 {
     for (Edge* edge: edges) {
         edge->updatePosition();
     }
+}
+
+void Vertex::clearEdges()
+{
+    edges.clear();
 }

@@ -33,12 +33,16 @@ MainWindow::MainWindow(QWidget *parent) :
     v1->setBrush(QBrush(randomColor()));
     scene->addItem(v1);
 
+    _vertices.push_back(v1);
+
     for (int i = 0; i < 20; i++) {
         auto v2 = new Vertex(0);
         v2->setBrush(QBrush(randomColor()));
         scene->addItem(v2);
         v2->setX(80 * (i / 5 + 1) * std::cos(i));
         v2->setY(80 * (i / 5 + 1) * std::sin(i));
+
+        _vertices.push_back(v2);
 
         graphConnect(v1, v2);
 
@@ -66,4 +70,29 @@ void MainWindow::graphConnect(Vertex* v1, Vertex* v2) {
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::on_randomizeEdges_clicked()
+{
+    for (Vertex* vertex : _vertices) {
+        for (Edge* edge : vertex->edges) {
+            if (scene->items().contains(edge)) {
+                scene->removeItem(edge);
+            }
+        }
+        vertex->clearEdges();
+
+        for (int i = 0; i < rand() % 3; i++) {
+            auto index = rand() % _vertices.size();
+            auto v2 = _vertices[index];
+
+            if (v2 != vertex) {
+                graphConnect(vertex, v2);
+            }
+        }
+
+        vertex->repaintEdges();
+    }
+
+    ui->graphicsView->repaint();
 }

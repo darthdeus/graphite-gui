@@ -17,7 +17,8 @@ public:
     void mouseReleaseEvent(QGraphicsSceneMouseEvent * event) override;
 
     std::vector<Edge*> edges;
-    void repaintEdges();
+    void repaintEdges();    
+    void clearEdges();
 
 private:
 //    Arrow* arrow;

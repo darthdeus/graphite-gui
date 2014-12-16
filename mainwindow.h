@@ -22,6 +22,9 @@ public:
     ~MainWindow();
 
     void graphConnect(Vertex* v1, Vertex* v2);
+private slots:
+    void on_randomizeEdges_clicked();
+
 private:
     Ui::MainWindow *ui;
     QGraphicsLineItem *arrow;
