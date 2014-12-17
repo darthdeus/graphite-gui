@@ -12,17 +12,18 @@ TARGET = graphite
 TEMPLATE = app
 
 
-SOURCES += main.cpp \
+SOURCES += \
+    main.cpp \
     mainwindow.cpp \
-    vertex.cpp \
-    edge.cpp
+    gui/vertex.cpp \
+    gui/edge.cpp
 
 HEADERS  += \
     mainwindow.h \
-    edge.h \
-    vertex.h
+    gui/edge.h \
+    gui/vertex.h
 
 FORMS    += \
     mainwindow.ui
 
-QMAKE_CXXFLAGS += -std=c++11 -stdlib=libc++
+QMAKE_CXXFLAGS += -std=c++11

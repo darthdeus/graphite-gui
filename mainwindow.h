@@ -7,7 +7,7 @@
 class QGraphicsLineItem;
 class QGraphicsScene;
 
-class Vertex;
+class VertexGraphicsItem;
 
 namespace Ui {
     class MainWindow;
@@ -21,7 +21,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-    void graphConnect(Vertex* v1, Vertex* v2);
+    void graphConnect(VertexGraphicsItem* v1, VertexGraphicsItem* v2);
 private slots:
     void on_randomizeEdges_clicked();
 
@@ -30,7 +30,7 @@ private:
     QGraphicsLineItem *arrow;
     QGraphicsScene *scene;
 
-    std::vector<Vertex*> _vertices;
+    std::vector<VertexGraphicsItem*> _vertices;
 };
 
 #endif // MAINWINDOW_H

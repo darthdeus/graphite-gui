@@ -2,10 +2,10 @@
 #include <QLineF>
 #include <QGraphicsItem>
 
-#include "edge.h"
-#include "vertex.h"
+#include "gui/edge.h"
+#include "gui/vertex.h"
 
-Edge::Edge(Vertex* from, Vertex* to): from(from), to(to)
+EdgeGraphicsItem::EdgeGraphicsItem(VertexGraphicsItem* from, VertexGraphicsItem* to): from(from), to(to)
 {
     QPen pen;
     pen.setWidth(3);
@@ -13,8 +13,8 @@ Edge::Edge(Vertex* from, Vertex* to): from(from), to(to)
     setPen(pen);
 }
 
-void Edge::updatePosition() {
-    int center = Vertex::GraphicSize / 2;
+void EdgeGraphicsItem::updatePosition() {
+    int center = VertexGraphicsItem::GraphicSize / 2;
     QLineF line(this->mapFromItem(from, center, center), this->mapFromItem(to, center, center));
 
     setZValue(-1);

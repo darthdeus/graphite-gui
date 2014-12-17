@@ -7,8 +7,8 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "vertex.h"
-#include "edge.h"
+#include "gui/vertex.h"
+#include "gui/edge.h"
 
 static QColor randomColor() {
     auto r = 100 + rand() % 100;
@@ -29,14 +29,14 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->graphicsView->setScene(scene);
     ui->graphicsView->setRenderHints(QPainter::Antialiasing);
 
-    auto v1 = new Vertex(0);
+    auto v1 = new VertexGraphicsItem(0);
     v1->setBrush(QBrush(randomColor()));
     scene->addItem(v1);
 
     _vertices.push_back(v1);
 
     for (int i = 0; i < 20; i++) {
-        auto v2 = new Vertex(0);
+        auto v2 = new VertexGraphicsItem(0);
         v2->setBrush(QBrush(randomColor()));
         scene->addItem(v2);
         v2->setX(80 * (i / 5 + 1) * std::cos(i));
@@ -59,8 +59,8 @@ MainWindow::MainWindow(QWidget *parent) :
 //    connect(ui->exitButton, &QPushButton::clicked, this, [this]() { this->close(); });
 }
 
-void MainWindow::graphConnect(Vertex* v1, Vertex* v2) {
-    Edge* edge = new Edge(v1, v2);
+void MainWindow::graphConnect(VertexGraphicsItem* v1, VertexGraphicsItem* v2) {
+    auto edge = new EdgeGraphicsItem(v1, v2);
     scene->addItem(edge);
 
     v1->edges.push_back(edge);
@@ -74,8 +74,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_randomizeEdges_clicked()
 {
-    for (Vertex* vertex : _vertices) {
-        for (Edge* edge : vertex->edges) {
+    for (VertexGraphicsItem* vertex : _vertices) {
+        for (EdgeGraphicsItem* edge : vertex->edges) {
             if (scene->items().contains(edge)) {
                 scene->removeItem(edge);
             }

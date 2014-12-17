@@ -6,10 +6,10 @@
 #include <iostream>
 #include <memory>
 
-#include "edge.h"
-#include "vertex.h"
+#include "gui/edge.h"
+#include "gui/vertex.h"
 
-Vertex::Vertex(QGraphicsItem *parent) :
+VertexGraphicsItem::VertexGraphicsItem(QGraphicsItem *parent) :
     QGraphicsEllipseItem(parent)
 {
     setPen(QPen(QColor(90, 90, 90)));
@@ -19,7 +19,7 @@ Vertex::Vertex(QGraphicsItem *parent) :
     setRect(0, 0, GraphicSize, GraphicSize);
 }
 
-QVariant Vertex::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant& value)
+QVariant VertexGraphicsItem::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant& value)
 {
     if (change == QGraphicsItem::ItemPositionChange) {
 //        qDebug() << value;
@@ -28,20 +28,20 @@ QVariant Vertex::itemChange(QGraphicsItem::GraphicsItemChange change, const QVar
     return value;
 }
 
-void Vertex::mouseReleaseEvent(QGraphicsSceneMouseEvent * event)
+void VertexGraphicsItem::mouseReleaseEvent(QGraphicsSceneMouseEvent * event)
 {
     QGraphicsItem::mouseReleaseEvent(event);
     repaintEdges();
 }
 
-void Vertex::repaintEdges()
+void VertexGraphicsItem::repaintEdges()
 {
-    for (Edge* edge: edges) {
+    for (EdgeGraphicsItem* edge: edges) {
         edge->updatePosition();
     }
 }
 
-void Vertex::clearEdges()
+void VertexGraphicsItem::clearEdges()
 {
     edges.clear();
 }
