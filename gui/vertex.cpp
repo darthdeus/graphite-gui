@@ -22,7 +22,6 @@ VertexGraphicsItem::VertexGraphicsItem(QGraphicsItem *parent) :
 QVariant VertexGraphicsItem::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant& value)
 {
     if (change == QGraphicsItem::ItemPositionChange) {
-//        qDebug() << value;
         repaintEdges();
     }
     return value;
