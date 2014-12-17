@@ -19,7 +19,8 @@ SOURCES += main.cpp \
 
 HEADERS  += \
     mainwindow.h \
-    edge.h
+    edge.h \
+    vertex.h
 
 FORMS    += \
     mainwindow.ui
