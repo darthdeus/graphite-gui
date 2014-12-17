@@ -20,6 +20,8 @@ public:
     void repaintEdges();    
     void clearEdges();
 
+
+
 private:
 //    Arrow* arrow;
 };

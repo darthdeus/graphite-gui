@@ -2,7 +2,9 @@
 #include <QGraphicsEllipseItem>
 #include <QPen>
 #include <QVariant>
+
 #include <iostream>
+#include <memory>
 
 #include "edge.h"
 #include "vertex.h"
@@ -13,6 +15,7 @@ Vertex::Vertex(QGraphicsItem *parent) :
     setPen(QPen(QColor(90, 90, 90)));
     setFlag(QGraphicsItem::ItemIsMovable);
     setFlag(QGraphicsItem::ItemSendsGeometryChanges);   
+    setFlag(QGraphicsItem::ItemIsSelectable);
     setRect(0, 0, GraphicSize, GraphicSize);
 }
 
