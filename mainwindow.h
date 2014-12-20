@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <vector>
 
+#include "lib/graph.hpp"
+
 class QGraphicsLineItem;
 class QGraphicsScene;
 
@@ -29,6 +31,7 @@ private:
     Ui::MainWindow *ui;
     QGraphicsLineItem *arrow;
     QGraphicsScene *scene;
+
 
     std::vector<VertexGraphicsItem*> _vertices;
 };

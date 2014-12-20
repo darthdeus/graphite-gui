@@ -15,7 +15,7 @@ vertex* graph::add_vertex(int v) {
   if (found) {
     return &*found;
   } else {
-    list.push_back(std::make_unique<vertex>(v));
+    list.push_back(std::unique_ptr<vertex>(new vertex(v)));
     return list.back().get();
   }
 }
@@ -50,14 +50,13 @@ bool graph::is_connected(int vn1, int vn2) const {
 }
 
 vertex* graph::find(int v) const {
-  auto p = [v](auto& vert) { return vert->value == v; };
-  auto found = std::find_if(begin(list), end(list), p);
-
-  if (found == end(list)) {
-    return nullptr;
-  } else {
-    return (*found).get();
+  for (auto& vert : list) {
+      if (vert->value == v) {
+          return vert.get();
+      }
   }
+
+  return nullptr;
 }
 
 

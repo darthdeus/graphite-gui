@@ -15,27 +15,27 @@ TEMPLATE = app
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
-    gui/vertex.cpp \
-    gui/edge.cpp \
     lib/bfs.cpp \
     lib/dfs.cpp \
     lib/edge.cpp \
     lib/graph.cpp \
     lib/store.cpp \
-    lib/vertex.cpp
+    lib/vertex.cpp \
+    gui/edge_graphics_item.cpp \
+    gui/vertex_graphics_item.cpp
 
 HEADERS  += \
     mainwindow.h \
     gui/edge.h \
     gui/vertex.h \
-    lib/bfs.hpp \
     lib/dfs.hpp \
     lib/edge.hpp \
     lib/graph.hpp \
     lib/store.hpp \
-    lib/vertex.hpp
+    lib/vertex.hpp \
+    lib/bfs.hpp
 
 FORMS    += \
     mainwindow.ui
 
-QMAKE_CXXFLAGS += -std=c++1y -stdlib=libc++
+CONFIG += c++11
