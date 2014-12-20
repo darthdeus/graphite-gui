@@ -26,14 +26,14 @@ SOURCES += \
 
 HEADERS  += \
     mainwindow.h \
-    gui/edge.h \
-    gui/vertex.h \
     lib/dfs.hpp \
     lib/edge.hpp \
     lib/graph.hpp \
     lib/store.hpp \
     lib/vertex.hpp \
-    lib/bfs.hpp
+    lib/bfs.hpp \
+    gui/vertex_graphics_item.h \
+    gui/edge_graphics_item.h
 
 FORMS    += \
     mainwindow.ui

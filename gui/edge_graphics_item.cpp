@@ -2,8 +2,8 @@
 #include <QLineF>
 #include <QGraphicsItem>
 
-#include "gui/edge.h"
-#include "gui/vertex.h"
+#include "gui/edge_graphics_item.h"
+#include "gui/vertex_graphics_item.h"
 
 EdgeGraphicsItem::EdgeGraphicsItem(VertexGraphicsItem* from, VertexGraphicsItem* to): from(from), to(to)
 {

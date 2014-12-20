@@ -7,8 +7,8 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "gui/vertex.h"
-#include "gui/edge.h"
+#include "gui/vertex_graphics_item.h"
+#include "gui/edge_graphics_item.h"
 
 static QColor randomColor()
 {
@@ -80,13 +80,15 @@ void MainWindow::randomizeVertices()
     int i = 0;
     for	(std::unique_ptr<Vertex>& v : graph->list) {
         // TODO - store the vertex value
-        auto vgi = new VertexGraphicsItem();
+        auto vgi = new VertexGraphicsItem(v.get());
+
         vgi->setBrush(QBrush(randomColor()));
-        _vertices.push_back(vgi);
-        scene->addItem(vgi);
 
         vgi->setX(80 * (i / 5 + 1) * std::cos(i));
         vgi->setY(80 * (i / 5 + 1) * std::sin(i));
+
+        _vertices.push_back(vgi);
+        scene->addItem(vgi);
 
         i++;
     }

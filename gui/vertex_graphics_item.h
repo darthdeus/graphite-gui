@@ -7,13 +7,14 @@
 
 #include <vector>
 
-#include "gui/edge.h"
+#include "lib/vertex.hpp"
+#include "gui/edge_graphics_item.h"
 
 class VertexGraphicsItem : public QGraphicsEllipseItem
 {
 public:
     static const int GraphicSize = 44;
-    explicit VertexGraphicsItem(QGraphicsItem *parent = 0);
+    explicit VertexGraphicsItem(Vertex* vertex, QGraphicsItem *parent = 0);
 
     QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent * event) override;
@@ -22,10 +23,8 @@ public:
     void repaintEdges();
     void clearEdges();
 
-
-
 private:
-//    Arrow* arrow;
+    Vertex* vertex;
 };
 
 #endif // VERTEX_H
