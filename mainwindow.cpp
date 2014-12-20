@@ -10,7 +10,8 @@
 #include "gui/vertex.h"
 #include "gui/edge.h"
 
-static QColor randomColor() {
+static QColor randomColor()
+{
     auto r = 100 + rand() % 100;
     auto g = 100 + rand() % 100;
     auto b = 100 + rand() % 100;
@@ -18,12 +19,10 @@ static QColor randomColor() {
     return QColor(r, g, b);
 }
 
-MainWindow::MainWindow(Graph* graph, QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow),
-    graph(graph)
+MainWindow::MainWindow(Graph *graph, QWidget *parent)
+    : QMainWindow(parent), ui(new Ui::MainWindow), graph(graph)
 {
-    ui->setupUi(this);   
+    ui->setupUi(this);
 
     scene = new QGraphicsScene(this);
 
@@ -31,12 +30,15 @@ MainWindow::MainWindow(Graph* graph, QWidget *parent) :
     ui->graphicsView->setRenderHints(QPainter::Antialiasing);
 
     randomizeVertices();
-//    connect(ui->exitButton, SIGNAL(clicked(), SLOT(close())));
-//    connect(ui->exitButton, &QPushButton::clicked, this, &MainWindow::close);
-//    connect(ui->exitButton, &QPushButton::clicked, this, [this]() { this->close(); });
+    //    connect(ui->exitButton, SIGNAL(clicked(), SLOT(close())));
+    //    connect(ui->exitButton, &QPushButton::clicked, this,
+    //    &MainWindow::close);
+    //    connect(ui->exitButton, &QPushButton::clicked, this, [this]() {
+    //    this->close(); });
 }
 
-void MainWindow::graphConnect(VertexGraphicsItem* v1, VertexGraphicsItem* v2) {
+void MainWindow::graphConnect(VertexGraphicsItem *v1, VertexGraphicsItem *v2)
+{
     auto edge = new EdgeGraphicsItem(v1, v2);
     scene->addItem(edge);
 
@@ -44,15 +46,12 @@ void MainWindow::graphConnect(VertexGraphicsItem* v1, VertexGraphicsItem* v2) {
     v2->edges.push_back(edge);
 }
 
-MainWindow::~MainWindow()
-{
-    delete ui;
-}
+MainWindow::~MainWindow() { delete ui; }
 
 void MainWindow::on_randomizeEdges_clicked()
 {
-    for (VertexGraphicsItem* vertex : _vertices) {
-        for (EdgeGraphicsItem* edge : vertex->edges) {
+    for (VertexGraphicsItem *vertex : _vertices) {
+        for (EdgeGraphicsItem *edge : vertex->edges) {
             if (scene->items().contains(edge)) {
                 scene->removeItem(edge);
             }
@@ -74,27 +73,44 @@ void MainWindow::on_randomizeEdges_clicked()
     ui->graphicsView->repaint();
 }
 
-void MainWindow::randomizeVertices() {
-    auto v1 = new VertexGraphicsItem(0);
-    v1->setBrush(QBrush(randomColor()));
-    scene->addItem(v1);
+void MainWindow::randomizeVertices()
+{
+    _vertices.clear();
 
-    _vertices.push_back(v1);
+    int i = 0;
+    for	(std::unique_ptr<Vertex>& v : graph->list) {
+        // TODO - store the vertex value
+        auto vgi = new VertexGraphicsItem();
+        vgi->setBrush(QBrush(randomColor()));
+        _vertices.push_back(vgi);
+        scene->addItem(vgi);
 
-    for (int i = 0; i < 20; i++) {
-        auto v2 = new VertexGraphicsItem(0);
-        v2->setBrush(QBrush(randomColor()));
-        scene->addItem(v2);
-        v2->setX(80 * (i / 5 + 1) * std::cos(i));
-        v2->setY(80 * (i / 5 + 1) * std::sin(i));
+        vgi->setX(80 * (i / 5 + 1) * std::cos(i));
+        vgi->setY(80 * (i / 5 + 1) * std::sin(i));
 
-        _vertices.push_back(v2);
-
-        graphConnect(v1, v2);
-
-        v1->repaintEdges();
-        v2->repaintEdges();
-
-        v1 = v2;
+        i++;
     }
+
+//    auto v1 = new VertexGraphicsItem(0);
+//    v1->setBrush(QBrush(randomColor()));
+//    scene->addItem(v1);
+
+//    _vertices.push_back(v1);
+
+//    for (int i = 0; i < 20; i++) {
+//        auto v2 = new VertexGraphicsItem(0);
+//        v2->setBrush(QBrush(randomColor()));
+//        scene->addItem(v2);
+//        v2->setX(80 * (i / 5 + 1) * std::cos(i));
+//        v2->setY(80 * (i / 5 + 1) * std::sin(i));
+
+//        _vertices.push_back(v2);
+
+//        graphConnect(v1, v2);
+
+//        v1->repaintEdges();
+//        v2->repaintEdges();
+
+//        v1 = v2;
+//    }
 }
