@@ -3,7 +3,7 @@
 #include "lib/vertex.hpp"
 #include "lib/edge.hpp"
 
-std::ostream& operator<<(std::ostream& os, const vertex& v) {
+std::ostream& operator<<(std::ostream& os, const Vertex& v) {
   os << v.value << "\t";
 
   for (auto e : v.edges) {

@@ -11,9 +11,9 @@ enum class vertex_color { white, gray, black };
 
 class graph_events {
   public:
-    void vertex_selected(vertex* v);
-    void vertex_colored(vertex* v, int color);
-    void edge_changed(edge* e);
+    void vertex_selected(Vertex* v);
+    void vertex_colored(Vertex* v, int color);
+    void edge_changed(Edge* e);
 };
 
 struct color {
@@ -25,22 +25,22 @@ static color white(vertex_color::white);
 static color gray(vertex_color::gray);
 static color black(vertex_color::black);
 
-static void color_white(vertex* v) { v->metadata = &white; }
-static void color_gray(vertex* v) { v->metadata = &gray; }
-static void color_black(vertex* v) { v->metadata = &black; }
+static void color_white(Vertex* v) { v->metadata = &white; }
+static void color_gray(Vertex* v) { v->metadata = &gray; }
+static void color_black(Vertex* v) { v->metadata = &black; }
 
-static bool is_white(vertex* v) { return ((color*)v->metadata) == &white; }
+static bool is_white(Vertex* v) { return ((color*)v->metadata) == &white; }
 // static bool is_gray(vertex* v) { return ((color*)v->metadata) == &gray; }
-static bool is_black(vertex* v) { return ((color*)v->metadata) == &black; }
+static bool is_black(Vertex* v) { return ((color*)v->metadata) == &black; }
 
-bfs::bfs(graph& g, vertex* start, vertex* end) : g(g), start(start), end(end) {
+BFS::BFS(Graph& g, Vertex* start, Vertex* end) : g(g), start(start), end(end) {
   for (auto& v : g.list) {
     color_white(v.get());
   }
 
   cout << "BFS start " << start->value << endl;
 
-  for (edge& e : start->edges) {
+  for (Edge& e : start->edges) {
     auto v = e.v;
 
     cout << "pushing " << v->value << endl;
@@ -51,7 +51,7 @@ bfs::bfs(graph& g, vertex* start, vertex* end) : g(g), start(start), end(end) {
   color_black(start);
 }
 
-int bfs::step() {
+int BFS::step() {
   if (!queue.empty()) {
     auto v = queue.front();
     queue.pop();
@@ -63,7 +63,7 @@ int bfs::step() {
       return v->value;
     }
 
-    for (edge& e : v->edges) {
+    for (Edge& e : v->edges) {
       auto neighbour = e.v;
 
       if (is_white(neighbour)) {

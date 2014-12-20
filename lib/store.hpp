@@ -2,12 +2,12 @@
 #define GUARD_STORE
 
 #include <string>
-class graph;
+class Graph;
 
 class store {
  public:
-  void save(const graph& g, const std::string filename);
-  graph load(const std::string filename);
+  void save(const Graph& g, const std::string filename);
+  Graph load(const std::string filename);
 };
 
 #endif

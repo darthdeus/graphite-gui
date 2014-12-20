@@ -4,17 +4,17 @@
 #include <queue>
 
 // TODO - can this be just a forward declaration?
-class graph;
-class vertex;
+class Graph;
+class Vertex;
 
-class dfs {
+class DFS {
  public:
-  dfs(graph& g, vertex* start, vertex* end);
+  DFS(Graph& g, Vertex* start, Vertex* end);
 
-  std::queue<vertex*> queue;
-  graph& g;
-  vertex* start;
-  vertex* end;
+  std::queue<Vertex*> queue;
+  Graph& g;
+  Vertex* start;
+  Vertex* end;
 
   int step();
 };

@@ -2,7 +2,10 @@
 #include <QApplication>
 #include <QObject>
 #include <QTextStream>
+
+#include "lib/graph.hpp"
 #include "mainwindow.h"
+
 
 int main(int argc, char *argv[])
 {
@@ -24,7 +27,15 @@ int main(int argc, char *argv[])
     out_stream << msg1 << "\n" << msg2 << endl;
 
     QApplication a(argc, argv);
-    MainWindow w;
+
+    Graph* g = new Graph();
+    Vertex* v1 = g->add_vertex(1);
+    Vertex* v2 = g->add_vertex(2);
+    Vertex* v3 = g->add_vertex(3);
+
+    g->connect(1, 2);
+
+    MainWindow w(g);
 
     w.show();
 

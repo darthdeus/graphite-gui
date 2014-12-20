@@ -20,10 +20,13 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow(Graph* graph, QWidget *parent = 0);
     ~MainWindow();
 
     void graphConnect(VertexGraphicsItem* v1, VertexGraphicsItem* v2);
+
+    void randomizeVertices();
+
 private slots:
     void on_randomizeEdges_clicked();
 
@@ -32,7 +35,7 @@ private:
     QGraphicsLineItem *arrow;
     QGraphicsScene *scene;
 
-
+    Graph* graph;
     std::vector<VertexGraphicsItem*> _vertices;
 };
 

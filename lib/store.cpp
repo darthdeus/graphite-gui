@@ -5,7 +5,7 @@
 #include "lib/store.hpp"
 #include "lib/graph.hpp"
 
-void store::save(const graph& g, const std::string filename) {
+void store::save(const Graph& g, const std::string filename) {
   std::ofstream fs(filename);
 
   for (auto& v : g.list) {
@@ -13,8 +13,8 @@ void store::save(const graph& g, const std::string filename) {
   }
 }
 
-graph store::load(const std::string filename) {
-  graph g;
+Graph store::load(const std::string filename) {
+  Graph g;
 
   std::ifstream fs(filename);
   // fs >> 

@@ -1,14 +1,14 @@
 #ifndef GUARD_EDGE
 #define GUARD_EDGE
 
-class vertex;
+class Vertex;
 
-class edge {
+class Edge {
  public:
-  edge(vertex* v): v(v) {}
+  Edge(Vertex* v): v(v) {}
 
   int weight;
-  vertex* v;
+  Vertex* v;
 };
 
 #endif

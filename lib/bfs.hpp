@@ -5,14 +5,14 @@
 #include "vertex.hpp"
 #include <queue>
 
-class bfs {
+class BFS {
  public:
-  bfs(graph& g, vertex* start, vertex* end);
+  BFS(Graph& g, Vertex* start, Vertex* end);
 
-  std::queue<vertex*> queue;
-  graph& g;
-  vertex* start;
-  vertex* end;
+  std::queue<Vertex*> queue;
+  Graph& g;
+  Vertex* start;
+  Vertex* end;
 
   int step();
 

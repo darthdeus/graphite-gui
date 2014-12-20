@@ -5,12 +5,12 @@
 #include <vector>
 #include "vertex.hpp"
 
-class graph {
+class Graph {
 
  public:
-  using adjacency_list = std::vector<std::unique_ptr<vertex>>;
+  using adjacency_list = std::vector<std::unique_ptr<Vertex>>;
 
-  vertex* add_vertex(int n);
+  Vertex* add_vertex(int n);
   void connect(int v1, int v2);
   bool is_connected(int v1, int v2) const;
 
@@ -19,7 +19,7 @@ class graph {
   void clear_metadata();
  private:
   // Try to find a vertex in the graph, otherwise return nullptr.
-  vertex* find(int n) const;
+  Vertex* find(int n) const;
 };
 
 #endif
