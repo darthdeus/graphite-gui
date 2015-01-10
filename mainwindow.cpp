@@ -79,7 +79,7 @@ void MainWindow::randomizeVertices()
 
     int i = 0;
     for	(std::unique_ptr<Vertex>& v : graph_->list) {
-        // TODO - store the vertex value
+        // TODO - store the vertex valu
         auto vgi = new VertexGraphicsItem(v.get());
 
         vgi->setBrush(QBrush(randomColor()));
@@ -94,7 +94,7 @@ void MainWindow::randomizeVertices()
     }
 }
 
-void MainWindow::on_pushButton_clicked()
+void MainWindow::on_addVertex_clicked()
 {
     auto v = graph_->add_vertex(10);
 
@@ -104,4 +104,28 @@ void MainWindow::on_pushButton_clicked()
 
     vertices_.push_back(vgi);
     scene->addItem(vgi);
+}
+
+void MainWindow::on_addEdge_clicked()
+{
+    if (scene->selectedItems().size() > 0) {
+        auto current = static_cast<VertexGraphicsItem*>(scene->selectedItems().at(0));
+
+        // If we already had one selected, revert the selection color
+        if (selectedVertex_) {
+            // Revert the color of the vertex, since we just selected a new one
+            selectedVertex_->setBrush(QBrush(randomColor()));
+
+            if (current != selectedVertex_) {
+                graphConnect(current, selectedVertex_);
+                current->repaintEdges();
+
+                // Reset the selection after we connect the vertices
+                selectedVertex_ = nullptr;
+            }
+        } else {
+            selectedVertex_ = static_cast<VertexGraphicsItem*>(scene->selectedItems().at(0));
+            selectedVertex_->setBrush(QBrush(QColor(0, 0, 0)));
+        }
+    }
 }

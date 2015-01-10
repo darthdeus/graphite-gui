@@ -29,8 +29,8 @@ public:
 
 private slots:
     void on_randomizeEdges_clicked();
-
-    void on_pushButton_clicked();
+    void on_addVertex_clicked();
+    void on_addEdge_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -39,6 +39,9 @@ private:
 
     Graph* graph_;
     std::vector<VertexGraphicsItem*> vertices_;
+
+    // Used for adding an edge, should be always cleared
+    VertexGraphicsItem* selectedVertex_ = nullptr;
 };
 
 #endif // MAINWINDOW_H
