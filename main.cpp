@@ -31,6 +31,18 @@ int main(int argc, char *argv[])
     Vertex *v1 = g->add_vertex(1);
     Vertex *v2 = g->add_vertex(2);
     Vertex *v3 = g->add_vertex(3);
+    g->add_vertex(4);
+    g->add_vertex(5);
+    g->add_vertex(6);
+    g->add_vertex(7);
+    g->add_vertex(8);
+    g->add_vertex(9);
+    g->add_vertex(10);
+    g->add_vertex(11);
+    g->add_vertex(12);
+
+
+
 
     g->connect(1, 2);
 

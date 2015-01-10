@@ -20,7 +20,7 @@ static QColor randomColor()
 }
 
 MainWindow::MainWindow(Graph *graph, QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow), graph(graph)
+    : QMainWindow(parent), ui(new Ui::MainWindow), graph_(graph)
 {
     ui->setupUi(this);
 
@@ -50,7 +50,7 @@ MainWindow::~MainWindow() { delete ui; }
 
 void MainWindow::on_randomizeEdges_clicked()
 {
-    for (VertexGraphicsItem *vertex : _vertices) {
+    for (VertexGraphicsItem *vertex : vertices_) {
         for (EdgeGraphicsItem *edge : vertex->edges) {
             if (scene->items().contains(edge)) {
                 scene->removeItem(edge);
@@ -58,9 +58,9 @@ void MainWindow::on_randomizeEdges_clicked()
         }
         vertex->clearEdges();
 
-        for (int i = 0; i < rand() % 3; i++) {
-            auto index = rand() % _vertices.size();
-            auto v2 = _vertices[index];
+        for (size_t i = 0; i < rand() % vertices_.size(); i++) {
+            auto index = rand() % vertices_.size();
+            auto v2 = vertices_[index];
 
             if (v2 != vertex) {
                 graphConnect(vertex, v2);
@@ -75,10 +75,10 @@ void MainWindow::on_randomizeEdges_clicked()
 
 void MainWindow::randomizeVertices()
 {
-    _vertices.clear();
+    vertices_.clear();
 
     int i = 0;
-    for	(std::unique_ptr<Vertex>& v : graph->list) {
+    for	(std::unique_ptr<Vertex>& v : graph_->list) {
         // TODO - store the vertex value
         auto vgi = new VertexGraphicsItem(v.get());
 
@@ -87,32 +87,21 @@ void MainWindow::randomizeVertices()
         vgi->setX(80 * (i / 5 + 1) * std::cos(i));
         vgi->setY(80 * (i / 5 + 1) * std::sin(i));
 
-        _vertices.push_back(vgi);
+        vertices_.push_back(vgi);
         scene->addItem(vgi);
 
         i++;
     }
+}
 
-//    auto v1 = new VertexGraphicsItem(0);
-//    v1->setBrush(QBrush(randomColor()));
-//    scene->addItem(v1);
+void MainWindow::on_pushButton_clicked()
+{
+    auto v = graph_->add_vertex(10);
 
-//    _vertices.push_back(v1);
+    auto vgi = new VertexGraphicsItem(v);
 
-//    for (int i = 0; i < 20; i++) {
-//        auto v2 = new VertexGraphicsItem(0);
-//        v2->setBrush(QBrush(randomColor()));
-//        scene->addItem(v2);
-//        v2->setX(80 * (i / 5 + 1) * std::cos(i));
-//        v2->setY(80 * (i / 5 + 1) * std::sin(i));
+    vgi->setBrush(QBrush(randomColor()));
 
-//        _vertices.push_back(v2);
-
-//        graphConnect(v1, v2);
-
-//        v1->repaintEdges();
-//        v2->repaintEdges();
-
-//        v1 = v2;
-//    }
+    vertices_.push_back(vgi);
+    scene->addItem(vgi);
 }

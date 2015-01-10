@@ -2,6 +2,7 @@
 #include <QGraphicsEllipseItem>
 #include <QPen>
 #include <QVariant>
+#include <QGraphicsTextItem>
 
 #include <iostream>
 #include <memory>
@@ -10,13 +11,15 @@
 #include "gui/vertex_graphics_item.h"
 
 VertexGraphicsItem::VertexGraphicsItem(Vertex *vertex, QGraphicsItem *parent)
-    : vertex(vertex), QGraphicsEllipseItem(parent)
+    : QGraphicsEllipseItem(parent), vertex(vertex)
 {
     setPen(QPen(QColor(90, 90, 90)));
     setFlag(QGraphicsItem::ItemIsMovable);
     setFlag(QGraphicsItem::ItemSendsGeometryChanges);
     setFlag(QGraphicsItem::ItemIsSelectable);
     setRect(0, 0, GraphicSize, GraphicSize);
+
+//    childItems().append();
 }
 
 QVariant

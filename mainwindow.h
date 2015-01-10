@@ -30,13 +30,15 @@ public:
 private slots:
     void on_randomizeEdges_clicked();
 
+    void on_pushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     QGraphicsLineItem *arrow;
     QGraphicsScene *scene;
 
-    Graph* graph;
-    std::vector<VertexGraphicsItem*> _vertices;
+    Graph* graph_;
+    std::vector<VertexGraphicsItem*> vertices_;
 };
 
 #endif // MAINWINDOW_H
