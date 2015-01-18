@@ -7,7 +7,7 @@ std::ostream& operator<<(std::ostream& os, const Vertex& v) {
   os << v.value << "\t";
 
   for (auto e : v.edges) {
-    os << e.v->value << " ";
+    os << e.to->value << " ";
   }
 
   return os;

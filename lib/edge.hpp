@@ -5,10 +5,11 @@ class Vertex;
 
 class Edge {
  public:
-  Edge(Vertex* v): v(v) {}
+  Edge(Vertex* to, Vertex* from): from(from), to(to) {}
 
   int weight;
-  Vertex* v;
+  Vertex* from;
+  Vertex* to;
 };
 
 #endif

@@ -11,6 +11,7 @@ EdgeGraphicsItem::EdgeGraphicsItem(VertexGraphicsItem* from, VertexGraphicsItem*
     pen.setWidth(3);
     pen.setColor(QColor(90, 90, 90));
     setPen(pen);
+    setFlag(GraphicsItemFlag::ItemIsSelectable);
 }
 
 void EdgeGraphicsItem::updatePosition() {

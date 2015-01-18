@@ -1,9 +1,11 @@
 #ifndef VERTEX_H
 #define VERTEX_H
 
+#include <QColor>
 #include <QVariant>
 #include <QGraphicsItem>
 #include <QGraphicsRectItem>
+#include <QGraphicsScene>
 
 #include <vector>
 
@@ -23,8 +25,12 @@ public:
     void repaintEdges();
     void clearEdges();
 
-private:
+    void setCoordinates(float x, float y);
+    void setColor(QColor color);
+
     Vertex* vertex;
+    int value() const;
+    bool hasCoordinates() const;
 };
 
 #endif // VERTEX_H

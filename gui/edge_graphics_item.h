@@ -11,7 +11,6 @@ public:
     EdgeGraphicsItem(VertexGraphicsItem* from, VertexGraphicsItem* to);
 
     void updatePosition();
-private:
     VertexGraphicsItem* from;
     VertexGraphicsItem* to;
 };

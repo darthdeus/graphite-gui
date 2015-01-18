@@ -44,7 +44,7 @@ BFS::BFS(Graph &g, Vertex *start, Vertex *end) : g(g), start(start), end(end)
     cout << "BFS start " << start->value << endl;
 
     for (Edge &e : start->edges) {
-        auto v = e.v;
+        auto v = e.to;
 
         cout << "pushing " << v->value << endl;
         queue.push(v);
@@ -69,7 +69,7 @@ int BFS::step()
         }
 
         for (Edge &e : v->edges) {
-            auto neighbour = e.v;
+            auto neighbour = e.to;
 
             if (is_white(neighbour)) {
                 cout << "    pushing neighbour " << neighbour->value << endl;

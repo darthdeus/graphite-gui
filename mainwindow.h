@@ -25,9 +25,11 @@ public:
 
     void graphConnect(VertexGraphicsItem* v1, VertexGraphicsItem* v2);
 
-    void randomizeVertices();
+    void reloadModel();
 
     void keyReleaseEvent(QKeyEvent *);
+
+    void delete_selection();
 private slots:
     void on_randomizeEdges_clicked();
     void on_addVertex_clicked();

@@ -12,6 +12,7 @@ class Graph {
 
   Vertex* add_vertex(int n);
   void connect(int v1, int v2);
+  void disconnect(int v1, int v2);
   bool is_connected(int v1, int v2) const;
 
   adjacency_list list;

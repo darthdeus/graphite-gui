@@ -6,6 +6,7 @@
 
 #include <cmath>
 #include <vector>
+#include <unordered_map>
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -31,7 +32,7 @@ MainWindow::MainWindow(Graph *graph, QWidget *parent)
     ui->graphicsView->setScene(scene);
     ui->graphicsView->setRenderHints(QPainter::Antialiasing);
 
-    randomizeVertices();
+    reloadModel();
     //    connect(ui->exitButton, SIGNAL(clicked(), SLOT(close())));
     //    connect(ui->exitButton, &QPushButton::clicked, this,
     //    &MainWindow::close);
@@ -44,6 +45,7 @@ void MainWindow::graphConnect(VertexGraphicsItem *v1, VertexGraphicsItem *v2)
     auto edge = new EdgeGraphicsItem(v1, v2);
     scene->addItem(edge);
 
+    //    graph_->connect(v1->vertex->value, v2->vertex->value);
     v1->edges.push_back(edge);
     v2->edges.push_back(edge);
 }
@@ -52,47 +54,62 @@ MainWindow::~MainWindow() { delete ui; }
 
 void MainWindow::on_randomizeEdges_clicked()
 {
-    for (VertexGraphicsItem *vertex : vertices_) {
-        for (EdgeGraphicsItem *edge : vertex->edges) {
-            if (scene->items().contains(edge)) {
-                scene->removeItem(edge);
-            }
-        }
-        vertex->clearEdges();
+    //    for (VertexGraphicsItem *vertex : vertices_) {
+    //        for (EdgeGraphicsItem *edge : vertex->edges) {
+    //            if (scene->items().contains(edge)) {
+    //                scene->removeItem(edge);
+    //            }
+    //        }
+    //        vertex->clearEdges();
 
-        for (size_t i = 0; i < rand() % vertices_.size(); i++) {
-            auto index = rand() % vertices_.size();
-            auto v2 = vertices_[index];
+    //        for (size_t i = 0; i < rand() % vertices_.size(); i++) {
+    //            auto index = rand() % vertices_.size();
+    //            auto v2 = vertices_[index];
 
-            if (v2 != vertex) {
-                graphConnect(vertex, v2);
-            }
-        }
+    //            if (v2 != vertex) {
+    //                graphConnect(vertex, v2);
+    //            }
+    //        }
 
-        vertex->repaintEdges();
-    }
+    //        vertex->repaintEdges();
+    //    }
 
-    ui->graphicsView->repaint();
+    //    ui->graphicsView->repaint();
 }
 
-void MainWindow::randomizeVertices()
+void MainWindow::reloadModel()
 {
     vertices_.clear();
+    scene->clear();
+
+    std::unordered_map<Vertex *, VertexGraphicsItem *> vgi_map;
 
     int i = 0;
-    for	(std::unique_ptr<Vertex>& v : graph_->list) {
-        // TODO - store the vertex valu
+    for (std::unique_ptr<Vertex> &v : graph_->list) {
         auto vgi = new VertexGraphicsItem(v.get());
 
         vgi->setBrush(QBrush(randomColor()));
-
-        vgi->setX(80 * (i / 5 + 1) * std::cos(i));
-        vgi->setY(80 * (i / 5 + 1) * std::sin(i));
+        if (!vgi->hasCoordinates()) {
+            vgi->setCoordinates(80 * (i / 5 + 1) * std::cos(i),
+                                80 * (i / 5 + 1) * std::sin(i));
+        }
 
         vertices_.push_back(vgi);
         scene->addItem(vgi);
 
+        vgi_map[v.get()] = vgi;
+
         i++;
+    }
+
+    for (std::unique_ptr<Vertex> &v : graph_->list) {
+        Vertex *vertex = v.get();
+
+        VertexGraphicsItem *vgi = vgi_map[vertex];
+        for (Edge &e : vertex->edges) {
+            graphConnect(vgi, vgi_map[e.to]);
+            vgi->repaintEdges();
+        }
     }
 }
 
@@ -102,6 +119,32 @@ void MainWindow::keyReleaseEvent(QKeyEvent *e)
         on_addVertex_clicked();
     } else if (e->key() == Qt::Key_C) {
         on_addEdge_clicked();
+    } else if (e->key() == Qt::Key_D) {
+        delete_selection();
+        reloadModel();
+    }
+}
+
+void MainWindow::delete_selection()
+{
+    if (scene->selectedItems().size() == 1) {
+        QGraphicsItem *selectedItem = scene->selectedItems().at(0);
+
+        if (VertexGraphicsItem *vgi
+            = dynamic_cast<VertexGraphicsItem *>(selectedItem)) {
+            qDebug() << "Trying to delete a vertex";
+        } else if (EdgeGraphicsItem *egi
+                   = dynamic_cast<EdgeGraphicsItem *>(selectedItem)) {
+            auto from = egi->from;
+            auto to = egi->to;
+
+            graph_->disconnect(from->vertex->value, to->vertex->value);
+            //            from->reloadModel(scene);
+            //            to->reloadModel(scene);
+
+        } else {
+            qDebug() << "Trying to delete something unknown";
+        }
     }
 }
 
@@ -120,8 +163,9 @@ void MainWindow::on_addVertex_clicked()
 void MainWindow::on_addEdge_clicked()
 {
     if (scene->selectedItems().size() > 0) {
-        qDebug() << "Some items were selected";
-        auto current = static_cast<VertexGraphicsItem*>(scene->selectedItems().at(0));
+        // TODO - this should be a dynamic cast
+        auto current
+            = static_cast<VertexGraphicsItem *>(scene->selectedItems().at(0));
 
         // If we already had one selected, revert the selection color
         if (selectedVertex_) {
@@ -130,15 +174,18 @@ void MainWindow::on_addEdge_clicked()
             if (current != selectedVertex_) {
                 selectedVertex_->setBrush(QBrush(randomColor()));
 
-                graphConnect(current, selectedVertex_);
-                current->repaintEdges();
+                graph_->connect(current->value(), selectedVertex_->value());
+                reloadModel();
+                //                graphConnect(current, selectedVertex_);
+                //                current->repaintEdges();
 
                 // Reset the selection after we connect the vertices
                 selectedVertex_ = nullptr;
-//                scene->clearSelection();
+                //                scene->clearSelection();
             }
         } else {
-            selectedVertex_ = static_cast<VertexGraphicsItem*>(scene->selectedItems().at(0));
+            selectedVertex_ = static_cast<VertexGraphicsItem *>(
+                scene->selectedItems().at(0));
             selectedVertex_->setBrush(QBrush(QColor(0, 0, 0)));
         }
     }

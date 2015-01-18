@@ -3,7 +3,8 @@
 
 #include <iostream>
 #include <ostream>
-#include <vector>
+#include <list>
+#include <Qcolor>
 
 #include "lib/edge.hpp"
 
@@ -16,13 +17,14 @@ class Vertex {
 
   int value;
 
-  std::vector<Edge> edges;
+  std::list<Edge> edges;
 
   float x;
   float y;
 
-  void* metadata;
+  QColor color;
 
+  void* metadata;
 };
 
 std::ostream& operator<<(std::ostream& os, const Vertex& v);
