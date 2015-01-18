@@ -1,6 +1,8 @@
 #include <QGraphicsItem>
 #include <QGraphicsScene>
 #include <QGraphicsView>
+#include <QKeyEvent>
+#include <QDebug>
 
 #include <cmath>
 #include <vector>
@@ -94,6 +96,15 @@ void MainWindow::randomizeVertices()
     }
 }
 
+void MainWindow::keyReleaseEvent(QKeyEvent *e)
+{
+    if (e->key() == Qt::Key_A) {
+        on_addVertex_clicked();
+    } else if (e->key() == Qt::Key_C) {
+        on_addEdge_clicked();
+    }
+}
+
 void MainWindow::on_addVertex_clicked()
 {
     auto v = graph_->add_vertex(10);
@@ -109,19 +120,22 @@ void MainWindow::on_addVertex_clicked()
 void MainWindow::on_addEdge_clicked()
 {
     if (scene->selectedItems().size() > 0) {
+        qDebug() << "Some items were selected";
         auto current = static_cast<VertexGraphicsItem*>(scene->selectedItems().at(0));
 
         // If we already had one selected, revert the selection color
         if (selectedVertex_) {
             // Revert the color of the vertex, since we just selected a new one
-            selectedVertex_->setBrush(QBrush(randomColor()));
 
             if (current != selectedVertex_) {
+                selectedVertex_->setBrush(QBrush(randomColor()));
+
                 graphConnect(current, selectedVertex_);
                 current->repaintEdges();
 
                 // Reset the selection after we connect the vertices
                 selectedVertex_ = nullptr;
+//                scene->clearSelection();
             }
         } else {
             selectedVertex_ = static_cast<VertexGraphicsItem*>(scene->selectedItems().at(0));

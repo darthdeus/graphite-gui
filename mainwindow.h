@@ -27,6 +27,7 @@ public:
 
     void randomizeVertices();
 
+    void keyReleaseEvent(QKeyEvent *);
 private slots:
     void on_randomizeEdges_clicked();
     void on_addVertex_clicked();
