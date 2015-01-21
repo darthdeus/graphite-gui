@@ -130,9 +130,8 @@ void MainWindow::delete_selection()
     if (scene->selectedItems().size() == 1) {
         QGraphicsItem *selectedItem = scene->selectedItems().at(0);
 
-        if (VertexGraphicsItem *vgi
-            = dynamic_cast<VertexGraphicsItem *>(selectedItem)) {
-            qDebug() << "Trying to delete a vertex";
+        if (VertexGraphicsItem *vgi = dynamic_cast<VertexGraphicsItem *>(selectedItem)) {
+            graph_->removeVertex(vgi->vertex);
         } else if (EdgeGraphicsItem *egi
                    = dynamic_cast<EdgeGraphicsItem *>(selectedItem)) {
             auto from = egi->from;

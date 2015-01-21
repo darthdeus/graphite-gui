@@ -74,6 +74,13 @@ bool Graph::is_connected(int vn1, int vn2) const
     return found != end(v1->edges);
 }
 
+void Graph::removeVertex(Vertex *v)
+{
+    for (Edge& e : v->edges) {
+        e.to->edges.remove_if([v](Edge& edge) { return edge.to == v; });
+    }
+}
+
 Vertex *Graph::find(int v) const
 {
     for (auto &vert : list) {
