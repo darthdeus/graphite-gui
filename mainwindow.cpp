@@ -172,8 +172,9 @@ void MainWindow::on_addEdge_clicked()
 {
     if (scene->selectedItems().size() > 0) {
         // TODO - this should be a dynamic cast
-        auto current
-            = static_cast<VertexGraphicsItem *>(scene->selectedItems().at(0));
+        VertexGraphicsItem* current = dynamic_cast<VertexGraphicsItem *>(scene->selectedItems().at(0));
+
+        if (!current) return;
 
         // If we already had one selected, revert the selection color
         if (selectedVertex_) {
@@ -184,12 +185,9 @@ void MainWindow::on_addEdge_clicked()
 
                 graph_->connect(current->value(), selectedVertex_->value());
                 reloadModel();
-                //                graphConnect(current, selectedVertex_);
-                //                current->repaintEdges();
 
                 // Reset the selection after we connect the vertices
                 selectedVertex_ = nullptr;
-                //                scene->clearSelection();
             }
         } else {
             selectedVertex_ = static_cast<VertexGraphicsItem *>(
