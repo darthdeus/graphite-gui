@@ -2,13 +2,13 @@
 #define GUARD_GRAPH
 
 #include <memory>
-#include <vector>
+#include <list>
 #include "vertex.hpp"
 
 class Graph {
 
  public:
-  using adjacency_list = std::vector<std::unique_ptr<Vertex>>;
+  using adjacency_list = std::list<std::unique_ptr<Vertex>>;
 
   Vertex* add_vertex(int n);
   void connect(int v1, int v2);

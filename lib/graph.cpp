@@ -79,6 +79,8 @@ void Graph::removeVertex(Vertex *v)
     for (Edge& e : v->edges) {
         e.to->edges.remove_if([v](Edge& edge) { return edge.to == v; });
     }
+
+    list.remove_if([v](std::unique_ptr<Vertex>& p) { return p.get() == v; });
 }
 
 Vertex *Graph::find(int v) const
