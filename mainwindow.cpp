@@ -19,7 +19,8 @@ static QColor randomColor()
     auto g = 100 + rand() % 100;
     auto b = 100 + rand() % 100;
 
-    return QColor(r, g, b);
+    return QColor(120, 150, 130);
+//    return QColor(r, g, b);
 }
 
 MainWindow::MainWindow(Graph *graph, QWidget *parent)
@@ -82,6 +83,13 @@ void MainWindow::reloadModel()
     vertices_.clear();
     scene->clear();
 
+    QGraphicsItem* selection = nullptr;
+
+    if (scene->selectedItems().size() == 1) {
+        // TODO - figure out how to restore the selection
+        selection = scene->selectedItems().at(0);
+    }
+
     std::unordered_map<Vertex *, VertexGraphicsItem *> vgi_map;
 
     int i = 0;
@@ -111,6 +119,8 @@ void MainWindow::reloadModel()
             vgi->repaintEdges();
         }
     }
+
+
 }
 
 void MainWindow::keyReleaseEvent(QKeyEvent *e)
@@ -132,8 +142,7 @@ void MainWindow::delete_selection()
 
         if (VertexGraphicsItem *vgi = dynamic_cast<VertexGraphicsItem *>(selectedItem)) {
             graph_->removeVertex(vgi->vertex);
-        } else if (EdgeGraphicsItem *egi
-                   = dynamic_cast<EdgeGraphicsItem *>(selectedItem)) {
+        } else if (EdgeGraphicsItem *egi = dynamic_cast<EdgeGraphicsItem *>(selectedItem)) {
             auto from = egi->from;
             auto to = egi->to;
 
