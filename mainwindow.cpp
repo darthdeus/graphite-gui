@@ -41,6 +41,8 @@ MainWindow::MainWindow(Graph *graph, QWidget *parent)
     //    this->close(); });
 }
 
+MainWindow::~MainWindow() { delete ui; }
+
 void MainWindow::graphConnect(VertexGraphicsItem *v1, VertexGraphicsItem *v2)
 {
     auto edge = new EdgeGraphicsItem(v1, v2);
@@ -49,33 +51,6 @@ void MainWindow::graphConnect(VertexGraphicsItem *v1, VertexGraphicsItem *v2)
     //    graph_->connect(v1->vertex->value, v2->vertex->value);
     v1->edges.push_back(edge);
     v2->edges.push_back(edge);
-}
-
-MainWindow::~MainWindow() { delete ui; }
-
-void MainWindow::on_randomizeEdges_clicked()
-{
-    //    for (VertexGraphicsItem *vertex : vertices_) {
-    //        for (EdgeGraphicsItem *edge : vertex->edges) {
-    //            if (scene->items().contains(edge)) {
-    //                scene->removeItem(edge);
-    //            }
-    //        }
-    //        vertex->clearEdges();
-
-    //        for (size_t i = 0; i < rand() % vertices_.size(); i++) {
-    //            auto index = rand() % vertices_.size();
-    //            auto v2 = vertices_[index];
-
-    //            if (v2 != vertex) {
-    //                graphConnect(vertex, v2);
-    //            }
-    //        }
-
-    //        vertex->repaintEdges();
-    //    }
-
-    //    ui->graphicsView->repaint();
 }
 
 void MainWindow::reloadModel()
@@ -119,8 +94,6 @@ void MainWindow::reloadModel()
             vgi->repaintEdges();
         }
     }
-
-
 }
 
 void MainWindow::keyReleaseEvent(QKeyEvent *e)
@@ -147,8 +120,6 @@ void MainWindow::delete_selection()
             auto to = egi->to;
 
             graph_->disconnect(from->vertex->value, to->vertex->value);
-            //            from->reloadModel(scene);
-            //            to->reloadModel(scene);
 
         } else {
             qDebug() << "Trying to delete something unknown";
@@ -158,11 +129,16 @@ void MainWindow::delete_selection()
 
 void MainWindow::on_addVertex_clicked()
 {
-    auto v = graph_->add_vertex(10);
+    auto v = graph_->add_vertex();
 
     auto vgi = new VertexGraphicsItem(v);
 
     vgi->setBrush(QBrush(randomColor()));
+
+//    auto pos = ui->graphicsView->viewport()->mapFromParent(mapFromGlobal(QCursor::pos()));
+//    auto pos = ui->graphicsView->mapToScene(mapFromGlobal(QCursor::pos()));
+    auto pos = ui->graphicsView->mapToScene(mapFromGlobal(QCursor::pos()));
+    vgi->setCoordinates(pos.x(), pos.y());
 
     vertices_.push_back(vgi);
     scene->addItem(vgi);
@@ -195,4 +171,29 @@ void MainWindow::on_addEdge_clicked()
             selectedVertex_->setBrush(QBrush(QColor(0, 0, 0)));
         }
     }
+}
+
+void MainWindow::on_randomizeEdges_clicked()
+{
+    //    for (VertexGraphicsItem *vertex : vertices_) {
+    //        for (EdgeGraphicsItem *edge : vertex->edges) {
+    //            if (scene->items().contains(edge)) {
+    //                scene->removeItem(edge);
+    //            }
+    //        }
+    //        vertex->clearEdges();
+
+    //        for (size_t i = 0; i < rand() % vertices_.size(); i++) {
+    //            auto index = rand() % vertices_.size();
+    //            auto v2 = vertices_[index];
+
+    //            if (v2 != vertex) {
+    //                graphConnect(vertex, v2);
+    //            }
+    //        }
+
+    //        vertex->repaintEdges();
+    //    }
+
+    //    ui->graphicsView->repaint();
 }

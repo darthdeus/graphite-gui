@@ -10,7 +10,7 @@ class Graph {
  public:
   using adjacency_list = std::list<std::unique_ptr<Vertex>>;
 
-  Vertex* add_vertex(int n);
+  Vertex* add_vertex();
   void connect(int v1, int v2);
   void disconnect(int v1, int v2);
   bool is_connected(int v1, int v2) const;

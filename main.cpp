@@ -23,24 +23,24 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     Graph *g = new Graph();
-    Vertex *v1 = g->add_vertex(1);
-    Vertex *v2 = g->add_vertex(2);
-    Vertex *v3 = g->add_vertex(3);
-    g->add_vertex(4);
-    g->add_vertex(5);
-    g->add_vertex(6);
-    g->add_vertex(7);
-    g->add_vertex(8);
-    g->add_vertex(9);
-    g->add_vertex(10);
-    g->add_vertex(11);
-    g->add_vertex(12);
+    Vertex *v1 = g->add_vertex();
+    Vertex *v2 = g->add_vertex();
+    Vertex *v3 = g->add_vertex();
+    g->add_vertex();
+    g->add_vertex();
+//    g->add_vertex(6);
+//    g->add_vertex(7);
+//    g->add_vertex(8);
+//    g->add_vertex(9);
+//    g->add_vertex(10);
+//    g->add_vertex(11);
+//    g->add_vertex(12);
 
-    g->connect(1, 2);
+    g->connect(v1->value, v2->value);
 
-    qDebug() << "is conn?" << g->is_connected(1, 2);
-    g->disconnect(1, 2);
-    qDebug() << "is conn?" << g->is_connected(1, 2);
+    qDebug() << "is conn?" << g->is_connected(v1->value, v2->value);
+    g->disconnect(v1->value, v2->value);
+    qDebug() << "is conn?" << g->is_connected(v1->value, v2->value);
 
     MainWindow w(g);
 

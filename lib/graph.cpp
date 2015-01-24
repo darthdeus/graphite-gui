@@ -12,14 +12,20 @@ static void vertex_not_found(const char *f, int vn1, int vn2)
               << std::endl;
 }
 
-Vertex *Graph::add_vertex(int v)
+Vertex *Graph::add_vertex()
 {
-    auto found = find(v);
+    static int counter = 0;
+
+    counter++;
+
+    auto found = find(counter);
 
     if (found) {
+        qDebug() << "Tried to add existing vertex" << counter;
         return &*found;
     } else {
-        list.push_back(std::unique_ptr<Vertex>(new Vertex(v)));
+        list.push_back(std::unique_ptr<Vertex>(new Vertex(counter)));
+        qDebug() << "Added vertex" << counter;
         return list.back().get();
     }
 }
@@ -80,7 +86,12 @@ void Graph::removeVertex(Vertex *v)
         e.to->edges.remove_if([v](Edge& edge) { return edge.to == v; });
     }
 
-    list.remove_if([v](std::unique_ptr<Vertex>& p) { return p.get() == v; });
+    qDebug() << "Removing vertex" << v->value << " ... current count is " << list.size();
+    list.remove_if([v](std::unique_ptr<Vertex>& p) {
+        return p->value == v->value;
+    });
+
+    qDebug() << "Size after removal:" << list.size();
 }
 
 Vertex *Graph::find(int v) const
