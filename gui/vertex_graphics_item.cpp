@@ -1,12 +1,13 @@
 #include <QDebug>
 #include <QGraphicsEllipseItem>
-#include <QPen>
-#include <QVariant>
+#include <QGraphicsItem>
 #include <QGraphicsTextItem>
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
 #include <QPainter>
+#include <QPen>
 #include <QStyleOptionGraphicsItem>
+#include <QVariant>
 #include <QWidget>
 
 #include <iostream>
@@ -79,6 +80,10 @@ bool VertexGraphicsItem::hasCoordinates() const
 void VertexGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     QGraphicsEllipseItem::paint(painter, option, widget);
-    QGraphicsTextItem text(QString::number(vertex->value));
+
+//    QGraphicsTextItem text{QString::number(vertex->value)};
+    QGraphicsTextItem text{};
+    text.setHtml(QString("<span style='font-size: 16px; font-weight: bold; color: white'>%1</span>").arg(vertex->value));
+    text.setFlag(QGraphicsItem::ItemIsSelectable, false);
     text.paint(painter, option, widget);
 }

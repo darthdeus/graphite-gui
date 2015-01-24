@@ -4,7 +4,7 @@
 #include <iostream>
 #include <ostream>
 #include <list>
-#include <Qcolor>
+#include <QColor>
 
 #include "lib/edge.hpp"
 
