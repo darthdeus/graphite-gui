@@ -136,8 +136,8 @@ void MainWindow::on_addVertex_clicked()
     vgi->setBrush(QBrush(randomColor()));
 
 //    auto pos = ui->graphicsView->viewport()->mapFromParent(mapFromGlobal(QCursor::pos()));
-//    auto pos = ui->graphicsView->mapToScene(mapFromGlobal(QCursor::pos()));
     auto pos = ui->graphicsView->mapToScene(mapFromGlobal(QCursor::pos()));
+//    auto pos = ui->graphicsView->mapToScene(mapFromGlobal(QCursor::pos()));
     vgi->setCoordinates(pos.x(), pos.y());
 
     vertices_.push_back(vgi);

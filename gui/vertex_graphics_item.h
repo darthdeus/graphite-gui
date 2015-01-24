@@ -31,6 +31,12 @@ public:
     Vertex* vertex;
     int value() const;
     bool hasCoordinates() const;
+
+
+
+    // QGraphicsItem interface
+public:
+    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 };
 
 #endif // VERTEX_H

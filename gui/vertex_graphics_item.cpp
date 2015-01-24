@@ -5,9 +5,13 @@
 #include <QGraphicsTextItem>
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
+#include <QPainter>
+#include <QStyleOptionGraphicsItem>
+#include <QWidget>
 
 #include <iostream>
 #include <memory>
+#include <cstdlib>
 
 #include "gui/edge_graphics_item.h"
 #include "gui/vertex_graphics_item.h"
@@ -70,4 +74,11 @@ int VertexGraphicsItem::value() const { return vertex->value; }
 bool VertexGraphicsItem::hasCoordinates() const
 {
     return std::abs((long)x()) > 0.001 && std::abs((long)y()) > 0.001;
+}
+
+void VertexGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+    QGraphicsEllipseItem::paint(painter, option, widget);
+    QGraphicsTextItem text(QString::number(vertex->value));
+    text.paint(painter, option, widget);
 }
