@@ -45,45 +45,6 @@
         <string>Sample graph</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="randomizeEdges">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>50</y>
-         <width>141</width>
-         <height>32</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Randomize edges</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="addVertex">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>80</y>
-         <width>141</width>
-         <height>32</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Add vertex</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="addEdge">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>110</y>
-         <width>141</width>
-         <height>32</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Add edge</string>
-       </property>
-      </widget>
      </widget>
     </item>
    </layout>

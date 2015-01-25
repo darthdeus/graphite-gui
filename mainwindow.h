@@ -23,19 +23,16 @@ public:
     explicit MainWindow(Graph* graph, QWidget *parent = 0);
     ~MainWindow();
 
-    void graphConnect(VertexGraphicsItem* v1, VertexGraphicsItem* v2);
-
     void reloadModel();
-
     void keyReleaseEvent(QKeyEvent *);
-
     void delete_selection();
 private slots:
-    void on_randomizeEdges_clicked();
-    void on_addVertex_clicked();
-    void on_addEdge_clicked();
 
 private:
+    void on_addVertex_clicked();
+    void on_addEdge_clicked();
+    void graphConnect(VertexGraphicsItem* v1, VertexGraphicsItem* v2);
+
     Ui::MainWindow *ui;
     QGraphicsLineItem *arrow;
     QGraphicsScene *scene;
