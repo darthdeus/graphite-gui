@@ -3,6 +3,7 @@
 #include <QGraphicsView>
 #include <QKeyEvent>
 #include <QDebug>
+#include <QMessageBox>
 
 #include <cmath>
 #include <vector>
@@ -99,6 +100,8 @@ void MainWindow::keyReleaseEvent(QKeyEvent *e)
     } else if (e->key() == Qt::Key_D) {
         delete_selection();
         reloadModel();
+    } else if (e->key() == Qt::Key_S) {
+        toggleSearch();
     }
 }
 
@@ -172,4 +175,27 @@ void MainWindow::graphConnect(VertexGraphicsItem *v1, VertexGraphicsItem *v2)
     //    graph_->connect(v1->vertex->value, v2->vertex->value);
     v1->edges.push_back(edge);
     v2->edges.push_back(edge);
+}
+
+void MainWindow::toggleSearch()
+{
+    VertexGraphicsItem* current = selectedVertex();
+    if (current) {
+
+    } else {
+        QMessageBox box;
+        box.setText("Select a vertex to begin search.");
+        box.exec();
+    }
+}
+
+/// Returns a selected vertex if there is one, otherwise nullptr.
+VertexGraphicsItem *MainWindow::selectedVertex()
+{
+    VertexGraphicsItem* current = nullptr;
+    if (scene->selectedItems().size() > 0) {
+        current = dynamic_cast<VertexGraphicsItem*>(scene->selectedItems().at(0));
+    }
+
+    return current;
 }
