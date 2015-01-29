@@ -30,9 +30,10 @@ MainWindow::MainWindow(Graph *graph, QWidget *parent)
     ui->setupUi(this);
 
     scene = new QGraphicsScene(this);
-
+    scene->setSceneRect(-1500, -1500, 3000, 3000);
     ui->graphicsView->setScene(scene);
     ui->graphicsView->setRenderHints(QPainter::Antialiasing);
+    ui->graphicsView->setDragMode(QGraphicsView::ScrollHandDrag);
 
     reloadModel();
 }
