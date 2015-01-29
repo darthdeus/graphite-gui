@@ -16,9 +16,9 @@
 
 static QColor randomColor()
 {
-    auto r = 100 + rand() % 100;
-    auto g = 100 + rand() % 100;
-    auto b = 100 + rand() % 100;
+//    auto r = 100 + rand() % 100;
+//    auto g = 100 + rand() % 100;
+//    auto b = 100 + rand() % 100;
 
     return QColor(120, 150, 130);
 //    return QColor(r, g, b);
