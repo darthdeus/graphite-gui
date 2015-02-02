@@ -96,6 +96,11 @@ void MainWindow::keyReleaseEvent(QKeyEvent *e)
         searchToggle(false);
     } else if (e->key() == Qt::Key_N) {
         searchStep();
+    } else if (e->key() == Qt::Key_R) {
+//        resetSearch();
+        bfs_ = new BFS(*graph_, graph_->start(), graph_->end());
+        graph_->clear_metadata();
+        scene->update();
     }
 }
 
@@ -183,6 +188,7 @@ void MainWindow::searchToggle(bool isStart) // true for start vertex, false for 
 //        current->update();
         scene->update();
 //        reloadModel();
+
     } else {
         QMessageBox box;
         box.setText("Select a vertex to begin search.");
@@ -192,10 +198,9 @@ void MainWindow::searchToggle(bool isStart) // true for start vertex, false for 
 
 void MainWindow::searchStep()
 {
-    if (graph_->search_ready()) {
-        static BFS bfs = BFS(*graph_, graph_->start(), graph_->end());
+    if (graph_->search_ready() && bfs_) {
         scene->update();
-        qDebug () << "Stepping search" << bfs.step();
+        qDebug () << "Stepping search" << bfs_->step();
     } else {
         qDebug() << "Search isn't ready yet.";
     }

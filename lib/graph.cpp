@@ -132,6 +132,7 @@ Vertex *Graph::find(int v) const
 void Graph::clear_metadata()
 {
     for (auto &v : list) {
+        v->color = vertex_color::white;
         v->metadata = nullptr;
     }
 }

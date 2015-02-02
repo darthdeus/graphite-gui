@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <vector>
 
+#include "lib/bfs.hpp"
 #include "lib/graph.hpp"
 
 class QGraphicsLineItem;
@@ -39,6 +40,7 @@ private:
     Ui::MainWindow *ui;
     QGraphicsLineItem *arrow;
     QGraphicsScene *scene;
+    BFS* bfs_ = nullptr;
 
     Graph* graph_;
     std::vector<VertexGraphicsItem*> vertices_;
