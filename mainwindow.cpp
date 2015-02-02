@@ -193,8 +193,11 @@ void MainWindow::searchToggle(bool isStart) // true for start vertex, false for 
 void MainWindow::searchStep()
 {
     if (graph_->search_ready()) {
-//        static BFS bfs = BFS(*graph_, graph_->start, graph_->end);
-//        bfs.step();
+        static BFS bfs = BFS(*graph_, graph_->start(), graph_->end());
+        scene->update();
+        qDebug () << "Stepping search" << bfs.step();
+    } else {
+        qDebug() << "Search isn't ready yet.";
     }
 }
 

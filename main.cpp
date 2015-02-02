@@ -26,20 +26,14 @@ int main(int argc, char *argv[])
     Vertex *v1 = g->add_vertex();
     Vertex *v2 = g->add_vertex();
     Vertex *v3 = g->add_vertex();
-    g->add_vertex();
-    g->add_vertex();
-//    g->add_vertex(6);
-//    g->add_vertex(7);
-//    g->add_vertex(8);
-//    g->add_vertex(9);
-//    g->add_vertex(10);
-//    g->add_vertex(11);
-//    g->add_vertex(12);
+    Vertex *v4 = g->add_vertex();
+    Vertex *v5 = g->add_vertex();
 
     g->connect(v1->value, v2->value);
+    g->connect(v2->value, v3->value);
+    g->connect(v3->value, v4->value);
+    g->connect(v4->value, v5->value);
 
-    qDebug() << "is conn?" << g->is_connected(v1->value, v2->value);
-    g->disconnect(v1->value, v2->value);
     qDebug() << "is conn?" << g->is_connected(v1->value, v2->value);
 
     MainWindow w(g);
