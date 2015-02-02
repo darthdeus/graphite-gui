@@ -95,15 +95,24 @@ void Graph::removeVertex(Vertex *v)
 }
 
 void Graph::set_start(Vertex *v) {
-    if (start_) start_->color = vertex_color::white;
+    // TODO - also check if the vertex still exists
+    if (start_) {
+        start_->color = vertex_color::white;
+        start_->target = false;
+    }
     start_ = v;
-    v->color = vertex_color::gray;
+    start_->color = vertex_color::gray;
+    start_->target = true;
 }
 
 void Graph::set_end(Vertex *v) {
-    if (end_) end_->color = vertex_color::white;
+    if (end_) {
+        end_->color = vertex_color::white;
+        end_->target = false;
+    }
     end_ = v;
-    v->color = vertex_color::gray;
+    end_->color = vertex_color::gray;
+    end_->target = true;
 }
 
 Vertex *Graph::start() const {

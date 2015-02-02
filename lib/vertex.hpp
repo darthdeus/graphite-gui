@@ -26,6 +26,7 @@ class Vertex {
 
   vertex_color color;
   bool selected = false;
+  bool target = false;
 
   void* metadata;
 };

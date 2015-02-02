@@ -72,7 +72,8 @@ bool VertexGraphicsItem::hasCoordinates() const
 }
 
 void VertexGraphicsItem::markSearch(bool value) {
-    vertex->color = value ? vertex_color::gray : vertex_color::white;
+    vertex->target = value;
+//    vertex->color = value ? vertex_color::gray : vertex_color::white;
     update();
 }
 
@@ -94,6 +95,12 @@ void VertexGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem
     case vertex_color::black:
         setBrush(QBrush(QColor(20, 50, 30, opacity)));
         break;
+    }
+
+    if (vertex->target) {
+        QPen pen = QPen(QColor(100, 50, 50));
+        pen.setWidth(2);
+        setPen(pen);
     }
 
     QGraphicsEllipseItem::paint(painter, option, widget);

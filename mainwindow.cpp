@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QMessageBox>
 
+#include <cassert>
 #include <cmath>
 #include <vector>
 #include <unordered_map>
@@ -14,6 +15,7 @@
 #include "gui/vertex_graphics_item.h"
 #include "gui/edge_graphics_item.h"
 #include "lib/bfs.hpp"
+
 
 MainWindow::MainWindow(Graph *graph, QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow), graph_(graph)
@@ -31,9 +33,13 @@ MainWindow::MainWindow(Graph *graph, QWidget *parent)
 
 MainWindow::~MainWindow() { delete ui; }
 
+static bool reloading = false;
 
 void MainWindow::reloadModel()
 {
+    qDebug() << "Reloading model";
+    reloading = true;
+
     int selectedVertexValue = -1;
 
     if (scene->selectedItems().size() == 1) {
@@ -79,6 +85,8 @@ void MainWindow::reloadModel()
             vgi->repaintEdges();
         }
     }
+
+    reloading = false;
 }
 
 void MainWindow::keyReleaseEvent(QKeyEvent *e)
@@ -133,14 +141,11 @@ void MainWindow::delete_selection()
 void MainWindow::on_addVertex_clicked()
 {
     auto v = graph_->add_vertex();
-
-    auto vgi = new VertexGraphicsItem(v);
-
     auto pos = ui->graphicsView->mapToScene(mapFromGlobal(QCursor::pos()));
-    vgi->setCoordinates(pos.x(), pos.y());
+    v->x = pos.x();
+    v->y = pos.y();
 
-    vertices_.push_back(vgi);
-    scene->addItem(vgi);
+    reloadModel();
 }
 
 void MainWindow::on_addEdge_clicked()
@@ -167,16 +172,8 @@ void MainWindow::on_addEdge_clicked()
     }
 }
 
-void MainWindow::graphConnect(VertexGraphicsItem *v1, VertexGraphicsItem *v2)
-{
-    auto edge = new EdgeGraphicsItem(v1, v2);
-    scene->addItem(edge);
-
-    v1->edges.push_back(edge);
-    v2->edges.push_back(edge);
-}
-
-void MainWindow::searchToggle(bool isStart) // true for start vertex, false for end vertex
+/// isStart - true for start vertex, false for end vertex
+void MainWindow::searchToggle(bool isStart)
 {
     VertexGraphicsItem* current = selectedVertex();
     if (current) {
@@ -207,7 +204,7 @@ void MainWindow::searchStep()
 }
 
 /// Returns a selected vertex if there is one, otherwise nullptr.
-VertexGraphicsItem *MainWindow::selectedVertex()
+VertexGraphicsItem *MainWindow::selectedVertex() const
 {
     VertexGraphicsItem* current = nullptr;
 
@@ -216,4 +213,14 @@ VertexGraphicsItem *MainWindow::selectedVertex()
     }
 
     return current;
+}
+
+/// Used to add a graphical edge between two vertices. Only ever call this from reloadModel.
+void MainWindow::graphConnect(VertexGraphicsItem *v1, VertexGraphicsItem *v2) {
+    assert(reloading);
+    auto edge = new EdgeGraphicsItem(v1, v2);
+    scene->addItem(edge);
+
+    v1->edges.push_back(edge);
+    v2->edges.push_back(edge);
 }

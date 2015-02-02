@@ -27,6 +27,8 @@ public:
     void reloadModel();
     void keyReleaseEvent(QKeyEvent *);
     void delete_selection();
+
+    VertexGraphicsItem *selectedVertex() const;
 private slots:
 
 private:
@@ -35,7 +37,6 @@ private:
     void graphConnect(VertexGraphicsItem* v1, VertexGraphicsItem* v2);
     void searchToggle(bool start);
     void searchStep();
-    VertexGraphicsItem *selectedVertex();
 
     Ui::MainWindow *ui;
     QGraphicsLineItem *arrow;
