@@ -32,7 +32,8 @@ private:
     void on_addVertex_clicked();
     void on_addEdge_clicked();
     void graphConnect(VertexGraphicsItem* v1, VertexGraphicsItem* v2);
-    void toggleSearch();
+    void searchToggle(bool start);
+    void searchStep();
     VertexGraphicsItem *selectedVertex();
 
     Ui::MainWindow *ui;

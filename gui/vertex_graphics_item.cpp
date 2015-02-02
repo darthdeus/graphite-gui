@@ -64,12 +64,6 @@ void VertexGraphicsItem::setCoordinates(float x, float y)
     vertex->y = y;
 }
 
-void VertexGraphicsItem::setColor(QColor color)
-{
-    setBrush(QBrush(color));
-    vertex->color = color;
-}
-
 int VertexGraphicsItem::value() const { return vertex->value; }
 
 bool VertexGraphicsItem::hasCoordinates() const
@@ -77,11 +71,28 @@ bool VertexGraphicsItem::hasCoordinates() const
     return std::abs((long)x()) > 0.001 && std::abs((long)y()) > 0.001;
 }
 
+void VertexGraphicsItem::markSearch(bool value)
+{
+    vertex->color = value ? vertex_color::gray : vertex_color::white;
+    update();
+}
+
 void VertexGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+    switch (vertex->color) {
+    case vertex_color::white:
+        setBrush(QBrush(QColor(120, 150, 130)));
+        break;
+    case vertex_color::gray:
+        setBrush(QBrush(QColor(90, 100, 80)));
+        break;
+    case vertex_color::black:
+        setBrush(QBrush(QColor(20, 50, 30)));
+        break;
+    }
+
     QGraphicsEllipseItem::paint(painter, option, widget);
 
-//    QGraphicsTextItem text{QString::number(vertex->value)};
     QGraphicsTextItem text{};
     text.setHtml(QString("<span style='font-size: 16px; font-weight: bold; color: white'>%1</span>").arg(vertex->value));
     text.setFlag(QGraphicsItem::ItemIsSelectable, false);

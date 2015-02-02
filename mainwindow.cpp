@@ -13,16 +13,7 @@
 #include "ui_mainwindow.h"
 #include "gui/vertex_graphics_item.h"
 #include "gui/edge_graphics_item.h"
-
-static QColor randomColor()
-{
-//    auto r = 100 + rand() % 100;
-//    auto g = 100 + rand() % 100;
-//    auto b = 100 + rand() % 100;
-
-    return QColor(120, 150, 130);
-//    return QColor(r, g, b);
-}
+#include "lib/bfs.hpp"
 
 MainWindow::MainWindow(Graph *graph, QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow), graph_(graph)
@@ -56,14 +47,12 @@ void MainWindow::reloadModel()
     vertices_.clear();
     scene->clear();
 
-
     std::unordered_map<Vertex *, VertexGraphicsItem *> vgi_map;
 
     int i = 0;
     for (std::unique_ptr<Vertex> &v : graph_->list) {
         auto vgi = new VertexGraphicsItem(v.get());
 
-        vgi->setBrush(QBrush(randomColor()));
         if (!vgi->hasCoordinates()) {
             vgi->setCoordinates(80 * (i / 5 + 1) * std::cos(i),
                                 80 * (i / 5 + 1) * std::sin(i));
@@ -101,8 +90,12 @@ void MainWindow::keyReleaseEvent(QKeyEvent *e)
     } else if (e->key() == Qt::Key_D) {
         delete_selection();
         reloadModel();
-    } else if (e->key() == Qt::Key_S) {
-        toggleSearch();
+    } else if (e->key() == Qt::Key_F) {
+        searchToggle(true);
+    } else if (e->key() == Qt::Key_T) {
+        searchToggle(false);
+    } else if (e->key() == Qt::Key_N) {
+        searchStep();
     }
 }
 
@@ -115,6 +108,9 @@ void MainWindow::delete_selection()
             if (selectedVertex_ == vgi) {
                 selectedVertex_ = nullptr;
             }
+
+            // TODO - check where else this needs to be done
+            if (vgi == selectedVertex_) selectedVertex_ = nullptr;
 
             graph_->removeVertex(vgi->vertex);
         } else if (EdgeGraphicsItem *egi = dynamic_cast<EdgeGraphicsItem *>(selectedItem)) {
@@ -134,7 +130,6 @@ void MainWindow::on_addVertex_clicked()
     auto v = graph_->add_vertex();
 
     auto vgi = new VertexGraphicsItem(v);
-    vgi->setBrush(QBrush(randomColor()));
 
     auto pos = ui->graphicsView->mapToScene(mapFromGlobal(QCursor::pos()));
     vgi->setCoordinates(pos.x(), pos.y());
@@ -145,15 +140,12 @@ void MainWindow::on_addVertex_clicked()
 
 void MainWindow::on_addEdge_clicked()
 {
-    if (scene->selectedItems().size() > 0) {
-        VertexGraphicsItem* current = dynamic_cast<VertexGraphicsItem *>(scene->selectedItems().at(0));
-
-        if (!current) return;
-
+    VertexGraphicsItem* current = selectedVertex();
+    if (current) {
         // If we already had one selected, revert the selection color
         if (selectedVertex_) {
             if (current != selectedVertex_) {
-                selectedVertex_->setBrush(QBrush(randomColor()));
+                selectedVertex_->vertex->color = vertex_color::white;
 
                 graph_->connect(current->value(), selectedVertex_->value());
                 reloadModel();
@@ -163,7 +155,8 @@ void MainWindow::on_addEdge_clicked()
             }
         } else {
             selectedVertex_ = static_cast<VertexGraphicsItem *>(scene->selectedItems().at(0));
-            selectedVertex_->setBrush(QBrush(QColor(0, 0, 0)));
+            selectedVertex_->vertex->color = vertex_color::gray;
+            selectedVertex_->update();
         }
     }
 }
@@ -173,16 +166,20 @@ void MainWindow::graphConnect(VertexGraphicsItem *v1, VertexGraphicsItem *v2)
     auto edge = new EdgeGraphicsItem(v1, v2);
     scene->addItem(edge);
 
-    //    graph_->connect(v1->vertex->value, v2->vertex->value);
     v1->edges.push_back(edge);
     v2->edges.push_back(edge);
 }
 
-void MainWindow::toggleSearch()
+void MainWindow::searchToggle(bool isStart) // true for start vertex, false for end vertex
 {
     VertexGraphicsItem* current = selectedVertex();
     if (current) {
-
+        if (isStart) {
+            graph_->set_start(current->vertex);
+        } else {
+            graph_->set_end(current->vertex);
+        }
+        reloadModel();
     } else {
         QMessageBox box;
         box.setText("Select a vertex to begin search.");
@@ -190,10 +187,19 @@ void MainWindow::toggleSearch()
     }
 }
 
+void MainWindow::searchStep()
+{
+    if (graph_->search_ready()) {
+//        static BFS bfs = BFS(*graph_, graph_->start, graph_->end);
+//        bfs.step();
+    }
+}
+
 /// Returns a selected vertex if there is one, otherwise nullptr.
 VertexGraphicsItem *MainWindow::selectedVertex()
 {
     VertexGraphicsItem* current = nullptr;
+
     if (scene->selectedItems().size() > 0) {
         current = dynamic_cast<VertexGraphicsItem*>(scene->selectedItems().at(0));
     }

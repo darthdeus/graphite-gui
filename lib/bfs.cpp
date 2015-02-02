@@ -1,13 +1,12 @@
 #include <queue>
 #include <iostream>
 
+#include "lib/vertex.hpp"
 #include "lib/graph.hpp"
 #include "lib/bfs.hpp"
 
 using std::cout;
 using std::endl;
-
-enum class vertex_color { white, gray, black };
 
 class graph_events
 {
@@ -35,15 +34,17 @@ static bool is_white(Vertex *v) { return ((color *)v->metadata) == &white; }
 // static bool is_gray(vertex* v) { return ((color*)v->metadata) == &gray; }
 static bool is_black(Vertex *v) { return ((color *)v->metadata) == &black; }
 
-BFS::BFS(Graph &g, Vertex *start, Vertex *end) : g(g), start(start), end(end)
+BFS::BFS(Graph &g, Vertex* start, Vertex* end) : g(g), start_(start), end_(end) { }
+
+void BFS::start()
 {
     for (auto &v : g.list) {
         color_white(v.get());
     }
 
-    cout << "BFS start " << start->value << endl;
+    cout << "BFS start " << start_->value << endl;
 
-    for (Edge &e : start->edges) {
+    for (Edge &e : start_->edges) {
         auto v = e.to;
 
         cout << "pushing " << v->value << endl;
@@ -51,7 +52,7 @@ BFS::BFS(Graph &g, Vertex *start, Vertex *end) : g(g), start(start), end(end)
         color_gray(v);
     }
 
-    color_black(start);
+    color_black(start_);
 }
 
 int BFS::step()
@@ -64,7 +65,7 @@ int BFS::step()
             return -1;
 
         cout << "processing " << v->value << endl;
-        if (v == end) {
+        if (v == end_) {
             return v->value;
         }
 

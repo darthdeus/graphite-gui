@@ -18,10 +18,19 @@ class Graph {
 
   adjacency_list list;
 
+  void set_start(Vertex* v);
+  void set_end(Vertex* v);
+  Vertex* start() const;
+  Vertex* end() const;
+  bool search_ready() const;
+
   void clear_metadata();
  private:
   // Try to find a vertex in the graph, otherwise return nullptr.
   Vertex* find(int n) const;
+
+  Vertex* start_;
+  Vertex* end_;
 };
 
 #endif

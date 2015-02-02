@@ -26,12 +26,12 @@ public:
     void clearEdges();
 
     void setCoordinates(float x, float y);
-    void setColor(QColor color);
 
     Vertex* vertex;
     int value() const;
     bool hasCoordinates() const;
 
+    void markSearch(bool);
 
 
     // QGraphicsItem interface

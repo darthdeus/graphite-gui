@@ -11,12 +11,13 @@ class BFS {
 
   std::queue<Vertex*> queue;
   Graph& g;
-  Vertex* start;
-  Vertex* end;
 
+  void start();
   int step();
 
  private:
+  Vertex* start_;
+  Vertex* end_;
 };
 
 #endif

@@ -75,9 +75,9 @@ bool Graph::is_connected(int vn1, int vn2) const
     }
 
     auto p = [v2](Edge &e) { return e.to == v2; };
-    auto found = std::find_if(begin(v1->edges), end(v1->edges), p);
+    auto found = std::find_if(begin(v1->edges), std::end(v1->edges), p);
 
-    return found != end(v1->edges);
+    return found != std::end(v1->edges);
 }
 
 void Graph::removeVertex(Vertex *v)
@@ -92,6 +92,31 @@ void Graph::removeVertex(Vertex *v)
     });
 
     qDebug() << "Size after removal:" << list.size();
+}
+
+void Graph::set_start(Vertex *v) {
+    if (start_) start_->color = vertex_color::white;
+    start_ = v;
+    v->color = vertex_color::gray;
+}
+
+void Graph::set_end(Vertex *v) {
+    if (end_) end_->color = vertex_color::white;
+    end_ = v;
+    v->color = vertex_color::gray;
+}
+
+Vertex *Graph::start() const {
+    return end_;
+}
+
+Vertex *Graph::end() const {
+    return start_;
+}
+
+bool Graph::search_ready() const
+{
+    return start_ && end_;
 }
 
 Vertex *Graph::find(int v) const

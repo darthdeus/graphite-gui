@@ -8,9 +8,11 @@
 
 #include "lib/edge.hpp"
 
+enum class vertex_color { white, gray, black };
+
 class Vertex {
  public:
-  explicit Vertex(int v) : value(v), x(0), y(0) {}
+  explicit Vertex(int v) : value(v), x(0), y(0), color(vertex_color::white) {}
 
   Vertex(const Vertex& v) = delete;
   Vertex& operator=(const Vertex& v) = delete;
@@ -22,7 +24,7 @@ class Vertex {
   float x;
   float y;
 
-  QColor color;
+  vertex_color color;
 
   void* metadata;
 };
