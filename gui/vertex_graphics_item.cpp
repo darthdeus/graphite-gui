@@ -28,7 +28,6 @@ VertexGraphicsItem::VertexGraphicsItem(Vertex *vertex, QGraphicsItem *parent)
 
     setX(vertex->x);
     setY(vertex->y);
-    //    childItems().append();
 }
 
 QVariant VertexGraphicsItem::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant &value)
@@ -45,7 +44,6 @@ void VertexGraphicsItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     vertex->x = x();
     vertex->y = y();
     repaintEdges();
-    qDebug() << "Released" << value();
 }
 
 void VertexGraphicsItem::repaintEdges()
