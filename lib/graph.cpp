@@ -114,8 +114,7 @@ Vertex *Graph::end() const {
     return start_;
 }
 
-bool Graph::search_ready() const
-{
+bool Graph::search_ready() const {
     return start_ && end_;
 }
 

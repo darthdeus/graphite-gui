@@ -25,6 +25,7 @@ class Vertex {
   float y;
 
   vertex_color color;
+  bool selected = false;
 
   void* metadata;
 };

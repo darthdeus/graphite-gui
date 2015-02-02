@@ -32,6 +32,8 @@ public:
     bool hasCoordinates() const;
 
     void markSearch(bool);
+    // Since `setSelected` isn't virtual, this is a simple hack to work around it.
+    void selected(bool);
 
 
     // QGraphicsItem interface

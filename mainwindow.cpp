@@ -145,7 +145,8 @@ void MainWindow::on_addEdge_clicked()
         // If we already had one selected, revert the selection color
         if (selectedVertex_) {
             if (current != selectedVertex_) {
-                selectedVertex_->vertex->color = vertex_color::white;
+                qDebug() << "Deselecting vertex" << selectedVertex_->value();
+                selectedVertex_->selected(false);
 
                 graph_->connect(current->value(), selectedVertex_->value());
                 reloadModel();
@@ -155,7 +156,7 @@ void MainWindow::on_addEdge_clicked()
             }
         } else {
             selectedVertex_ = static_cast<VertexGraphicsItem *>(scene->selectedItems().at(0));
-            selectedVertex_->vertex->color = vertex_color::gray;
+            selectedVertex_->selected(true);
             selectedVertex_->update();
         }
     }
@@ -179,7 +180,9 @@ void MainWindow::searchToggle(bool isStart) // true for start vertex, false for 
         } else {
             graph_->set_end(current->vertex);
         }
-        reloadModel();
+//        current->update();
+        scene->update();
+//        reloadModel();
     } else {
         QMessageBox box;
         box.setText("Select a vertex to begin search.");

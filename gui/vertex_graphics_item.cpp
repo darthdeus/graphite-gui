@@ -71,23 +71,28 @@ bool VertexGraphicsItem::hasCoordinates() const
     return std::abs((long)x()) > 0.001 && std::abs((long)y()) > 0.001;
 }
 
-void VertexGraphicsItem::markSearch(bool value)
-{
+void VertexGraphicsItem::markSearch(bool value) {
     vertex->color = value ? vertex_color::gray : vertex_color::white;
     update();
 }
 
+void VertexGraphicsItem::selected(bool value) {
+    setSelected(value);
+    vertex->selected = value;
+}
+
 void VertexGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+    int opacity = vertex->selected ? 100 : 255;
     switch (vertex->color) {
     case vertex_color::white:
-        setBrush(QBrush(QColor(120, 150, 130)));
+        setBrush(QBrush(QColor(120, 150, 130, opacity)));
         break;
     case vertex_color::gray:
-        setBrush(QBrush(QColor(90, 100, 80)));
+        setBrush(QBrush(QColor(90, 100, 80, opacity)));
         break;
     case vertex_color::black:
-        setBrush(QBrush(QColor(20, 50, 30)));
+        setBrush(QBrush(QColor(20, 50, 30, opacity)));
         break;
     }
 
