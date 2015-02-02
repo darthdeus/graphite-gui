@@ -35,6 +35,8 @@ MainWindow::~MainWindow() { delete ui; }
 
 static bool reloading = false;
 
+/// Reloads the whole UI based on the model. Everything is first removed,
+/// and then re-created in the same coordinates, so that the user notice anything.
 void MainWindow::reloadModel()
 {
     qDebug() << "Reloading model";
@@ -49,6 +51,9 @@ void MainWindow::reloadModel()
             selectedVertexValue = selection->value();
         }
     }
+
+    // TODO - promyslet
+//    selectedVertex_ = nullptr;
 
     vertices_.clear();
     scene->clear();
@@ -97,7 +102,6 @@ void MainWindow::keyReleaseEvent(QKeyEvent *e)
         on_addEdge_clicked();
     } else if (e->key() == Qt::Key_D) {
         delete_selection();
-        reloadModel();
     } else if (e->key() == Qt::Key_F) {
         searchToggle(true);
     } else if (e->key() == Qt::Key_T) {
@@ -122,10 +126,8 @@ void MainWindow::delete_selection()
                 selectedVertex_ = nullptr;
             }
 
-            // TODO - check where else this needs to be done
-            if (vgi == selectedVertex_) selectedVertex_ = nullptr;
-
             graph_->removeVertex(vgi->vertex);
+
         } else if (EdgeGraphicsItem *egi = dynamic_cast<EdgeGraphicsItem *>(selectedItem)) {
             auto from = egi->from;
             auto to = egi->to;
@@ -136,6 +138,8 @@ void MainWindow::delete_selection()
             qDebug() << "Trying to delete something unknown";
         }
     }
+
+    reloadModel();
 }
 
 void MainWindow::on_addVertex_clicked()
@@ -204,7 +208,7 @@ void MainWindow::searchStep()
 }
 
 /// Returns a selected vertex if there is one, otherwise nullptr.
-VertexGraphicsItem *MainWindow::selectedVertex() const
+VertexGraphicsItem* MainWindow::selectedVertex() const
 {
     VertexGraphicsItem* current = nullptr;
 

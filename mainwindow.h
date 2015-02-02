@@ -39,14 +39,13 @@ private:
     void searchStep();
 
     Ui::MainWindow *ui;
-    QGraphicsLineItem *arrow;
     QGraphicsScene *scene;
     BFS* bfs_ = nullptr;
 
     Graph* graph_;
     std::vector<VertexGraphicsItem*> vertices_;
 
-    // Used for adding an edge, should be always cleared
+    /// Used for adding an edge, should be always nullified afterwards
     VertexGraphicsItem* selectedVertex_ = nullptr;
 };
 
