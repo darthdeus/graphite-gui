@@ -122,8 +122,8 @@ void MainWindow::delete_selection()
         QGraphicsItem *selectedItem = scene->selectedItems().at(0);
 
         if (VertexGraphicsItem *vgi = dynamic_cast<VertexGraphicsItem *>(selectedItem)) {
-            if (selectedVertex_ == vgi) {
-                selectedVertex_ = nullptr;
+            if (connectionVertex_ == vgi->value()) {
+                connectionVertex_ = -1;
             }
 
             graph_->removeVertex(vgi->vertex);
@@ -157,21 +157,24 @@ void MainWindow::on_addEdge_clicked()
     VertexGraphicsItem* current = selectedVertex();
     if (current) {
         // If we already had one selected, revert the selection color
-        if (selectedVertex_) {
-            if (current != selectedVertex_) {
-                qDebug() << "Deselecting vertex" << selectedVertex_->value();
-                selectedVertex_->selected(false);
+        if (connectionVertex_ != -1) {
+            if (current->value() != connectionVertex_) {
+                for	(VertexGraphicsItem* vgi : vertices_) {
+                    if (vgi->value() == connectionVertex_) {
+                        vgi->selected(false);
+                    }
+                }
 
-                graph_->connect(current->value(), selectedVertex_->value());
-                reloadModel();
+                graph_->connect(current->value(), connectionVertex_);
 
                 // Reset the selection after we connect the vertices
-                selectedVertex_ = nullptr;
+                connectionVertex_ = -1;
+                reloadModel();
             }
         } else {
-            selectedVertex_ = static_cast<VertexGraphicsItem *>(scene->selectedItems().at(0));
-            selectedVertex_->selected(true);
-            selectedVertex_->update();
+            current->selected(true);
+            connectionVertex_ = current->value();
+            reloadModel();
         }
     }
 }
@@ -186,9 +189,9 @@ void MainWindow::searchToggle(bool isStart)
         } else {
             graph_->set_end(current->vertex);
         }
-//        current->update();
-        scene->update();
-//        reloadModel();
+
+//        scene->update();
+        reloadModel();
 
     } else {
         QMessageBox box;

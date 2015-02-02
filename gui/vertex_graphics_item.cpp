@@ -45,6 +45,7 @@ void VertexGraphicsItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     vertex->x = x();
     vertex->y = y();
     repaintEdges();
+    qDebug() << "Released" << value();
 }
 
 void VertexGraphicsItem::repaintEdges()

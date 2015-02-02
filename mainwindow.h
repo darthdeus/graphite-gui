@@ -46,7 +46,7 @@ private:
     std::vector<VertexGraphicsItem*> vertices_;
 
     /// Used for adding an edge, should be always nullified afterwards
-    VertexGraphicsItem* selectedVertex_ = nullptr;
+    int connectionVertex_ = -1;
 };
 
 #endif // MAINWINDOW_H
