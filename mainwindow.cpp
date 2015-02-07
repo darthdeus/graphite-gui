@@ -15,7 +15,7 @@
 #include "gui/vertex_graphics_item.h"
 #include "gui/edge_graphics_item.h"
 #include "lib/bfs.hpp"
-
+#include "lib/logger.hpp"
 
 MainWindow::MainWindow(Graph *graph, QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow), graph_(graph)
@@ -27,6 +27,8 @@ MainWindow::MainWindow(Graph *graph, QWidget *parent)
     ui->graphicsView->setScene(scene);
     ui->graphicsView->setRenderHints(QPainter::Antialiasing);
     ui->graphicsView->setDragMode(QGraphicsView::ScrollHandDrag);
+
+    global_logger_logView_ = ui->txtLogView;
 
     reloadModel();
 }
@@ -114,6 +116,8 @@ void MainWindow::keyReleaseEvent(QKeyEvent *e)
         graph_->clear_metadata();
         scene->update();
     }
+
+    log_event("key pressed");
 }
 
 void MainWindow::delete_selection()

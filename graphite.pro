@@ -15,6 +15,7 @@ TEMPLATE = app
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
+    lib/logger.cpp \
     lib/bfs.cpp \
     lib/dfs.cpp \
     lib/edge.cpp \
@@ -26,6 +27,7 @@ SOURCES += \
 
 HEADERS  += \
     mainwindow.h \
+    lib/logger.hpp \
     lib/dfs.hpp \
     lib/edge.hpp \
     lib/graph.hpp \

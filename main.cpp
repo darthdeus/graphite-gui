@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <vector>
 
+#include "lib/logger.hpp"
 #include "lib/graph.hpp"
 #include "mainwindow.h"
 
@@ -36,7 +37,7 @@ int main(int argc, char *argv[])
 
     qDebug() << "is conn?" << g->is_connected(v1->value, v2->value);
 
-    MainWindow w(g);
+    MainWindow w{g};
 
     w.show();
 

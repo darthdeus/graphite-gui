@@ -29,6 +29,8 @@ public:
     void delete_selection();
 
     VertexGraphicsItem *selectedVertex() const;
+    Ui::MainWindow *ui;
+
 private slots:
 
 private:
@@ -38,7 +40,6 @@ private:
     void searchToggle(bool start);
     void searchStep();
 
-    Ui::MainWindow *ui;
     QGraphicsScene *scene;
     BFS* bfs_ = nullptr;
 
