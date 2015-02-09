@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <list>
+#include <ostream>
 #include "vertex.hpp"
 
 class Graph {
@@ -32,6 +33,8 @@ class Graph {
   Vertex* start_;
   Vertex* end_;
 };
+
+std::ostream& operator<<(std::ostream& os, Graph& g);
 
 #endif
 

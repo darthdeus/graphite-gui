@@ -4,11 +4,14 @@
 #include <QKeyEvent>
 #include <QDebug>
 #include <QMessageBox>
+#include <QFileDialog>
 
 #include <cassert>
 #include <cmath>
 #include <vector>
 #include <unordered_map>
+#include <fstream>
+#include <string>
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -111,10 +114,11 @@ void MainWindow::keyReleaseEvent(QKeyEvent *e)
     } else if (e->key() == Qt::Key_N) {
         searchStep();
     } else if (e->key() == Qt::Key_R) {
-//        resetSearch();
-        bfs_ = new BFS(*graph_, graph_->start(), graph_->end());
-        graph_->clear_metadata();
-        scene->update();
+        if (graph_->start() && graph_->end()) {
+            bfs_ = new BFS(*graph_, graph_->start(), graph_->end());
+            graph_->clear_metadata();
+            scene->update();
+        }
     }
 
     log_event("key pressed");
@@ -127,8 +131,7 @@ void MainWindow::delete_selection()
 
         if (VertexGraphicsItem *vgi = dynamic_cast<VertexGraphicsItem *>(selectedItem)) {
             if (connectionVertex_ == vgi->value()) {
-                connectionVertex_ = -1;
-            }
+                connectionVertex_ = -1; }
 
             graph_->removeVertex(vgi->vertex);
 
@@ -137,10 +140,7 @@ void MainWindow::delete_selection()
             auto to = egi->to;
 
             graph_->disconnect(from->vertex->value, to->vertex->value);
-
-        } else {
-            qDebug() << "Trying to delete something unknown";
-        }
+        } else { qDebug() << "Trying to delete something unknown"; }
     }
 
     reloadModel();
@@ -165,9 +165,7 @@ void MainWindow::on_addEdge_clicked()
             if (current->value() != connectionVertex_) {
                 for	(VertexGraphicsItem* vgi : vertices_) {
                     if (vgi->value() == connectionVertex_) {
-                        vgi->selected(false);
-                    }
-                }
+                        vgi->selected(false); } }
 
                 graph_->connect(current->value(), connectionVertex_);
 
@@ -191,10 +189,8 @@ void MainWindow::searchToggle(bool isStart)
         if (isStart) {
             graph_->set_start(current->vertex);
         } else {
-            graph_->set_end(current->vertex);
-        }
+            graph_->set_end(current->vertex); }
 
-//        scene->update();
         reloadModel();
 
     } else {
@@ -207,8 +203,8 @@ void MainWindow::searchToggle(bool isStart)
 void MainWindow::searchStep()
 {
     if (graph_->search_ready() && bfs_) {
-        scene->update();
         qDebug () << "Stepping search" << bfs_->step();
+        reloadModel();
     } else {
         qDebug() << "Search isn't ready yet.";
     }
@@ -224,6 +220,32 @@ VertexGraphicsItem* MainWindow::selectedVertex() const
     }
 
     return current;
+}
+
+void MainWindow::on_actionNew_clicked()
+{
+    log_event("New");
+}
+
+void MainWindow::on_actionSave_clicked()
+{
+    log_event("Save");
+}
+
+void MainWindow::on_actionSaveAs_clicked()
+{
+    log_event("Save as");
+
+    std::string file = QFileDialog::getSaveFileName().toStdString();
+
+    std::ofstream fs(file);
+    fs << *graph_;
+    log_event("Graph saved");
+}
+
+void MainWindow::on_actionOpen_clicked()
+{
+    log_event("Open");
 }
 
 /// Used to add a graphical edge between two vertices. Only ever call this from reloadModel.

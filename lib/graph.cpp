@@ -145,3 +145,19 @@ void Graph::clear_metadata()
         v->metadata = nullptr;
     }
 }
+
+std::ostream& operator<<(std::ostream& os, Graph& g) {
+    std::size_t size = g.list.size();
+    os << size << std::endl;
+
+    for (auto& vertex: g.list) {
+        qDebug() << "saving" << vertex->value << " = " << vertex.get()->value;
+        os << vertex->value << ":";
+
+        for (auto edge: vertex->edges) {
+            os << edge.to->value << " ";
+        }
+        os << std::endl;
+    }
+    os << std::endl;
+}

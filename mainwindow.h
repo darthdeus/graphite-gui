@@ -31,7 +31,11 @@ public:
     VertexGraphicsItem *selectedVertex() const;
     Ui::MainWindow *ui;
 
-private slots:
+public slots:
+    void on_actionNew_clicked();
+    void on_actionSave_clicked();
+    void on_actionSaveAs_clicked();
+    void on_actionOpen_clicked();
 
 private:
     void on_addVertex_clicked();
