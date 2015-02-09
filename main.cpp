@@ -11,16 +11,6 @@
 
 int main(int argc, char *argv[])
 {
-    //    qWarning("Hello console!");
-
-    //    QString msg("This is a qt string");
-    //    int x = 20;
-
-    //    QTextStream out(stdout);
-    //    out.setFieldWidth(20);
-    //    out.setPadChar('*');
-    //    out << msg << x << "hotov";
-
     QApplication a(argc, argv);
 
     Graph *g = new Graph();
