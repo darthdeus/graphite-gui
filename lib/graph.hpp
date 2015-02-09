@@ -26,12 +26,16 @@ class Graph {
   bool search_ready() const;
 
   void clear_metadata();
- private:
+
+  static Graph* parse_stream(std::istream& is);
+private:
   // Try to find a vertex in the graph, otherwise return nullptr.
   Vertex* find(int n) const;
+  Vertex *add_vertex(int n);
 
   Vertex* start_;
   Vertex* end_;
+  int vertex_counter_;
 };
 
 std::ostream& operator<<(std::ostream& os, Graph& g);

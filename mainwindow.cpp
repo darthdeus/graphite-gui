@@ -225,6 +225,9 @@ VertexGraphicsItem* MainWindow::selectedVertex() const
 void MainWindow::on_actionNew_clicked()
 {
     log_event("New");
+    graph_ = new Graph();
+    connectionVertex_ = -1;
+    reloadModel();
 }
 
 void MainWindow::on_actionSave_clicked()
@@ -246,6 +249,14 @@ void MainWindow::on_actionSaveAs_clicked()
 void MainWindow::on_actionOpen_clicked()
 {
     log_event("Open");
+
+    std::string file = QFileDialog::getOpenFileName().toStdString();
+
+    // TODO - nastavit vsem streamum aby vyhazovali vyjimky
+    std::ifstream fs(file);
+    graph_ = Graph::parse_stream(fs);
+    connectionVertex_ = -1;
+    reloadModel();
 }
 
 /// Used to add a graphical edge between two vertices. Only ever call this from reloadModel.

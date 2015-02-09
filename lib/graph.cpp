@@ -6,28 +6,28 @@
 #include "lib/graph.hpp"
 #include "lib/edge.hpp"
 
-static void vertex_not_found(const char *f, int vn1, int vn2)
-{
+static void vertex_not_found(const char *f, int vn1, int vn2) {
+    // TODO - better logging
     std::cout << f << ": vertex not found " << vn1 << " --> " << vn2
               << std::endl;
 }
 
-Vertex *Graph::add_vertex()
-{
-    static int counter = 0;
-
-    counter++;
-
-    auto found = find(counter);
+Vertex* Graph::add_vertex(int n) {
+    if (n > vertex_counter_) vertex_counter_ = n;
+    auto found = find(n);
 
     if (found) {
-        qDebug() << "Tried to add existing vertex" << counter;
+        qDebug() << "Tried to add existing vertex" << n;
         return &*found;
     } else {
-        list.push_back(std::unique_ptr<Vertex>(new Vertex(counter)));
-        qDebug() << "Added vertex" << counter;
+        qDebug() << "Added vertex" << n;
+        list.push_back(std::unique_ptr<Vertex>(new Vertex(n)));
         return list.back().get();
     }
+}
+
+Vertex* Graph::add_vertex() {
+    return add_vertex(++vertex_counter_);
 }
 
 void Graph::connect(int vn1, int vn2)
@@ -146,18 +146,59 @@ void Graph::clear_metadata()
     }
 }
 
+Graph* Graph::parse_stream(std::istream& is)
+{
+    int size;
+    is >> size;
+
+    Graph* g = new Graph;
+    g->vertex_counter_ = 0;
+
+    // Napred musime vytvorit vrcholy, aby je bylo mozne pospojovat
+    for	(int i = 0; i < size; i++) {
+        int n;
+        is >> n;
+        auto v = g->add_vertex(n);
+        is >> v->x;
+        is >> v->y;
+    }
+
+    for	(int i = 0; i < size; i++) {
+        int vertex, edge_count;
+        is >> vertex;
+        is.get();
+        is >> edge_count;
+        is.get();
+
+        int edge_to;
+        for (int j = 0; j < edge_count; j++) {
+            is >> edge_to;
+            qDebug() << "trying to connect" << vertex << edge_to;
+            g->connect(vertex, edge_to);
+        }
+    }
+
+    return g;
+}
+
 std::ostream& operator<<(std::ostream& os, Graph& g) {
     std::size_t size = g.list.size();
     os << size << std::endl;
 
     for (auto& vertex: g.list) {
+       os << vertex->value << " " << vertex->x << " " << vertex->y << std::endl;
+    }
+    os << std::endl;
+
+    for (auto& vertex: g.list) {
         qDebug() << "saving" << vertex->value << " = " << vertex.get()->value;
         os << vertex->value << ":";
 
+        os << vertex->edges.size() << ":";
         for (auto edge: vertex->edges) {
             os << edge.to->value << " ";
         }
         os << std::endl;
     }
-    os << std::endl;
+    return os;
 }
