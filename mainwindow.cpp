@@ -236,28 +236,30 @@ void MainWindow::on_actionSave_clicked()
 
 void MainWindow::on_actionSaveAs_clicked()
 {
-    std::string file = QFileDialog::getSaveFileName().toStdString();
+    auto file = QFileDialog::getSaveFileName();
 
-    std::ofstream fs(file);
-    fs << *graph_;
-    log_event("Graph saved");
+    if (!file.isNull()) {
+        std::ofstream fs(file.toStdString());
+        fs << *graph_;
+        log_event("Graph saved");
+    } else {
+        log_event("Dialog canceled"); }
 }
 
 void MainWindow::on_actionOpen_clicked()
 {
-    auto s = QFileDialog::getOpenFileName();
+    // TODO - nastavit vsem streamum aby vyhazovaly vyjimky
+    auto file = QFileDialog::getOpenFileName();
 
-    if (!s.isNull()) {
-        // TODO - nastavit vsem streamum aby vyhazovaly vyjimky
-        std::ifstream fs(s.toStdString());
+    if (!file.isNull()) {
+        std::ifstream fs(file.toStdString());
         graph_ = Graph::parse_stream(fs);
         connectionVertex_ = -1;
         reloadModel();
 
         log_event("Graph loaded");
     } else {
-        log_event("Dialog canceled");
-    }
+        log_event("Dialog canceled"); }
 }
 
 /// Used to add a graphical edge between two vertices. Only ever call this from reloadModel.
