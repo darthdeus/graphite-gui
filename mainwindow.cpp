@@ -120,8 +120,6 @@ void MainWindow::keyReleaseEvent(QKeyEvent *e)
             scene->update();
         }
     }
-
-    log_event("key pressed");
 }
 
 void MainWindow::delete_selection()
@@ -172,6 +170,7 @@ void MainWindow::on_addEdge_clicked()
                 // Reset the selection after we connect the vertices
                 connectionVertex_ = -1;
                 reloadModel();
+                log_event("Edge added");
             }
         } else {
             current->selected(true);
@@ -224,7 +223,7 @@ VertexGraphicsItem* MainWindow::selectedVertex() const
 
 void MainWindow::on_actionNew_clicked()
 {
-    log_event("New");
+    log_event("New graph");
     graph_ = new Graph();
     connectionVertex_ = -1;
     reloadModel();
@@ -237,8 +236,6 @@ void MainWindow::on_actionSave_clicked()
 
 void MainWindow::on_actionSaveAs_clicked()
 {
-    log_event("Save as");
-
     std::string file = QFileDialog::getSaveFileName().toStdString();
 
     std::ofstream fs(file);
@@ -248,15 +245,19 @@ void MainWindow::on_actionSaveAs_clicked()
 
 void MainWindow::on_actionOpen_clicked()
 {
-    log_event("Open");
+    auto s = QFileDialog::getOpenFileName();
 
-    std::string file = QFileDialog::getOpenFileName().toStdString();
+    if (!s.isNull()) {
+        // TODO - nastavit vsem streamum aby vyhazovaly vyjimky
+        std::ifstream fs(s.toStdString());
+        graph_ = Graph::parse_stream(fs);
+        connectionVertex_ = -1;
+        reloadModel();
 
-    // TODO - nastavit vsem streamum aby vyhazovali vyjimky
-    std::ifstream fs(file);
-    graph_ = Graph::parse_stream(fs);
-    connectionVertex_ = -1;
-    reloadModel();
+        log_event("Graph loaded");
+    } else {
+        log_event("Dialog canceled");
+    }
 }
 
 /// Used to add a graphical edge between two vertices. Only ever call this from reloadModel.

@@ -16,12 +16,6 @@ public:
     void edge_changed(Edge *e);
 };
 
-struct color
-{
-    vertex_color c;
-    explicit color(vertex_color c) : c(c) {}
-};
-
 BFS::BFS(Graph &g, Vertex* s, Vertex* e) : g(g), start_(s), end_(e) {
     start();
 }
