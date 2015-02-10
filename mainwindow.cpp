@@ -185,6 +185,7 @@ void MainWindow::searchToggle(bool isStart)
 {
     VertexGraphicsItem* current = selectedVertex();
     if (current) {
+        log_event(QString("searchToggle(%1) on vertex %2").arg(isStart).arg(current->vertex->value).toStdString().c_str());
         if (isStart) {
             graph_->set_start(current->vertex);
         } else {

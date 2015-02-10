@@ -116,11 +116,11 @@ void Graph::set_end(Vertex *v) {
 }
 
 Vertex *Graph::start() const {
-    return end_;
+    return start_;
 }
 
 Vertex *Graph::end() const {
-    return start_;
+    return end_;
 }
 
 bool Graph::search_ready() const {
