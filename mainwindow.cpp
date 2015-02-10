@@ -115,9 +115,9 @@ void MainWindow::keyReleaseEvent(QKeyEvent *e)
         searchStep();
     } else if (e->key() == Qt::Key_R) {
         if (graph_->start() && graph_->end()) {
-            bfs_ = new BFS(*graph_, graph_->start(), graph_->end());
             graph_->clear_metadata();
-            scene->update();
+            bfs_ = new BFS(*graph_, graph_->start(), graph_->end());
+            reloadModel();
         }
     }
 }
@@ -223,10 +223,10 @@ VertexGraphicsItem* MainWindow::selectedVertex() const
 
 void MainWindow::on_actionNew_clicked()
 {
-    log_event("New graph");
     graph_ = new Graph();
     connectionVertex_ = -1;
     reloadModel();
+    log_event("New graph");
 }
 
 void MainWindow::on_actionSave_clicked()
