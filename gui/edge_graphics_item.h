@@ -13,6 +13,10 @@ public:
     void updatePosition();
     VertexGraphicsItem* from;
     VertexGraphicsItem* to;
+
+    // QGraphicsItem interface
+public:
+    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 };
 
 #endif // EDGE_H

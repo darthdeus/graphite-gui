@@ -33,7 +33,7 @@ VertexGraphicsItem::VertexGraphicsItem(Vertex *vertex, QGraphicsItem *parent)
 QVariant VertexGraphicsItem::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant &value)
 {
     if (change == QGraphicsItem::ItemPositionChange) {
-        repaintEdges();
+        scene()->update();
     }
     return value;
 }
@@ -43,7 +43,7 @@ void VertexGraphicsItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     QGraphicsItem::mouseReleaseEvent(event);
     vertex->x = x();
     vertex->y = y();
-    repaintEdges();
+    scene()->invalidate();
 }
 
 void VertexGraphicsItem::repaintEdges()
