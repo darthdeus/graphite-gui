@@ -33,7 +33,8 @@ VertexGraphicsItem::VertexGraphicsItem(Vertex *vertex, QGraphicsItem *parent)
 QVariant VertexGraphicsItem::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant &value)
 {
     if (change == QGraphicsItem::ItemPositionChange) {
-        scene()->update();
+        // TODO - Z nejakeho duvodu tohle pada
+        //        scene()->update();
     }
     return value;
 }
