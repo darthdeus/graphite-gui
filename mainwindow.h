@@ -43,6 +43,8 @@ private:
     void graphConnect(VertexGraphicsItem* v1, VertexGraphicsItem* v2);
     void searchToggle(bool start);
     void searchStep();
+    void changeOrientation();
+    void printDebugInfo();
 
     QGraphicsScene *scene;
     BFS* bfs_ = nullptr;

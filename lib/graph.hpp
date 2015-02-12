@@ -13,9 +13,18 @@ class Graph {
 
   Vertex* add_vertex();
   void connect(int v1, int v2);
+  void connect_oriented(int vn1, int vn2);
   void disconnect(int v1, int v2);
+  void disconnect_oriented(int vn1, int vn2);
+
   bool is_connected(int v1, int v2) const;
   void removeVertex(Vertex* v);
+
+  /// Pro dva vrcholy prepina orientaci hrany, v nasledujicim poradi
+  /// v1 <-> v2
+  /// v1  -> v2
+  /// v1 <-  v2
+  void toggleEdge(int v1, int v2);
 
   adjacency_list list;
 

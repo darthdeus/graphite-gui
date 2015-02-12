@@ -12,6 +12,7 @@
 #include <unordered_map>
 #include <fstream>
 #include <string>
+#include <sstream>
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -30,6 +31,7 @@ MainWindow::MainWindow(Graph *graph, QWidget *parent)
     ui->graphicsView->setScene(scene);
     ui->graphicsView->setRenderHints(QPainter::Antialiasing);
     ui->graphicsView->setDragMode(QGraphicsView::ScrollHandDrag);
+    ui->graphicsView->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
 
     global_logger_logView_ = ui->txtLogView;
 
@@ -101,24 +103,30 @@ void MainWindow::reloadModel()
 
 void MainWindow::keyReleaseEvent(QKeyEvent *e)
 {
-    if (e->key() == Qt::Key_A) {
-        on_addVertex_clicked();
-    } else if (e->key() == Qt::Key_C) {
-        on_addEdge_clicked();
-    } else if (e->key() == Qt::Key_D) {
-        delete_selection();
-    } else if (e->key() == Qt::Key_F) {
-        searchToggle(true);
-    } else if (e->key() == Qt::Key_T) {
-        searchToggle(false);
-    } else if (e->key() == Qt::Key_N) {
-        searchStep();
-    } else if (e->key() == Qt::Key_R) {
+    switch (e->key()) {
+    case Qt::Key_A:
+        on_addVertex_clicked(); break;
+    case Qt::Key_C:
+        on_addEdge_clicked(); break;
+    case Qt::Key_D:
+        delete_selection(); break;
+    case Qt::Key_F:
+        searchToggle(true); break;
+    case Qt::Key_N:
+        searchStep(); break;
+    case Qt::Key_O:
+        changeOrientation(); break;
+    case Qt::Key_T:
+        searchToggle(false); break;
+    case Qt::Key_P:
+        printDebugInfo(); break;
+    case Qt::Key_R:
         if (graph_->start() && graph_->end()) {
             graph_->clear_metadata();
             bfs_ = new BFS(*graph_, graph_->start(), graph_->end());
             reloadModel();
         }
+        break;
     }
 }
 
@@ -208,6 +216,25 @@ void MainWindow::searchStep()
     } else {
         qDebug() << "Search isn't ready yet.";
     }
+}
+
+void MainWindow::changeOrientation()
+{
+    EdgeGraphicsItem* egi;
+    if (scene->selectedItems().size() > 0 && (egi = dynamic_cast<EdgeGraphicsItem*>(scene->selectedItems().at(0)))) {
+        graph_->toggleEdge(egi->from->value(), egi->to->value());
+        reloadModel();
+        log_event("Changed orientation");
+    } else {
+        log_event("Failed to change, it aint an edge");
+    }
+}
+
+void MainWindow::printDebugInfo()
+{
+    std::stringstream ss;
+    ss << *graph_;
+    qDebug() << ss.str().c_str();
 }
 
 /// Returns a selected vertex if there is one, otherwise nullptr.

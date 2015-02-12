@@ -42,16 +42,16 @@ void EdgeGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
     QPolygonF arrowHead;
     arrowHead.clear();
 
-    float arrowSize = 40;
+    float arrowSize = -40;
     double angle = std::acos(line.dx() / line.length());
 
     if (line.dy() >= 0) {
         angle = -angle;
     }
 
-    QPointF arrowP1 = line.p1() + QPointF(sin(angle + M_PI / 3) * arrowSize, cos(angle + M_PI / 3) * arrowSize);
-    QPointF arrowP2 = line.p1() + QPointF(sin(angle + M_PI - M_PI / 3) * arrowSize, cos(angle + M_PI - M_PI / 3) * arrowSize);
-    arrowHead << line.p1() << arrowP1 << arrowP2;
+    QPointF arrowP1 = line.p2() + QPointF(sin(angle + M_PI / 3) * arrowSize, cos(angle + M_PI / 3) * arrowSize);
+    QPointF arrowP2 = line.p2() + QPointF(sin(angle + M_PI - M_PI / 3) * arrowSize, cos(angle + M_PI - M_PI / 3) * arrowSize);
+    arrowHead << line.p2() << arrowP1 << arrowP2;
 
     pen.setWidth(1);
     painter->setPen(pen);

@@ -1,5 +1,6 @@
 #include <QDebug>
 #include <algorithm>
+#include <cassert>
 #include <memory>
 #include <iostream>
 
@@ -30,8 +31,12 @@ Vertex* Graph::add_vertex() {
     return add_vertex(++vertex_counter_);
 }
 
-void Graph::connect(int vn1, int vn2)
-{
+void Graph::connect(int vn1, int vn2) {
+    connect_oriented(vn1, vn2);
+    connect_oriented(vn2, vn1);
+}
+
+void Graph::connect_oriented(int vn1, int vn2) {
     auto v1 = find(vn1);
     auto v2 = find(vn2);
 
@@ -45,8 +50,12 @@ void Graph::connect(int vn1, int vn2)
     }
 }
 
-void Graph::disconnect(int vn1, int vn2)
-{
+void Graph::disconnect(int vn1, int vn2) {
+    disconnect_oriented(vn1, vn2);
+    disconnect_oriented(vn2, vn1);
+}
+
+void Graph::disconnect_oriented(int vn1, int vn2) {
     auto v1 = find(vn1);
     auto v2 = find(vn2);
 
@@ -56,9 +65,7 @@ void Graph::disconnect(int vn1, int vn2)
 
     if (is_connected(vn1, vn2)) {
         v1->edges.remove_if([vn2](Edge &e) { return e.to->value == vn2; });
-        v2->edges.remove_if([vn1](Edge &e) { return e.to->value == vn1; });
-
-        qDebug() << is_connected(vn1, vn2);
+        qDebug() << "Disconnected" << vn1 << vn2;
     } else {
         qDebug() << "Trying to disconnect vertices which aren't connected" << vn1 << vn2;
     }
@@ -92,6 +99,26 @@ void Graph::removeVertex(Vertex *v)
     });
 
     qDebug() << "Size after removal:" << list.size();
+}
+
+void Graph::toggleEdge(int vn1, int vn2)
+{
+    bool left = is_connected(vn1, vn2);
+    bool right = is_connected(vn2, vn1);
+
+    if (left && right) {
+        qDebug() << "toogle(left && right)";
+        disconnect_oriented(vn2, vn1);
+    } else if (left) {
+        qDebug() << "toogle(left)";
+        disconnect_oriented(vn1, vn2);
+        connect_oriented(vn2, vn1);
+    } else if (right) {
+        qDebug() << "toogle(right)";
+        connect_oriented(vn1, vn2);
+        assert(is_connected(vn1, vn2));
+        assert(is_connected(vn2, vn1));
+    }
 }
 
 void Graph::set_start(Vertex *v) {
