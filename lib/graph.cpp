@@ -46,7 +46,7 @@ void Graph::connect_oriented(int vn1, int vn2) {
         return;
     } else {
         v1->edges.emplace_back(v2, v1);
-        v2->edges.emplace_back(v1, v2);
+        qDebug() << "Connected" << vn1 << vn2;
     }
 }
 
