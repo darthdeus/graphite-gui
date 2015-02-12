@@ -109,15 +109,16 @@ void Graph::toggleEdge(int vn1, int vn2)
     if (left && right) {
         qDebug() << "toogle(left && right)";
         disconnect_oriented(vn2, vn1);
-    } else if (left) {
-        qDebug() << "toogle(left)";
-        disconnect_oriented(vn1, vn2);
+    } else if (vn1 < vn2) {
+        qDebug() << "toogle(left)" << vn1 << vn2 << (vn1 < vn2);
+
         connect_oriented(vn2, vn1);
-    } else if (right) {
-        qDebug() << "toogle(right)";
-        connect_oriented(vn1, vn2);
         assert(is_connected(vn1, vn2));
         assert(is_connected(vn2, vn1));
+    } else {
+        qDebug() << "toogle(left)" << vn1 << vn2 << (vn1 < vn2);
+        disconnect_oriented(vn1, vn2);
+        connect_oriented(vn2, vn1);
     }
 }
 
