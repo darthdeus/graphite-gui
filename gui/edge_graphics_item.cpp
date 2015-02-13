@@ -27,7 +27,6 @@ void EdgeGraphicsItem::updatePosition() {
     scene()->invalidate(rect);
 }
 
-
 void EdgeGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     QPen pen;
@@ -36,22 +35,41 @@ void EdgeGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
     setPen(pen);
 
     QLineF line(this->mapFromItem(from, center_, center_), this->mapFromItem(to, center_, center_));
-    setZValue(-1);
+//    setZValue(-1);
+    double angle = std::acos(line.dx() / line.length());
+
+
+    double radius = VertexGraphicsItem::GraphicSize / 2;
+    QPointF v1 = line.p2() - line.p1();
+    double ratio1 = radius / sqrt(v1.x() * v1.x() + v1.y() * v1.y());
+    line.setP2(line.p2() - v1*ratio1);
+
+    QPointF v2 = line.p1() - line.p2();
+    double ratio2 = radius / sqrt(v2.x() * v2.x() + v2.y() * v2.y());
+    line.setP1(line.p1() - v2*ratio2);
+
+    /// Protoze QT je hloupe a ma obracene osu X
+    double dy = -line.dy();
+    if (dy <= 0) {
+        angle = -angle;
+    }
+
     setLine(line);
 
     QPolygonF arrowHead;
     arrowHead.clear();
 
-    float arrowSize = -40;
-    double angle = std::acos(line.dx() / line.length());
 
-    if (line.dy() >= 0) {
-        angle = -angle;
-    }
+    /// Pro zjednoduseni abychom nemuseli resit otaceni uhlu
+    float arrowSize = -15;
 
-    QPointF arrowP1 = line.p2() + QPointF(sin(angle + M_PI / 3) * arrowSize, cos(angle + M_PI / 3) * arrowSize);
-    QPointF arrowP2 = line.p2() + QPointF(sin(angle + M_PI - M_PI / 3) * arrowSize, cos(angle + M_PI - M_PI / 3) * arrowSize);
+    double arrowAngle = 1 * M_PI / 3;
+
+    QPointF arrowP1 = line.p2() + QPointF(sin(angle + arrowAngle) * arrowSize, cos(angle + arrowAngle) * arrowSize);
+    QPointF arrowP2 = line.p2() + QPointF(sin(angle + M_PI - arrowAngle) * arrowSize, cos(angle + M_PI - arrowAngle) * arrowSize);
     arrowHead << line.p2() << arrowP1 << arrowP2;
+
+    qDebug() << arrowAngle << line.p1() << line.p2() << "\t" << (360 * angle / (2*M_PI)) << "\t" << line.dx() << "\t" << dy;
 
     pen.setWidth(1);
     painter->setPen(pen);
