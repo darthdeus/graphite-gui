@@ -33,18 +33,15 @@ VertexGraphicsItem::VertexGraphicsItem(Vertex *vertex, QGraphicsItem *parent)
 QVariant VertexGraphicsItem::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant &value)
 {
     if (change == QGraphicsItem::ItemPositionChange) {
-        // TODO - Z nejakeho duvodu tohle pada
-        //        scene()->update();
+        // aktualne neni potreba nic refreshovat
     }
     return value;
 }
 
-void VertexGraphicsItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
-{
+void VertexGraphicsItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
     QGraphicsItem::mouseReleaseEvent(event);
     vertex->x = x();
     vertex->y = y();
-//    scene()->invalidate();
 }
 
 void VertexGraphicsItem::repaintEdges()
@@ -105,8 +102,6 @@ void VertexGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem
 
     QGraphicsEllipseItem::paint(painter, option, widget);
 
-    QGraphicsTextItem text{};
-    text.setHtml(QString("<span style='font-size: 16px; font-weight: bold; color: white;'>%1</span>").arg(vertex->value));
-    text.setFlag(QGraphicsItem::ItemIsSelectable, false);
-    text.paint(painter, option, widget);
+    painter->setPen(QColor(Qt::white));
+    painter->drawText(this->boundingRect(), QString::number(vertex->value), QTextOption(Qt::AlignCenter));
 }

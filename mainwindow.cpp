@@ -93,7 +93,7 @@ void MainWindow::reloadModel()
 
         VertexGraphicsItem *vgi = vgi_map[vertex];
         for (Edge &e : vertex->edges) {
-            graphConnect(vgi, vgi_map[e.to]);
+            graphConnect(vgi, vgi_map[e.to], &e);
             vgi->repaintEdges();
         }
     }
@@ -291,11 +291,11 @@ void MainWindow::on_actionOpen_clicked()
 }
 
 /// Used to add a graphical edge between two vertices. Only ever call this from reloadModel.
-void MainWindow::graphConnect(VertexGraphicsItem *v1, VertexGraphicsItem *v2) {
+void MainWindow::graphConnect(VertexGraphicsItem *v1, VertexGraphicsItem *v2, Edge* edge) {
     assert(reloading);
-    auto edge = new EdgeGraphicsItem(v1, v2);
-    scene->addItem(edge);
+    auto egi = new EdgeGraphicsItem(v1, v2, edge);
+    scene->addItem(egi);
 
-    v1->edges.push_back(edge);
-    v2->edges.push_back(edge);
+    v1->edges.push_back(egi);
+    v2->edges.push_back(egi);
 }

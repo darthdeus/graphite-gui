@@ -40,7 +40,7 @@ public slots:
 private:
     void on_addVertex_clicked();
     void on_addEdge_clicked();
-    void graphConnect(VertexGraphicsItem* v1, VertexGraphicsItem* v2);
+    void graphConnect(VertexGraphicsItem* v1, VertexGraphicsItem* v2, Edge* edge);
     void searchToggle(bool start);
     void searchStep();
     void changeOrientation();

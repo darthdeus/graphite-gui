@@ -5,6 +5,7 @@
 #include <QPainter>
 #include <QDebug>
 #include <QSize>
+#include <QGraphicsDropShadowEffect>
 
 #include <cmath>
 
@@ -13,7 +14,7 @@
 
 static int center_ = VertexGraphicsItem::GraphicSize / 2;
 
-EdgeGraphicsItem::EdgeGraphicsItem(VertexGraphicsItem* from, VertexGraphicsItem* to): from(from), to(to)
+EdgeGraphicsItem::EdgeGraphicsItem(VertexGraphicsItem* from, VertexGraphicsItem* to, Edge* edge): from(from), to(to), edge(edge)
 {
     setFlag(GraphicsItemFlag::ItemIsSelectable);
 }
@@ -40,13 +41,15 @@ void EdgeGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
 
 
     double radius = VertexGraphicsItem::GraphicSize / 2;
-    QPointF v1 = line.p2() - line.p1();
+    QPointF v1 = line.p1() - line.p2();
     double ratio1 = radius / sqrt(v1.x() * v1.x() + v1.y() * v1.y());
-    line.setP2(line.p2() - v1*ratio1);
+    QPointF moved1 = line.p1() - v1*ratio1;
+    line.setP1(moved1);
 
-    QPointF v2 = line.p1() - line.p2();
+    QPointF v2 = line.p2() - line.p1();
     double ratio2 = radius / sqrt(v2.x() * v2.x() + v2.y() * v2.y());
-    line.setP1(line.p1() - v2*ratio2);
+    QPointF moved2 = line.p2() - v2*ratio2;
+    line.setP2(moved2);
 
     /// Protoze QT je hloupe a ma obracene osu X
     double dy = -line.dy();
@@ -69,12 +72,15 @@ void EdgeGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
     QPointF arrowP2 = line.p2() + QPointF(sin(angle + M_PI - arrowAngle) * arrowSize, cos(angle + M_PI - arrowAngle) * arrowSize);
     arrowHead << line.p2() << arrowP1 << arrowP2;
 
-//    qDebug() << arrowAngle << line.p1() << line.p2() << "\t" << (360 * angle / (2*M_PI)) << "\t" << line.dx() << "\t" << dy;
-
     pen.setWidth(1);
     painter->setPen(pen);
     painter->setBrush(QColor(90, 90, 90));
     painter->drawPolygon(arrowHead);
+
+    // Popisek zobrazujici vahu hrany
+    QPointF textPoint = line.p2() + QPointF(sin(angle + arrowAngle) * -25, cos(angle + arrowAngle) * -25);
+    painter->setPen(QColor(0, 0, 0));
+    painter->drawText(textPoint, QString::number(edge->weight));
 
     QGraphicsLineItem::paint(painter, option, widget);
 }
