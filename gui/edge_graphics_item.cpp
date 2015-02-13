@@ -21,13 +21,14 @@ EdgeGraphicsItem::EdgeGraphicsItem(VertexGraphicsItem* from, VertexGraphicsItem*
     weightText_ = new EdgeWeightText(this);
 
     // Pro zlepseni citelnosti textu
-    auto shadow = new QGraphicsDropShadowEffect();
-    shadow->setOffset(0, 0);
-    shadow->setBlurRadius(10);
-    shadow->setColor(QColor(255, 255, 255));
-    weightText_->setGraphicsEffect(shadow);
+//    auto shadow = new QGraphicsDropShadowEffect();
+//    shadow->setOffset(0, 0);
+//    shadow->setBlurRadius(10);
+//    shadow->setColor(QColor(255, 255, 255));
+//    weightText_->setGraphicsEffect(shadow);
     weightText_->setFlag(QGraphicsItem::ItemIsSelectable);
     weightText_->setHtml(QString::number(edge->weight));
+    weightText_->setHtml(QString("<span style='font-weight: bold;'>%1</span>").arg(edge->weight));
     weightText_->edge = edge;
 }
 
@@ -52,15 +53,12 @@ void EdgeGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
     setPen(pen);
 
     QLineF line(this->mapFromItem(from, center_, center_), this->mapFromItem(to, center_, center_));
-//    setZValue(-1);
+    setZValue(-1);
     double angle = std::acos(line.dx() / line.length());
 
     double dx = line.dx();
+    /// Protoze QT je hloupe a ma obracene osu Y
     double dy = -line.dy();
-    auto an = std::asin(dy / line.length());
-    double x_shift = 180 - deg(std::acos(dx / line.length()));
-    double y_shift = 180 - deg(std::asin(dy/line.length()) + M_PI / 2);
-//    qDebug() << dx << dy << "\t" << deg(an) << "\t" << x_shift << "\t" << y_shift;
 
     double radius = VertexGraphicsItem::GraphicSize / 2;
     QPointF v1 = line.p1() - line.p2();
@@ -73,8 +71,6 @@ void EdgeGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
     QPointF moved2 = line.p2() - v2*ratio2;
     line.setP2(moved2);
 
-    /// Protoze QT je hloupe a ma obracene osu X
-//    double dy = -line.dy();
     if (dy <= 0) {
         angle = -angle;
     }
@@ -99,21 +95,16 @@ void EdgeGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
     painter->setBrush(QColor(180, 180, 180));
     painter->drawPolygon(arrowHead);
 
-    // Popisek zobrazujici vahu hrany
-//    QPointF offset = QPointF(x_shift / log(x_shift), y_shift / log(y_shift));
-
     double weightRadius = -25;
     double x_offset = std::abs(M_PI - std::abs(angle));
 
-    QPointF offset{x_offset * 4,0};
-//    QPointF offset{0,0};
+    QPointF offset{x_offset * 4, 10};
+//    QPointF offset = QPointF(x_shift / log(x_shift), y_shift / log(y_shift));
 
-    qDebug() << QString("%1\t%2\t%3\t%4").arg(x_offset).arg(M_PI/2.0 - angle).arg(dx).arg(dy);
+
+//    qDebug() << QString("%1\t%2\t%3\t%4").arg(x_offset).arg(M_PI/2.0 - angle).arg(dx).arg(dy);
 
     QPointF textPoint = line.p2() + QPointF(sin(angle + arrowAngle) * weightRadius, cos(angle + arrowAngle) * weightRadius) - offset;
-//    painter->setPen(QColor(0, 0, 0));
-//    painter->drawText(textPoint, QString::number(edge->weight));
-
     weightText_->setPos(textPoint);
 
     QGraphicsLineItem::paint(painter, option, widget);

@@ -89,16 +89,16 @@ bool Graph::is_connected(int vn1, int vn2) const
 
 void Graph::removeVertex(Vertex *v)
 {
-    for (Edge& e : v->edges) {
-        e.to->edges.remove_if([v](Edge& edge) { return edge.to == v; });
+    for (auto& vv : list) {
+        vv->edges.remove_if([v](Edge& edge) {
+            return edge.to->value == v->value;
+        });
     }
 
     qDebug() << "Removing vertex" << v->value << " ... current count is " << list.size();
     list.remove_if([v](std::unique_ptr<Vertex>& p) {
         return p->value == v->value;
     });
-
-    qDebug() << "Size after removal:" << list.size();
 }
 
 void Graph::toggleEdge(int vn1, int vn2)
@@ -225,7 +225,7 @@ std::ostream& operator<<(std::ostream& os, Graph& g) {
 
         os << vertex->edges.size() << ":";
         for (Edge& edge: vertex->edges) {
-            os << edge.to->value << " " << edge.weight;
+            os << edge.to->value << " " << edge.weight << " ";
         }
         os << std::endl;
     }
