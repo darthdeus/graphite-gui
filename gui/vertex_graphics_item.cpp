@@ -106,7 +106,7 @@ void VertexGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem
     QGraphicsEllipseItem::paint(painter, option, widget);
 
     QGraphicsTextItem text{};
-    text.setHtml(QString("<span style='font-size: 16px; font-weight: bold; color: white'>%1</span>").arg(vertex->value));
+    text.setHtml(QString("<span style='font-size: 16px; font-weight: bold; color: white;'>%1</span>").arg(vertex->value));
     text.setFlag(QGraphicsItem::ItemIsSelectable, false);
     text.paint(painter, option, widget);
 }

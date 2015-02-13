@@ -69,7 +69,7 @@ void EdgeGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
     QPointF arrowP2 = line.p2() + QPointF(sin(angle + M_PI - arrowAngle) * arrowSize, cos(angle + M_PI - arrowAngle) * arrowSize);
     arrowHead << line.p2() << arrowP1 << arrowP2;
 
-    qDebug() << arrowAngle << line.p1() << line.p2() << "\t" << (360 * angle / (2*M_PI)) << "\t" << line.dx() << "\t" << dy;
+//    qDebug() << arrowAngle << line.p1() << line.p2() << "\t" << (360 * angle / (2*M_PI)) << "\t" << line.dx() << "\t" << dy;
 
     pen.setWidth(1);
     painter->setPen(pen);
