@@ -18,6 +18,7 @@
 #include "ui_mainwindow.h"
 #include "gui/vertex_graphics_item.h"
 #include "gui/edge_graphics_item.h"
+#include "gui/edge_weight_text.h"
 #include "lib/bfs.hpp"
 #include "lib/logger.hpp"
 
@@ -104,22 +105,24 @@ void MainWindow::reloadModel()
 void MainWindow::keyReleaseEvent(QKeyEvent *e)
 {
     switch (e->key()) {
-    case Qt::Key_A:
-        on_addVertex_clicked(); break;
-    case Qt::Key_C:
-        on_addEdge_clicked(); break;
-    case Qt::Key_D:
-        delete_selection(); break;
-    case Qt::Key_F:
-        searchToggle(true); break;
-    case Qt::Key_N:
-        searchStep(); break;
-    case Qt::Key_O:
-        changeOrientation(); break;
-    case Qt::Key_T:
-        searchToggle(false); break;
-    case Qt::Key_P:
-        printDebugInfo(); break;
+    case Qt::Key_A: on_addVertex_clicked(); break;
+    case Qt::Key_C: on_addEdge_clicked(); break;
+    case Qt::Key_D: delete_selection(); break;
+    case Qt::Key_F: searchToggle(true); break;
+    case Qt::Key_N: searchStep(); break;
+    case Qt::Key_O: changeOrientation(); break;
+    case Qt::Key_T: searchToggle(false); break;
+    case Qt::Key_P: printDebugInfo(); break;
+    case Qt::Key_0: setEdgeWeight(0); break;
+    case Qt::Key_1: setEdgeWeight(1); break;
+    case Qt::Key_2: setEdgeWeight(2); break;
+    case Qt::Key_3: setEdgeWeight(3); break;
+    case Qt::Key_4: setEdgeWeight(4); break;
+    case Qt::Key_5: setEdgeWeight(5); break;
+    case Qt::Key_6: setEdgeWeight(6); break;
+    case Qt::Key_7: setEdgeWeight(7); break;
+    case Qt::Key_8: setEdgeWeight(8); break;
+    case Qt::Key_9: setEdgeWeight(9); break;
     case Qt::Key_R:
         if (graph_->start() && graph_->end()) {
             graph_->clear_metadata();
@@ -288,6 +291,15 @@ void MainWindow::on_actionOpen_clicked()
         log_event("Graph loaded");
     } else {
         log_event("Dialog canceled"); }
+}
+
+void MainWindow::setEdgeWeight(int value) {
+    EdgeWeightText *ewt;
+    if (scene->selectedItems().count() == 1 && (ewt = dynamic_cast<EdgeWeightText*>(scene->selectedItems().at(0)))) {
+        ewt->edge->weight = value;
+        log_event(QString("Set edge weight %1").arg(value).toStdString().c_str());
+        reloadModel();
+    }
 }
 
 /// Used to add a graphical edge between two vertices. Only ever call this from reloadModel.

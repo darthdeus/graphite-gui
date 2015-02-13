@@ -45,6 +45,7 @@ private:
     void searchStep();
     void changeOrientation();
     void printDebugInfo();
+    void setEdgeWeight(int value);
 
     QGraphicsScene *scene;
     BFS* bfs_ = nullptr;

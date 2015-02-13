@@ -2,6 +2,9 @@
 #define EDGE_H
 
 #include <QGraphicsLineItem>
+#include <QGraphicsTextItem>
+
+#include "gui/edge_weight_text.h"
 #include "lib/edge.hpp"
 
 class VertexGraphicsItem;
@@ -19,6 +22,8 @@ public:
     // QGraphicsItem interface
 public:
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+
+    EdgeWeightText* weightText_;
 };
 
 #endif // EDGE_H

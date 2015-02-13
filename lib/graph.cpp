@@ -36,7 +36,7 @@ void Graph::connect(int vn1, int vn2) {
     connect_oriented(vn2, vn1);
 }
 
-void Graph::connect_oriented(int vn1, int vn2) {
+void Graph::connect_oriented(int vn1, int vn2, int weight) {
     auto v1 = find(vn1);
     auto v2 = find(vn2);
 
@@ -45,7 +45,7 @@ void Graph::connect_oriented(int vn1, int vn2) {
         vertex_not_found("graph::connect", vn1, vn2);
         return;
     } else {
-        v1->edges.emplace_back(v2, v1);
+        v1->edges.emplace_back(v2, v1, weight);
         qDebug() << "Connected" << vn1 << vn2;
     }
 }
@@ -198,11 +198,12 @@ Graph* Graph::parse_stream(std::istream& is)
         is >> edge_count;
         is.get();
 
-        int edge_to;
+        int edge_to, weight;
         for (int j = 0; j < edge_count; j++) {
             is >> edge_to;
+            is >> weight;
             qDebug() << "trying to connect" << vertex << edge_to;
-            g->connect(vertex, edge_to);
+            g->connect_oriented(vertex, edge_to, weight);
         }
     }
 
@@ -223,8 +224,8 @@ std::ostream& operator<<(std::ostream& os, Graph& g) {
         os << vertex->value << ":";
 
         os << vertex->edges.size() << ":";
-        for (auto edge: vertex->edges) {
-            os << edge.to->value << " ";
+        for (Edge& edge: vertex->edges) {
+            os << edge.to->value << " " << edge.weight;
         }
         os << std::endl;
     }
