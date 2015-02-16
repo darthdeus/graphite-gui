@@ -1,18 +1,19 @@
 #ifndef GUARD_BFS
 #define GUARD_BFS
 
+#include "search.hpp"
 #include "graph.hpp"
 #include "vertex.hpp"
 #include <queue>
 
-class BFS {
+class BFS : public Search {
  public:
   BFS(Graph& g, Vertex* start, Vertex* end);
 
   Graph& g;
 
-  void start();
-  int step();
+  void start() override;
+  int step() override;
 
  private:
   Vertex* start_;

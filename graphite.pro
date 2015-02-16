@@ -25,7 +25,8 @@ SOURCES += \
     gui/edge_graphics_item.cpp \
     gui/vertex_graphics_item.cpp \
     gui/edge_weight_text.cpp \
-    lib/dijkstra.cpp
+    lib/dijkstra.cpp \
+    lib/search.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -39,7 +40,8 @@ HEADERS  += \
     gui/vertex_graphics_item.h \
     gui/edge_graphics_item.h \
     gui/edge_weight_text.h \
-    lib/dijkstra.hpp
+    lib/dijkstra.hpp \
+    lib/search.hpp
 
 FORMS    += \
     mainwindow.ui

@@ -50,7 +50,7 @@ private:
     void setEdgeWeight(int value);
 
     QGraphicsScene *scene;
-    Dijkstra* bfs_ = nullptr;
+    Search* search_ = nullptr;
 
     Graph* graph_;
     std::vector<VertexGraphicsItem*> vertices_;

@@ -4,6 +4,7 @@
 #include <queue>
 #include "lib/vertex.hpp"
 #include "lib/graph.hpp"
+#include "lib/search.hpp"
 
 class vertex_distance {
 public:
@@ -12,12 +13,12 @@ public:
     }
 };
 
-class Dijkstra {
+class Dijkstra : public Search {
  public:
   Dijkstra(Graph& g, Vertex* source);
 
-  void start();
-  int step();
+  void start() override;
+  int step() override;
 
  private:
   Vertex* source_ = nullptr;

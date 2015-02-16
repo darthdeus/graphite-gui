@@ -128,10 +128,10 @@ void MainWindow::keyReleaseEvent(QKeyEvent *e)
     case Qt::Key_R:
         if (graph_->search_ready()) {
             graph_->clear_metadata();
-//            bfs_ = new BFS(*graph_, graph_->start(), graph_->end());
-//            bfs_ = new DFS(*graph_, graph_->start(), graph_->end());
-            bfs_ = new Dijkstra(*graph_, graph_->start());
-            bfs_->start();
+//            search_ = new BFS(*graph_, graph_->start(), graph_->end());
+//            search_ = new DFS(*graph_, graph_->start(), graph_->end());
+            search_ = new Dijkstra(*graph_, graph_->start());
+            search_->start();
             reloadModel();
         }
         break;
@@ -218,8 +218,8 @@ void MainWindow::searchToggle(bool isStart)
 
 void MainWindow::searchStep()
 {
-    if (graph_->search_ready() && bfs_) {
-        bfs_->step();
+    if (graph_->search_ready() && search_) {
+        search_->step();
         reloadModel();
     } else {
         qDebug() << "Search isn't ready yet.";
