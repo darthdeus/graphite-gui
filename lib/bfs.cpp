@@ -8,16 +8,7 @@
 using std::cout;
 using std::endl;
 
-class graph_events
-{
-public:
-    void vertex_selected(Vertex *v);
-    void vertex_colored(Vertex *v, int color);
-    void edge_changed(Edge *e);
-};
-
 BFS::BFS(Graph &g, Vertex* s, Vertex* e) : g(g), start_(s), end_(e) {
-    start();
 }
 
 void BFS::start()
@@ -26,17 +17,19 @@ void BFS::start()
         v.get()->color = vertex_color::white;
     }
 
-    cout << "BFS start " << start_->value << endl;
-
-    for (Edge &e : start_->edges) {
-        auto v = e.to;
-
-        cout << "pushing " << v->value << endl;
-        queue.push(v);
-        v->color = vertex_color::gray;
-    }
-
+    queue.push(start_);
     start_->color = vertex_color::black;
+
+    // TODO - check if this breaks anything
+//    for (Edge &e : start_->edges) {
+//        auto v = e.to;
+
+//        cout << "pushing " << v->value << endl;
+//        queue.push(v);
+//        v->color = vertex_color::gray;
+//    }
+
+//    start_->color = vertex_color::black;
 }
 
 int BFS::step()

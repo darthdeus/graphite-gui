@@ -127,6 +127,7 @@ void MainWindow::keyReleaseEvent(QKeyEvent *e)
         if (graph_->start() && graph_->end()) {
             graph_->clear_metadata();
             bfs_ = new BFS(*graph_, graph_->start(), graph_->end());
+            bfs_->start();
             reloadModel();
         }
         break;
