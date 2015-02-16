@@ -44,7 +44,7 @@ MainWindow::~MainWindow() { delete ui; }
 
 static bool reloading = false;
 
-/// Reloads the whole UI based on the model. Everything is first removed,
+/// Reload the whole UI based on the model. Everything is first removed,
 /// and then re-created in the same coordinates, so that the user notice anything.
 void MainWindow::reloadModel()
 {

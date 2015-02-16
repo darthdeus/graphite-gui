@@ -42,9 +42,9 @@ private:
   Vertex* find(int n) const;
   Vertex *add_vertex(int n);
 
-  Vertex* start_;
-  Vertex* end_;
-  int vertex_counter_;
+  Vertex* start_ = nullptr;
+  Vertex* end_ = nullptr;
+  int vertex_counter_ = 0;
 };
 
 std::ostream& operator<<(std::ostream& os, Graph& g);
