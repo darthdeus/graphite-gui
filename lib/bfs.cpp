@@ -25,7 +25,6 @@ void BFS::start()
 //    for (Edge &e : start_->edges) {
 //        auto v = e.to;
 
-//        cout << "pushing " << v->value << endl;
 //        queue.push(v);
 //        v->color = vertex_color::gray;
 //    }
@@ -42,7 +41,6 @@ int BFS::step()
         if (v->color == vertex_color::black)
             return -1;
 
-        cout << "processing " << v->value << endl;
         if (v == end_) {
             return v->value;
         }
@@ -50,15 +48,13 @@ int BFS::step()
         for (Edge &e : v->edges) {
             auto neighbour = e.to;
             if (neighbour->color == vertex_color::white) {
-                cout << "    pushing neighbour " << neighbour->value << endl;
                 queue.push(neighbour);
                 neighbour->color = vertex_color::gray;
             }
 
-            v->color = vertex_color::black;
         }
 
-        v->color = vertex_color::gray;
+        v->color = vertex_color::black;
 
         return 0;
     } else {
