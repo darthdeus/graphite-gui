@@ -9,7 +9,6 @@ class DFS {
  public:
   DFS(Graph& g, Vertex* start, Vertex* end);
 
-  std::stack<Vertex*> stack;
   Graph& g;
 
   void start();
@@ -18,6 +17,7 @@ class DFS {
  private:
   Vertex* start_;
   Vertex* end_;
+  std::stack<Vertex*> stack_;
 };
 
 #endif

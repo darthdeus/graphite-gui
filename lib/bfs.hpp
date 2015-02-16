@@ -9,7 +9,6 @@ class BFS {
  public:
   BFS(Graph& g, Vertex* start, Vertex* end);
 
-  std::queue<Vertex*> queue;
   Graph& g;
 
   void start();
@@ -18,6 +17,7 @@ class BFS {
  private:
   Vertex* start_;
   Vertex* end_;
+  std::queue<Vertex*> queue_;
 };
 
 #endif

@@ -20,6 +20,7 @@
 #include "gui/edge_graphics_item.h"
 #include "gui/edge_weight_text.h"
 #include "lib/bfs.hpp"
+#include "lib/dfs.hpp"
 #include "lib/logger.hpp"
 
 MainWindow::MainWindow(Graph *graph, QWidget *parent)

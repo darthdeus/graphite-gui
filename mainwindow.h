@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "lib/bfs.hpp"
+#include "lib/dfs.hpp"
 #include "lib/graph.hpp"
 
 class QGraphicsLineItem;

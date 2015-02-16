@@ -12,13 +12,34 @@ void DFS::start() {
         v.get()->color = vertex_color::white;
     }
 
-    stack.push(start_);
-    start_->color = vertex_color::black;
-
-    // TODO - implement this
+    stack_.push(start_);
 }
 
 int DFS::step() {
-    // TODO - implement this
-    return 0;
+    if (!stack_.empty()) {
+        auto v = stack_.top();
+        stack_.pop();
+
+        if (v->color == vertex_color::black)
+            return -1;
+
+        if (v == end_) {
+            return v->value;
+        }
+
+        for (Edge &e : v->edges) {
+            auto neighbour = e.to;
+            if (neighbour->color == vertex_color::white) {
+                stack_.push(neighbour);
+                neighbour->color = vertex_color::gray;
+            }
+        }
+
+        v->color = vertex_color::black;
+
+        return 0;
+    } else {
+        g.clear_metadata();
+        return -2;
+    }
 }

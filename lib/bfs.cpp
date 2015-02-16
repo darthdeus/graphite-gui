@@ -17,26 +17,14 @@ void BFS::start()
         v.get()->color = vertex_color::white;
     }
 
-    queue.push(start_);
-    // TODO - figure out the best initial coloring
-//    start_->color = vertex_color::black;
-
-    // TODO - check if this breaks anything
-//    for (Edge &e : start_->edges) {
-//        auto v = e.to;
-
-//        queue.push(v);
-//        v->color = vertex_color::gray;
-//    }
-
-//    start_->color = vertex_color::black;
+    queue_.push(start_);
 }
 
 int BFS::step()
 {
-    if (!queue.empty()) {
-        auto v = queue.front();
-        queue.pop();
+    if (!queue_.empty()) {
+        auto v = queue_.front();
+        queue_.pop();
 
         if (v->color == vertex_color::black)
             return -1;
@@ -48,10 +36,9 @@ int BFS::step()
         for (Edge &e : v->edges) {
             auto neighbour = e.to;
             if (neighbour->color == vertex_color::white) {
-                queue.push(neighbour);
+                queue_.push(neighbour);
                 neighbour->color = vertex_color::gray;
             }
-
         }
 
         v->color = vertex_color::black;
