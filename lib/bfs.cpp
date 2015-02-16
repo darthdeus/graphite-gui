@@ -18,7 +18,8 @@ void BFS::start()
     }
 
     queue.push(start_);
-    start_->color = vertex_color::black;
+    // TODO - figure out the best initial coloring
+//    start_->color = vertex_color::black;
 
     // TODO - check if this breaks anything
 //    for (Edge &e : start_->edges) {
