@@ -21,6 +21,7 @@
 #include "gui/edge_weight_text.h"
 #include "lib/bfs.hpp"
 #include "lib/dfs.hpp"
+#include "lib/dijkstra.hpp"
 #include "lib/logger.hpp"
 
 MainWindow::MainWindow(Graph *graph, QWidget *parent)
@@ -125,9 +126,11 @@ void MainWindow::keyReleaseEvent(QKeyEvent *e)
     case Qt::Key_8: setEdgeWeight(8); break;
     case Qt::Key_9: setEdgeWeight(9); break;
     case Qt::Key_R:
-        if (graph_->start() && graph_->end()) {
+        if (graph_->search_ready()) {
             graph_->clear_metadata();
-            bfs_ = new DFS(*graph_, graph_->start(), graph_->end());
+//            bfs_ = new BFS(*graph_, graph_->start(), graph_->end());
+//            bfs_ = new DFS(*graph_, graph_->start(), graph_->end());
+            bfs_ = new Dijkstra(*graph_, graph_->start());
             bfs_->start();
             reloadModel();
         }
@@ -216,7 +219,7 @@ void MainWindow::searchToggle(bool isStart)
 void MainWindow::searchStep()
 {
     if (graph_->search_ready() && bfs_) {
-        qDebug () << "Stepping search" << bfs_->step();
+        bfs_->step();
         reloadModel();
     } else {
         qDebug() << "Search isn't ready yet.";

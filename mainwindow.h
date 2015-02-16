@@ -6,6 +6,7 @@
 
 #include "lib/bfs.hpp"
 #include "lib/dfs.hpp"
+#include "lib/dijkstra.hpp"
 #include "lib/graph.hpp"
 
 class QGraphicsLineItem;
@@ -49,7 +50,7 @@ private:
     void setEdgeWeight(int value);
 
     QGraphicsScene *scene;
-    DFS* bfs_ = nullptr;
+    Dijkstra* bfs_ = nullptr;
 
     Graph* graph_;
     std::vector<VertexGraphicsItem*> vertices_;

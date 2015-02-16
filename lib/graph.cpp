@@ -152,7 +152,8 @@ Vertex *Graph::end() const {
 }
 
 bool Graph::search_ready() const {
-    return start_ && end_;
+//    return start_ && end_;
+    return start_;
 }
 
 Vertex *Graph::find(int v) const

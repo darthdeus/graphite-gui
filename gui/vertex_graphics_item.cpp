@@ -10,6 +10,7 @@
 #include <QVariant>
 #include <QWidget>
 
+#include <limits>
 #include <iostream>
 #include <memory>
 #include <cstdlib>
@@ -102,6 +103,16 @@ void VertexGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem
 
     QGraphicsEllipseItem::paint(painter, option, widget);
 
+//    auto text = QString("%1").arg(vertex->value);
+    auto text = QString("%1 / %2").arg(vertex->value);
+
+    if (vertex->distance == std::numeric_limits<int>::max()) {
+        text = text.arg("inf");
+    } else {
+        text = text.arg(vertex->distance);
+    }
+
+
     painter->setPen(QColor(Qt::white));
-    painter->drawText(this->boundingRect(), QString::number(vertex->value), QTextOption(Qt::AlignCenter));
+    painter->drawText(this->boundingRect(), text, QTextOption(Qt::AlignCenter));
 }

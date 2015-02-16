@@ -4,6 +4,7 @@
 #include <iostream>
 #include <ostream>
 #include <list>
+#include <limits>
 #include <QColor>
 
 #include "lib/edge.hpp"
@@ -23,6 +24,8 @@ class Vertex {
 
   float x;
   float y;
+
+  int distance = std::numeric_limits<int>::max();
 
   vertex_color color;
   bool selected = false;
