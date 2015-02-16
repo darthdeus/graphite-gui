@@ -49,7 +49,7 @@ private:
     void setEdgeWeight(int value);
 
     QGraphicsScene *scene;
-    BFS* bfs_ = nullptr;
+    DFS* bfs_ = nullptr;
 
     Graph* graph_;
     std::vector<VertexGraphicsItem*> vertices_;

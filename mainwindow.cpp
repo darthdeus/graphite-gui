@@ -127,7 +127,7 @@ void MainWindow::keyReleaseEvent(QKeyEvent *e)
     case Qt::Key_R:
         if (graph_->start() && graph_->end()) {
             graph_->clear_metadata();
-            bfs_ = new BFS(*graph_, graph_->start(), graph_->end());
+            bfs_ = new DFS(*graph_, graph_->start(), graph_->end());
             bfs_->start();
             reloadModel();
         }
