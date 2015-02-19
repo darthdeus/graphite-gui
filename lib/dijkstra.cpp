@@ -22,7 +22,7 @@ int Dijkstra::step() {
 
         qDebug() << "popped" << v->value << v->distance;
 
-        v->color = vertex_color::gray;
+        v->color = vertex_color::black;
 
         for (Edge& e : v->edges) {
             if (!is_closed(e.to)) {
@@ -30,6 +30,7 @@ int Dijkstra::step() {
                     e.to->distance = e.weight + v->distance;
                 }
 
+                e.to->color = vertex_color::gray;
                 queue_.push(e.to);
             }
         }
@@ -39,6 +40,6 @@ int Dijkstra::step() {
 }
 
 bool Dijkstra::is_closed(Vertex *v) {
-    return v->color == vertex_color::gray;
+    return v->color == vertex_color::black;
 }
 

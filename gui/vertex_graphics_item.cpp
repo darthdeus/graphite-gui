@@ -88,7 +88,7 @@ void VertexGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem
         setBrush(QBrush(QColor(120, 150, 130, opacity)));
         break;
     case vertex_color::gray:
-        setBrush(QBrush(QColor(90, 100, 80, opacity)));
+        setBrush(QBrush(QColor(90, 200, 80, opacity)));
         break;
     case vertex_color::black:
         setBrush(QBrush(QColor(20, 50, 30, opacity)));
@@ -103,8 +103,13 @@ void VertexGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem
 
     QGraphicsEllipseItem::paint(painter, option, widget);
 
-//    auto text = QString("%1").arg(vertex->value);
-    auto text = QString("%1 / %2").arg(vertex->value);
+
+    QString text;
+    if (vertex->showDistance) {
+        text = QString("%1 / %2").arg(vertex->value);
+    } else {
+        text = QString("%1").arg(vertex->value);
+    }
 
     if (vertex->distance == std::numeric_limits<int>::max()) {
         text = text.arg("inf");

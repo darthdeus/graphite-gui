@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <cassert>
 #include <memory>
+#include <limits>
 #include <iostream>
 
 #include "lib/graph.hpp"
@@ -167,11 +168,13 @@ Vertex *Graph::find(int v) const
     return nullptr;
 }
 
-void Graph::clear_metadata()
+void Graph::clear_metadata(bool showDistance)
 {
     for (auto &v : list) {
         v->color = vertex_color::white;
+        v->distance = std::numeric_limits<int>::max();
         v->metadata = nullptr;
+        v->showDistance = showDistance;
     }
 }
 

@@ -34,7 +34,7 @@ class Graph {
   Vertex* end() const;
   bool search_ready() const;
 
-  void clear_metadata();
+  void clear_metadata(bool showDistance);
 
   static Graph* parse_stream(std::istream& is);
 private:

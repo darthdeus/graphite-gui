@@ -39,7 +39,7 @@ int DFS::step() {
 
         return 0;
     } else {
-        g.clear_metadata();
+        g.clear_metadata(false);
         return -2;
     }
 }

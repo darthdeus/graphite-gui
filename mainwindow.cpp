@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QMessageBox>
 #include <QFileDialog>
+#include <QComboBox>
 
 #include <cassert>
 #include <cmath>
@@ -127,10 +128,23 @@ void MainWindow::keyReleaseEvent(QKeyEvent *e)
     case Qt::Key_9: setEdgeWeight(9); break;
     case Qt::Key_R:
         if (graph_->search_ready()) {
-            graph_->clear_metadata();
-//            search_ = new BFS(*graph_, graph_->start(), graph_->end());
-//            search_ = new DFS(*graph_, graph_->start(), graph_->end());
-            search_ = new Dijkstra(*graph_, graph_->start());
+
+            auto text = ui->algList->currentText();
+            if (text == "BFS") {
+                graph_->clear_metadata(false);
+                search_ = new BFS(*graph_, graph_->start(), graph_->end());
+            } else if (text == "DFS") {
+                graph_->clear_metadata(false);
+                search_ = new DFS(*graph_, graph_->start(), graph_->end());
+            } else if (text == "Dijkstra") {
+                graph_->clear_metadata(true);
+                search_ = new Dijkstra(*graph_, graph_->start());
+            } else {
+                QMessageBox box;
+                box.setText("No algorithm was selected.");
+                box.exec();
+            }
+
             search_->start();
             reloadModel();
         }
