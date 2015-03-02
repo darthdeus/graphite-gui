@@ -11,8 +11,7 @@ using std::endl;
 BFS::BFS(Graph &g, Vertex* s, Vertex* e) : g(g), start_(s), end_(e) {
 }
 
-void BFS::start()
-{
+void BFS::start() {
     for (auto &v : g.list) {
         v.get()->color = vertex_color::white;
     }
@@ -20,8 +19,7 @@ void BFS::start()
     queue_.push(start_);
 }
 
-int BFS::step()
-{
+int BFS::step() {
     if (!queue_.empty()) {
         auto v = queue_.front();
         queue_.pop();

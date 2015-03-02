@@ -32,6 +32,9 @@ class Vertex {
   bool target = false;
   bool showDistance = false;
 
+  int low;
+  int in;
+
   void* metadata;
 };
 

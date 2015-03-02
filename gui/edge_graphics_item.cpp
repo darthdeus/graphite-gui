@@ -49,7 +49,12 @@ void EdgeGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
 {
     QPen pen;
     pen.setWidth(3);
-    pen.setColor(QColor(180, 180, 180));
+    if (edge->bridge) {
+        pen.setColor(QColor(230, 230, 230));
+    } else {
+        // TODO - handle bridges
+        pen.setColor(QColor(180, 180, 180));
+    }
     setPen(pen);
 
     QLineF line(this->mapFromItem(from, center_, center_), this->mapFromItem(to, center_, center_));

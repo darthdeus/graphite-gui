@@ -11,6 +11,8 @@ class Edge {
   Vertex* from;
   Vertex* to;
   int weight;
+  bool deleted = false;
+  bool bridge = false;
 };
 
 #endif

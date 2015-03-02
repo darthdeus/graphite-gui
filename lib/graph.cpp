@@ -229,9 +229,40 @@ std::ostream& operator<<(std::ostream& os, Graph& g) {
 
         os << vertex->edges.size() << ":";
         for (Edge& edge: vertex->edges) {
-            os << edge.to->value << " " << edge.weight << " ";
+            os << edge.to->value << " " << edge.weight << " "; // << edge.bridge << "| ";
         }
         os << std::endl;
     }
     return os;
+}
+
+const int undefined_in = -1;
+
+void updateVertex(Vertex* v, int& counter) {
+    v->in = counter++;
+    for (Edge& e : v->edges) {
+        if (e.to->in == undefined_in) {
+            updateVertex(e.to, counter);
+
+            if (e.to->low >= e.to->in) {
+                e.bridge = true;
+            }
+
+            v->low = std::min(v->low, e.to->low);
+        } else if (e.to->in < v->in - 1) {
+            // zpetna hrana
+            v->low = std::min(v->low, e.to->in);
+        }
+    }
+}
+
+
+void Graph::updateBridges() {
+    int counter = 0;
+
+    for (auto& v : list) {
+        v->in = undefined_in;
+    }
+
+    updateVertex((*list.begin()).get(),  counter);
 }

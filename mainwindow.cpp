@@ -109,6 +109,11 @@ void MainWindow::keyReleaseEvent(QKeyEvent *e)
 {
     switch (e->key()) {
     case Qt::Key_A: on_addVertex_clicked(); break;
+    case Qt::Key_B:
+        graph_->updateBridges();
+        log_event("bridges updated");
+        reloadModel();
+        break;
     case Qt::Key_C: on_addEdge_clicked(); break;
     case Qt::Key_D: delete_selection(); break;
     case Qt::Key_F: searchToggle(true); break;

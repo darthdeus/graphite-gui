@@ -35,6 +35,7 @@ class Graph {
   bool search_ready() const;
 
   void clear_metadata(bool showDistance);
+  void updateBridges();
 
   static Graph* parse_stream(std::istream& is);
 private:
