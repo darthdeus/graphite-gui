@@ -11,7 +11,6 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = graphite
 TEMPLATE = app
 
-
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
@@ -49,3 +48,9 @@ FORMS    += \
     mainwindow.ui
 
 CONFIG += c++11
+
+CONFIG(debug, debug|release) {
+    DESTDIR = build/debug
+} else {
+    DESTDIR = build/release
+}
