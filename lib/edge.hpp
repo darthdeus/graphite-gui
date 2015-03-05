@@ -13,6 +13,10 @@ class Edge {
   int weight;
   bool deleted = false;
   bool bridge = false;
+
+  /// Returns the other side of the edge in an undirected graph,
+  /// otherwise nullptr.
+  Edge* reverseEdge();
 };
 
 #endif
