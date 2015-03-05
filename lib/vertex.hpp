@@ -5,7 +5,6 @@
 #include <ostream>
 #include <list>
 #include <limits>
-#include <QColor>
 
 #include "lib/edge.hpp"
 

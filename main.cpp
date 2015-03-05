@@ -9,8 +9,7 @@
 #include "lib/graph.hpp"
 #include "mainwindow.h"
 
-int main(int argc, char *argv[])
-{
+int app(int argc, char *argv[]) {
     QApplication a(argc, argv);
 
     Graph *g = new Graph();
@@ -31,4 +30,9 @@ int main(int argc, char *argv[])
     w.show();
 
     return a.exec();
+}
+
+int main(int argc, char *argv[])
+{
+  return app(argc, argv);
 }
