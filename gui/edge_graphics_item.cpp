@@ -85,7 +85,6 @@ void EdgeGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
     QPolygonF arrowHead;
     arrowHead.clear();
 
-
     /// Pro zjednoduseni abychom nemuseli resit otaceni uhlu
     float arrowSize = -15;
 
