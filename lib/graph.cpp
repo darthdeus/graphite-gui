@@ -168,7 +168,7 @@ Vertex *Graph::find(int v) const
     return nullptr;
 }
 
-void Graph::clear_metadata(bool showDistance)
+void Graph::clear_metadata(bool showDistance, bool showOrientation)
 {
     for (auto &v : list) {
         v->color = vertex_color::white;

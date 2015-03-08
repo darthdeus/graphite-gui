@@ -34,6 +34,8 @@ class Vertex {
   int low;
   int in;
 
+  int undeletedEdgeCount();
+
   void* metadata;
 };
 

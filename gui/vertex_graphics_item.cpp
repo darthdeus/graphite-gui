@@ -107,16 +107,15 @@ void VertexGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem
     QString text;
     if (vertex->showDistance) {
         text = QString("%1 / %2").arg(vertex->value);
+
+        if (vertex->distance == std::numeric_limits<int>::max()) {
+            text = text.arg("inf");
+        } else {
+            text = text.arg(vertex->distance);
+        }
     } else {
         text = QString("%1").arg(vertex->value);
     }
-
-    if (vertex->distance == std::numeric_limits<int>::max()) {
-        text = text.arg("inf");
-    } else {
-        text = text.arg(vertex->distance);
-    }
-
 
     painter->setPen(QColor(Qt::white));
     painter->drawText(this->boundingRect(), text, QTextOption(Qt::AlignCenter));

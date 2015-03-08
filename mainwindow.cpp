@@ -23,6 +23,7 @@
 #include "lib/bfs.hpp"
 #include "lib/dfs.hpp"
 #include "lib/dijkstra.hpp"
+#include "lib/euler.hpp"
 #include "lib/logger.hpp"
 
 MainWindow::MainWindow(Graph *graph, QWidget *parent)
@@ -144,6 +145,9 @@ void MainWindow::keyReleaseEvent(QKeyEvent *e)
             } else if (text == "Dijkstra") {
                 graph_->clear_metadata(true);
                 search_ = new Dijkstra(*graph_, graph_->start());
+            } else if (text == "Euler") {
+                graph_->clear_metadata(false, false);
+                search_ = new Euler(*graph_, graph_->start());
             } else {
                 QMessageBox box;
                 box.setText("No algorithm was selected.");

@@ -13,6 +13,9 @@ class Edge {
   int weight;
   bool deleted = false;
   bool bridge = false;
+  // TODO - show a ready status bar
+  bool oriented = true;
+  bool weighted = true;
 
   /// Returns the other side of the edge in an undirected graph,
   /// otherwise nullptr.

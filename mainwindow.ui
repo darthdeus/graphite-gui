@@ -108,6 +108,11 @@ p, li { white-space: pre-wrap; }
          <string>Dijkstra</string>
         </property>
        </item>
+       <item>
+        <property name="text">
+         <string>Euler</string>
+        </property>
+       </item>
       </widget>
      </widget>
     </item>

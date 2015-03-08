@@ -49,7 +49,7 @@ void EdgeGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
 {
     QPen pen;
     pen.setWidth(3);
-    if (edge->bridge) {
+    if (edge->bridge || edge->deleted) {
         pen.setColor(QColor(230, 230, 230));
     } else {
         // TODO - handle bridges
@@ -97,16 +97,20 @@ void EdgeGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
     pen.setWidth(1);
     painter->setPen(pen);
     painter->setBrush(QColor(180, 180, 180));
-    painter->drawPolygon(arrowHead);
+
+    if (edge->oriented) {
+        painter->drawPolygon(arrowHead);
+    }
+
+    if (!edge->weighted) {
+        weightText_->setVisible(false);
+
+    }
 
     double weightRadius = -25;
     double x_offset = std::abs(M_PI - std::abs(angle));
 
     QPointF offset{x_offset * 4, 10};
-//    QPointF offset = QPointF(x_shift / log(x_shift), y_shift / log(y_shift));
-
-
-//    qDebug() << QString("%1\t%2\t%3\t%4").arg(x_offset).arg(M_PI/2.0 - angle).arg(dx).arg(dy);
 
     QPointF textPoint = line.p2() + QPointF(sin(angle + arrowAngle) * weightRadius, cos(angle + arrowAngle) * weightRadius) - offset;
     weightText_->setPos(textPoint);
