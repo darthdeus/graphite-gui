@@ -20,7 +20,7 @@ int app(int argc, char *argv[]) {
     Vertex *v5 = g->add_vertex();
 
     g->connect(v1->value, v2->value);
-    g->toggleEdge(v1->value, v2->value);
+//    g->toggleEdge(v1->value, v2->value);
     g->connect(v2->value, v3->value);
     g->connect(v3->value, v4->value);
     g->connect(v4->value, v5->value);

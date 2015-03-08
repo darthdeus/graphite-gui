@@ -246,8 +246,10 @@ void updateVertex(Vertex* v, int& counter) {
 
             if (e.to->low >= e.to->in) {
                 e.bridge = true;
-                // TODO - handle null properly
-                e.reverseEdge()->bridge = true;
+
+                if (Edge* reverse = e.reverseEdge()) {
+                    reverse->bridge = true;
+                }
             }
 
             v->low = std::min(v->low, e.to->low);
