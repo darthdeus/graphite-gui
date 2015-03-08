@@ -11,9 +11,12 @@
 Euler::Euler(Graph& g, Vertex* start): g_(g), start_(start) { }
 
 void Euler::start() {
+    done = false;
     current_ = start_;
 
     for (auto& v: g_.list) {
+        v->label = "";
+
         for (Edge& e: v->edges) {
             e.oriented = false;
             e.weighted = false;
@@ -27,6 +30,7 @@ void Euler::start() {
 }
 
 int Euler::step() {
+    if (done) return 0;
     if (!current_) return 0;
 
     bool found = false;
@@ -51,14 +55,27 @@ int Euler::step() {
         if (!stack_.empty()) {
             current_ = stack_.top();
             stack_.pop();
+
+            if (!current_->undeletedEdgeCount()) step();
             qDebug() << "popped from the stack" << current_->value;
 
         } else {
+            done = true;
             qDebug() << "Done, the circuit is:";
 
+            std::reverse(begin(circuit_), end(circuit_));
+
+            int i = 1;
             for (Vertex* v: circuit_) {
+                if (v->label.length() > 0) {
+                    v->label += ", ";
+                }
+
+                v->label += QString("%1").arg(i++).toStdString();
                 qDebug() << v->value;
             }
         }
     }
+
+    return 0;
 }

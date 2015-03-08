@@ -24,6 +24,8 @@ class Euler : public Search
 
   std::stack<Vertex*> stack_;
   std::vector<Vertex*> circuit_;
+
+  bool done = false;
 };
 
 #endif // EULER_HPP

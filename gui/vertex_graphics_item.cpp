@@ -117,6 +117,16 @@ void VertexGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem
         text = QString("%1").arg(vertex->value);
     }
 
+    if (vertex->label.length() > 0) {
+        painter->setPen(QColor(Qt::black));
+        QString label(vertex->label.c_str());
+
+        auto rect = this->boundingRect();
+        rect.setLeft(rect.left() + 50);
+        rect.setWidth(rect.width() + 50);
+        painter->drawText(rect, label);
+    }
+
     painter->setPen(QColor(Qt::white));
     painter->drawText(this->boundingRect(), text, QTextOption(Qt::AlignCenter));
 }

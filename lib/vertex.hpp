@@ -5,6 +5,7 @@
 #include <ostream>
 #include <list>
 #include <limits>
+#include <string>
 
 #include "lib/edge.hpp"
 
@@ -36,6 +37,7 @@ class Vertex {
 
   int undeletedEdgeCount();
 
+  std::string label;
   void* metadata;
 };
 
