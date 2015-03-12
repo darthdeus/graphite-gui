@@ -146,7 +146,7 @@ void MainWindow::keyReleaseEvent(QKeyEvent *e)
                 graph_->clear_metadata(true);
                 search_ = new Dijkstra(*graph_, graph_->start());
             } else if (text == "Euler") {
-                graph_->clear_metadata(false, false);
+                graph_->clear_metadata(false);
                 search_ = new Euler(*graph_, graph_->start());
             } else {
                 QMessageBox box;

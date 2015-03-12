@@ -21,9 +21,9 @@ class Dijkstra : public Search {
   int step() override;
 
  private:
-  Vertex* source_ = nullptr;
   std::priority_queue<Vertex*, std::vector<Vertex*>, vertex_distance> queue_;
   Graph& graph_;
+  Vertex* source_ = nullptr;
 
   bool is_closed(Vertex* v);
 

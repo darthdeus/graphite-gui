@@ -153,6 +153,7 @@ Vertex *Graph::end() const {
 }
 
 bool Graph::search_ready() const {
+    // TODO - check if this is good enough
 //    return start_ && end_;
     return start_;
 }
@@ -168,7 +169,7 @@ Vertex *Graph::find(int v) const
     return nullptr;
 }
 
-void Graph::clear_metadata(bool showDistance, bool showOrientation)
+void Graph::clear_metadata(bool showDistance)
 {
     for (auto &v : list) {
         v->color = vertex_color::white;
