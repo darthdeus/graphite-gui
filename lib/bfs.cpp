@@ -13,7 +13,14 @@ BFS::BFS(Graph &g, Vertex* s, Vertex* e) : g(g), start_(s), end_(e) {
 
 void BFS::start() {
     for (auto &v : g.list) {
-        v.get()->color = vertex_color::white;
+        v->color = vertex_color::white;
+        v->label = "";
+
+        for (Edge& e: v->edges) {
+            e.oriented = true;
+            e.weighted = false;
+            e.deleted = false;
+        }
     }
 
     queue_.push(start_);

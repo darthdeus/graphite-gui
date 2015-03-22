@@ -77,8 +77,8 @@ void MainWindow::reloadModel()
         auto vgi = new VertexGraphicsItem(v.get());
 
         if (!vgi->hasCoordinates()) {
-            vgi->setCoordinates(80 * (i / 5 + 1) * std::cos(i),
-                                80 * (i / 5 + 1) * std::sin(i));
+            vgi->setCoordinates(115 * (i / 5 + 1) * std::cos(i),
+                                115 * (i / 5 + 1) * std::sin(i));
         }
 
         vertices_.push_back(vgi);
@@ -287,6 +287,42 @@ void MainWindow::on_actionNew_clicked()
     reloadModel();
     log_event("New graph");
 }
+
+void MainWindow::on_sampleGraph_clicked()
+{
+    graph_ = new Graph();
+    connectionVertex_ = -1;
+
+    Vertex* prev = graph_->add_vertex();
+
+    std::queue<Vertex*> queue;
+    queue.push(prev);
+
+    int count = rand() % 5 + 10;
+
+    while (count-- ) {
+        Vertex* next = graph_->add_vertex();
+        queue.push(next);
+
+        graph_->connect(prev->value, next->value);
+        prev = next;
+    }
+
+    while (!queue.empty()) {
+        Vertex* top = queue.front();
+        queue.pop();
+
+        int index = (rand() % (graph_->list.size() - 1)) + 1;
+        int dice = rand() % 6;
+
+        if (top->value != index && dice > 2) {
+            graph_->connect(top->value, index);
+        }
+    }
+
+    reloadModel();
+}
+
 
 void MainWindow::on_actionSave_clicked()
 {

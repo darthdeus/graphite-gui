@@ -39,6 +39,9 @@ public slots:
     void on_actionSaveAs_clicked();
     void on_actionOpen_clicked();
 
+private slots:
+    void on_sampleGraph_clicked();
+
 private:
     void on_addVertex_clicked();
     void on_addEdge_clicked();
