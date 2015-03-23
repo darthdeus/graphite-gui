@@ -215,6 +215,9 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>Make undirected (removes edge orientation)</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+R, U</string>
+   </property>
   </action>
   <action name="actionExportGraphvizDotFile">
    <property name="text">

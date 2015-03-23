@@ -303,7 +303,22 @@ void MainWindow::on_actionRandomEdgeWeights_triggered()
 
 void MainWindow::on_actionMakeUndirected_triggered()
 {
+    // We can use pairs since they already handle comparisons properly.
+    std::set<std::pair<int, int>> edges;
 
+    for (auto& v: graph_->list) {
+        for (Edge& e: v->edges) {
+            edges.insert(std::make_pair(e.from->value, e.to->value));
+        }
+    }
+
+    for (auto pair : edges) {
+        graph_->disconnect(pair.first, pair.second);
+        graph_->connect(pair.first, pair.second);
+    }
+
+    reloadModel();
+    log_event("Removed orientation");
 }
 
 void MainWindow::on_actionExportGraphvizDotFile_triggered()
