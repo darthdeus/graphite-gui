@@ -61,7 +61,6 @@ void EdgeGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
     setZValue(-1);
     double angle = std::acos(line.dx() / line.length());
 
-    double dx = line.dx();
     /// Protoze QT je hloupe a ma obracene osu Y
     double dy = -line.dy();
 
