@@ -27,29 +27,41 @@ public:
     ~MainWindow();
 
     void reloadModel();
-    void keyReleaseEvent(QKeyEvent *);
-    void delete_selection();
+//    void keyReleaseEvent(QKeyEvent *);
 
     VertexGraphicsItem *selectedVertex() const;
     Ui::MainWindow *ui;
 
 public slots:
+private slots:
     void on_actionNew_triggered();
     void on_actionSave_triggered();
     void on_actionSave_as_triggered();
     void on_actionOpen_triggered();
 
-private slots:
-    void on_sampleGraph_clicked();
+    void on_actionAddVertex_triggered();
+    void on_actionConnectWithEdge_triggered();
+    void on_actionDelete_triggered();
+    void on_actionChangeOrientation_triggered();
+
+    void on_actionSearchFrom_triggered();
+    void on_actionSearchTo_triggered();
+    void on_actionNextStep_triggered();
+    void on_actionRestartAlgorithm_triggered();
+    void on_actionPrintGraphToStdout_triggered();
+
+    void on_actionRandomDirectedEdges_triggered();
+    void on_actionRandomGraph_triggered();
+    void on_actionRandomEulerianGraph_triggered();
+    void on_actionRandomEdgeWeights_triggered();
+
+    void on_actionMakeUndirected_triggered();
+    void on_actionExportGraphvizDotFile_triggered();
 
 private:
-    void on_addVertex_clicked();
-    void on_addEdge_clicked();
     void graphConnect(VertexGraphicsItem* v1, VertexGraphicsItem* v2, Edge* edge);
     void searchToggle(bool start);
     void searchStep();
-    void changeOrientation();
-    void printDebugInfo();
     void setEdgeWeight(int value);
 
     QGraphicsScene *scene;

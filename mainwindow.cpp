@@ -106,62 +106,26 @@ void MainWindow::reloadModel()
     reloading = false;
 }
 
-void MainWindow::keyReleaseEvent(QKeyEvent *e)
-{
-    switch (e->key()) {
-    case Qt::Key_A: on_addVertex_clicked(); break;
-    case Qt::Key_B:
-        graph_->updateBridges();
-        log_event("bridges updated");
-        reloadModel();
-        break;
-    case Qt::Key_C: on_addEdge_clicked(); break;
-    case Qt::Key_D: delete_selection(); break;
-    case Qt::Key_F: searchToggle(true); break;
-    case Qt::Key_N: searchStep(); break;
-    case Qt::Key_O: changeOrientation(); break;
-    case Qt::Key_T: searchToggle(false); break;
-    case Qt::Key_P: printDebugInfo(); break;
-    case Qt::Key_0: setEdgeWeight(0); break;
-    case Qt::Key_1: setEdgeWeight(1); break;
-    case Qt::Key_2: setEdgeWeight(2); break;
-    case Qt::Key_3: setEdgeWeight(3); break;
-    case Qt::Key_4: setEdgeWeight(4); break;
-    case Qt::Key_5: setEdgeWeight(5); break;
-    case Qt::Key_6: setEdgeWeight(6); break;
-    case Qt::Key_7: setEdgeWeight(7); break;
-    case Qt::Key_8: setEdgeWeight(8); break;
-    case Qt::Key_9: setEdgeWeight(9); break;
-    case Qt::Key_R:
-        if (graph_->search_ready()) {
+//void MainWindow::keyReleaseEvent(QKeyEvent *e)
+//{
+//    switch (e->key()) {
+//    case Qt::Key_N: searchStep(); break;
+//    case Qt::Key_0: setEdgeWeight(0); break;
+//    case Qt::Key_1: setEdgeWeight(1); break;
+//    case Qt::Key_2: setEdgeWeight(2); break;
+//    case Qt::Key_3: setEdgeWeight(3); break;
+//    case Qt::Key_4: setEdgeWeight(4); break;
+//    case Qt::Key_5: setEdgeWeight(5); break;
+//    case Qt::Key_6: setEdgeWeight(6); break;
+//    case Qt::Key_7: setEdgeWeight(7); break;
+//    case Qt::Key_8: setEdgeWeight(8); break;
+//    case Qt::Key_9: setEdgeWeight(9); break;
+//    case Qt::Key_R:
+//        break;
+//    }
+//}
 
-            auto text = ui->algList->currentText();
-            if (text == "BFS") {
-                graph_->clear_metadata(false);
-                search_ = new BFS(*graph_, graph_->start(), graph_->end());
-            } else if (text == "DFS") {
-                graph_->clear_metadata(false);
-                search_ = new DFS(*graph_, graph_->start(), graph_->end());
-            } else if (text == "Dijkstra") {
-                graph_->clear_metadata(true);
-                search_ = new Dijkstra(*graph_, graph_->start());
-            } else if (text == "Euler") {
-                graph_->clear_metadata(false);
-                search_ = new Euler(*graph_, graph_->start());
-            } else {
-                QMessageBox box;
-                box.setText("No algorithm was selected.");
-                box.exec();
-            }
-
-            search_->start();
-            reloadModel();
-        }
-        break;
-    }
-}
-
-void MainWindow::delete_selection()
+void MainWindow::on_actionDelete_triggered()
 {
     if (scene->selectedItems().size() == 1) {
         QGraphicsItem *selectedItem = scene->selectedItems().at(0);
@@ -181,42 +145,6 @@ void MainWindow::delete_selection()
     }
 
     reloadModel();
-}
-
-void MainWindow::on_addVertex_clicked()
-{
-    auto v = graph_->add_vertex();
-    auto pos = ui->graphicsView->mapToScene(mapFromGlobal(QCursor::pos()));
-    v->x = pos.x();
-    v->y = pos.y();
-
-    reloadModel();
-}
-
-void MainWindow::on_addEdge_clicked()
-{
-    VertexGraphicsItem* current = selectedVertex();
-    if (current) {
-        // If we already had one selected, revert the selection color
-        if (connectionVertex_ != -1) {
-            if (current->value() != connectionVertex_) {
-                for	(VertexGraphicsItem* vgi : vertices_) {
-                    if (vgi->value() == connectionVertex_) {
-                        vgi->selected(false); } }
-
-                graph_->connect(current->value(), connectionVertex_);
-
-                // Reset the selection after we connect the vertices
-                connectionVertex_ = -1;
-                reloadModel();
-                log_event("Edge added");
-            }
-        } else {
-            current->selected(true);
-            connectionVertex_ = current->value();
-            reloadModel();
-        }
-    }
 }
 
 /// isStart - true for start vertex, false for end vertex
@@ -239,7 +167,7 @@ void MainWindow::searchToggle(bool isStart)
     }
 }
 
-void MainWindow::searchStep()
+void MainWindow::on_actionNextStep_triggered()
 {
     if (graph_->search_ready() && search_) {
         search_->step();
@@ -249,23 +177,44 @@ void MainWindow::searchStep()
     }
 }
 
-void MainWindow::changeOrientation()
+void MainWindow::on_actionRestartAlgorithm_triggered()
 {
-    EdgeGraphicsItem* egi;
-    if (scene->selectedItems().size() > 0 && (egi = dynamic_cast<EdgeGraphicsItem*>(scene->selectedItems().at(0)))) {
-        graph_->toggleEdge(egi->from->value(), egi->to->value());
+    if (graph_->search_ready()) {
+
+        auto text = ui->algList->currentText();
+        if (text == "BFS") {
+            graph_->clear_metadata(false);
+            search_ = new BFS(*graph_, graph_->start(), graph_->end());
+        } else if (text == "DFS") {
+            graph_->clear_metadata(false);
+            search_ = new DFS(*graph_, graph_->start(), graph_->end());
+        } else if (text == "Dijkstra") {
+            graph_->clear_metadata(true);
+            search_ = new Dijkstra(*graph_, graph_->start());
+        } else if (text == "Euler") {
+            graph_->clear_metadata(false);
+            search_ = new Euler(*graph_, graph_->start());
+        } else {
+            QMessageBox box;
+            box.setText("No algorithm was selected.");
+            box.exec();
+        }
+
+        search_->start();
         reloadModel();
-        log_event("Changed orientation");
-    } else {
-        log_event("Failed to change, it aint an edge");
     }
 }
 
-void MainWindow::printDebugInfo()
+void MainWindow::on_actionPrintGraphToStdout_triggered()
 {
     std::stringstream ss;
     ss << *graph_;
     qDebug() << ss.str().c_str();
+}
+
+void MainWindow::on_actionRandomDirectedEdges_triggered()
+{
+
 }
 
 /// Returns a selected vertex if there is one, otherwise nullptr.
@@ -288,7 +237,8 @@ void MainWindow::on_actionNew_triggered()
     log_event("New graph");
 }
 
-void MainWindow::on_sampleGraph_clicked()
+
+void MainWindow::on_actionRandomGraph_triggered()
 {
     graph_ = new Graph();
     connectionVertex_ = -1;
@@ -323,6 +273,25 @@ void MainWindow::on_sampleGraph_clicked()
     reloadModel();
 }
 
+void MainWindow::on_actionRandomEulerianGraph_triggered()
+{
+
+}
+
+void MainWindow::on_actionRandomEdgeWeights_triggered()
+{
+
+}
+
+void MainWindow::on_actionMakeUndirected_triggered()
+{
+
+}
+
+void MainWindow::on_actionExportGraphvizDotFile_triggered()
+{
+
+}
 
 void MainWindow::on_actionSave_triggered()
 {
@@ -357,6 +326,42 @@ void MainWindow::on_actionOpen_triggered()
         log_event("Dialog canceled"); }
 }
 
+void MainWindow::on_actionAddVertex_triggered()
+{
+    auto v = graph_->add_vertex();
+    auto pos = ui->graphicsView->mapToScene(mapFromGlobal(QCursor::pos()));
+    v->x = pos.x();
+    v->y = pos.y();
+
+    reloadModel();
+}
+
+void MainWindow::on_actionConnectWithEdge_triggered()
+{
+    VertexGraphicsItem* current = selectedVertex();
+    if (current) {
+        // If we already had one selected, revert the selection color
+        if (connectionVertex_ != -1) {
+            if (current->value() != connectionVertex_) {
+                for	(VertexGraphicsItem* vgi : vertices_) {
+                    if (vgi->value() == connectionVertex_) {
+                        vgi->selected(false); } }
+
+                graph_->connect(current->value(), connectionVertex_);
+
+                // Reset the selection after we connect the vertices
+                connectionVertex_ = -1;
+                reloadModel();
+                log_event("Edge added");
+            }
+        } else {
+            current->selected(true);
+            connectionVertex_ = current->value();
+            reloadModel();
+        }
+    }
+}
+
 void MainWindow::setEdgeWeight(int value) {
     EdgeWeightText *ewt;
     if (scene->selectedItems().count() == 1 && (ewt = dynamic_cast<EdgeWeightText*>(scene->selectedItems().at(0)))) {
@@ -374,4 +379,26 @@ void MainWindow::graphConnect(VertexGraphicsItem *v1, VertexGraphicsItem *v2, Ed
 
     v1->edges.push_back(egi);
     v2->edges.push_back(egi);
+}
+
+void MainWindow::on_actionChangeOrientation_triggered()
+{
+    EdgeGraphicsItem* egi;
+    if (scene->selectedItems().size() > 0 && (egi = dynamic_cast<EdgeGraphicsItem*>(scene->selectedItems().at(0)))) {
+        graph_->toggleEdge(egi->from->value(), egi->to->value());
+        reloadModel();
+        log_event("Changed orientation");
+    } else {
+        log_event("Failed to change, it aint an edge");
+    }
+}
+
+void MainWindow::on_actionSearchFrom_triggered()
+{
+    searchToggle(true);
+}
+
+void MainWindow::on_actionSearchTo_triggered()
+{
+    searchToggle(false);
 }

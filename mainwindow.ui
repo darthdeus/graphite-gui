@@ -32,19 +32,6 @@
       <property name="title">
        <string>Graph operations    </string>
       </property>
-      <widget class="QPushButton" name="sampleGraph">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>20</y>
-         <width>141</width>
-         <height>32</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Random graph</string>
-       </property>
-      </widget>
       <widget class="QTextBrowser" name="textBrowser">
        <property name="geometry">
         <rect>
@@ -142,28 +129,29 @@ p, li { white-space: pre-wrap; }
     <property name="title">
      <string>Graph</string>
     </property>
-    <addaction name="actionRandom_oriented_edges"/>
-    <addaction name="actionRandom_graph"/>
-    <addaction name="actionRandom_Eulerian_graph"/>
+    <addaction name="actionRandomDirectedEdges"/>
+    <addaction name="actionRandomGraph"/>
+    <addaction name="actionRandomEulerianGraph"/>
+    <addaction name="actionRandomEdgeWeights"/>
     <addaction name="separator"/>
-    <addaction name="actionMake_undirected"/>
-    <addaction name="actionExport_Graphviz_dot_file"/>
+    <addaction name="actionMakeUndirected"/>
+    <addaction name="actionExportGraphvizDotFile"/>
    </widget>
    <widget class="QMenu" name="menuActions">
     <property name="title">
      <string>Actions</string>
     </property>
-    <addaction name="actionAdd_node"/>
-    <addaction name="actionConnect_with_edge"/>
+    <addaction name="actionAddVertex"/>
+    <addaction name="actionConnectWithEdge"/>
     <addaction name="actionDelete"/>
-    <addaction name="actionChange_orientation"/>
+    <addaction name="actionChangeOrientation"/>
     <addaction name="separator"/>
-    <addaction name="actionSearch_from"/>
-    <addaction name="actionSearch_to"/>
-    <addaction name="actionNext_step"/>
-    <addaction name="actionRestart_algorithm"/>
+    <addaction name="actionSearchFrom"/>
+    <addaction name="actionSearchTo"/>
+    <addaction name="actionNextStep"/>
+    <addaction name="actionRestartAlgorithm"/>
     <addaction name="separator"/>
-    <addaction name="actionPrint_graph_to_stdout"/>
+    <addaction name="actionPrintGraphToStdout"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuGraph"/>
@@ -199,40 +187,49 @@ p, li { white-space: pre-wrap; }
     <string>Ctrl+O</string>
    </property>
   </action>
-  <action name="actionRandom_oriented_edges">
+  <action name="actionRandomDirectedEdges">
    <property name="text">
     <string>Random directed edges</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+R, D</string>
+   </property>
   </action>
-  <action name="actionRandom_graph">
+  <action name="actionRandomGraph">
    <property name="text">
     <string>Random graph</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+R, G</string>
+   </property>
   </action>
-  <action name="actionRandom_Eulerian_graph">
+  <action name="actionRandomEulerianGraph">
    <property name="text">
     <string>Random Eulerian graph</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+R, E</string>
+   </property>
   </action>
-  <action name="actionMake_undirected">
+  <action name="actionMakeUndirected">
    <property name="text">
     <string>Make undirected (removes edge orientation)</string>
    </property>
   </action>
-  <action name="actionExport_Graphviz_dot_file">
+  <action name="actionExportGraphvizDotFile">
    <property name="text">
     <string>Export Graphviz .dot file</string>
    </property>
   </action>
-  <action name="actionAdd_node">
+  <action name="actionAddVertex">
    <property name="text">
-    <string>Add node</string>
+    <string>Add vertex</string>
    </property>
    <property name="shortcut">
     <string>A</string>
    </property>
   </action>
-  <action name="actionConnect_with_edge">
+  <action name="actionConnectWithEdge">
    <property name="text">
     <string>Connect with edge</string>
    </property>
@@ -248,7 +245,7 @@ p, li { white-space: pre-wrap; }
     <string>D</string>
    </property>
   </action>
-  <action name="actionChange_orientation">
+  <action name="actionChangeOrientation">
    <property name="text">
     <string>Change orientation</string>
    </property>
@@ -256,7 +253,7 @@ p, li { white-space: pre-wrap; }
     <string>O</string>
    </property>
   </action>
-  <action name="actionSearch_from">
+  <action name="actionSearchFrom">
    <property name="text">
     <string>Search from</string>
    </property>
@@ -264,7 +261,7 @@ p, li { white-space: pre-wrap; }
     <string>F</string>
    </property>
   </action>
-  <action name="actionSearch_to">
+  <action name="actionSearchTo">
    <property name="text">
     <string>Search to</string>
    </property>
@@ -272,7 +269,7 @@ p, li { white-space: pre-wrap; }
     <string>T</string>
    </property>
   </action>
-  <action name="actionNext_step">
+  <action name="actionNextStep">
    <property name="text">
     <string>Next step</string>
    </property>
@@ -280,7 +277,7 @@ p, li { white-space: pre-wrap; }
     <string>N</string>
    </property>
   </action>
-  <action name="actionRestart_algorithm">
+  <action name="actionRestartAlgorithm">
    <property name="text">
     <string>Restart algorithm</string>
    </property>
@@ -288,7 +285,7 @@ p, li { white-space: pre-wrap; }
     <string>R</string>
    </property>
   </action>
-  <action name="actionPrint_graph_to_stdout">
+  <action name="actionPrintGraphToStdout">
    <property name="text">
     <string>Print graph to stdout</string>
    </property>
@@ -299,6 +296,14 @@ p, li { white-space: pre-wrap; }
   <action name="actionQuit">
    <property name="text">
     <string>Quit</string>
+   </property>
+  </action>
+  <action name="actionRandomEdgeWeights">
+   <property name="text">
+    <string>Random edge weights</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+E, W</string>
    </property>
   </action>
  </widget>
