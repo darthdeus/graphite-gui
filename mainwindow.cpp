@@ -298,7 +298,14 @@ void MainWindow::on_actionRandomEulerianGraph_triggered()
 
 void MainWindow::on_actionRandomEdgeWeights_triggered()
 {
+    for (auto& v: graph_->list) {
+        for (auto& e: v->edges) {
+            e.weight = 1 + rand() % 9;
+        }
+    }
 
+    reloadModel();
+    log_event("edge weights randomized");
 }
 
 void MainWindow::on_actionMakeUndirected_triggered()
