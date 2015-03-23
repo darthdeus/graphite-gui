@@ -280,7 +280,7 @@ VertexGraphicsItem* MainWindow::selectedVertex() const
     return current;
 }
 
-void MainWindow::on_actionNew_clicked()
+void MainWindow::on_actionNew_triggered()
 {
     graph_ = new Graph();
     connectionVertex_ = -1;
@@ -324,12 +324,12 @@ void MainWindow::on_sampleGraph_clicked()
 }
 
 
-void MainWindow::on_actionSave_clicked()
+void MainWindow::on_actionSave_triggered()
 {
     log_event("Save");
 }
 
-void MainWindow::on_actionSaveAs_clicked()
+void MainWindow::on_actionSave_as_triggered()
 {
     auto file = QFileDialog::getSaveFileName();
 
@@ -341,7 +341,7 @@ void MainWindow::on_actionSaveAs_clicked()
         log_event("Dialog canceled"); }
 }
 
-void MainWindow::on_actionOpen_clicked()
+void MainWindow::on_actionOpen_triggered()
 {
     // TODO - nastavit vsem streamum aby vyhazovaly vyjimky
     auto file = QFileDialog::getOpenFileName();

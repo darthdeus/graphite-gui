@@ -34,10 +34,10 @@ public:
     Ui::MainWindow *ui;
 
 public slots:
-    void on_actionNew_clicked();
-    void on_actionSave_clicked();
-    void on_actionSaveAs_clicked();
-    void on_actionOpen_clicked();
+    void on_actionNew_triggered();
+    void on_actionSave_triggered();
+    void on_actionSave_as_triggered();
+    void on_actionOpen_triggered();
 
 private slots:
     void on_sampleGraph_clicked();
