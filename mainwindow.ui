@@ -297,6 +297,9 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>Quit</string>
    </property>
+   <property name="shortcut">
+    <string/>
+   </property>
   </action>
   <action name="actionRandomEdgeWeights">
    <property name="text">

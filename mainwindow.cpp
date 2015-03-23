@@ -14,6 +14,8 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include <set>
+#include <utility>
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -214,7 +216,23 @@ void MainWindow::on_actionPrintGraphToStdout_triggered()
 
 void MainWindow::on_actionRandomDirectedEdges_triggered()
 {
+    // We can use pairs since they already handle comparisons properly.
+    std::set<std::pair<int, int>> edges;
 
+    for (auto& v: graph_->list) {
+        for (Edge& e: v->edges) {
+            edges.insert(std::make_pair(e.from->value, e.to->value));
+        }
+    }
+
+    for (auto pair : edges) {
+        if (rand() % 2 == 0) {
+            graph_->toggleEdge(pair.first, pair.second);
+        }
+    }
+
+    reloadModel();
+    log_event("Randomized edges");
 }
 
 /// Returns a selected vertex if there is one, otherwise nullptr.

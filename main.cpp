@@ -4,6 +4,7 @@
 #include <QTextStream>
 #include <algorithm>
 #include <vector>
+#include <utility>
 
 #include "lib/logger.hpp"
 #include "lib/graph.hpp"
