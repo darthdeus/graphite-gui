@@ -108,24 +108,22 @@ void MainWindow::reloadModel()
     reloading = false;
 }
 
-//void MainWindow::keyReleaseEvent(QKeyEvent *e)
-//{
-//    switch (e->key()) {
-//    case Qt::Key_N: searchStep(); break;
-//    case Qt::Key_0: setEdgeWeight(0); break;
-//    case Qt::Key_1: setEdgeWeight(1); break;
-//    case Qt::Key_2: setEdgeWeight(2); break;
-//    case Qt::Key_3: setEdgeWeight(3); break;
-//    case Qt::Key_4: setEdgeWeight(4); break;
-//    case Qt::Key_5: setEdgeWeight(5); break;
-//    case Qt::Key_6: setEdgeWeight(6); break;
-//    case Qt::Key_7: setEdgeWeight(7); break;
-//    case Qt::Key_8: setEdgeWeight(8); break;
-//    case Qt::Key_9: setEdgeWeight(9); break;
-//    case Qt::Key_R:
-//        break;
-//    }
-//}
+void MainWindow::keyReleaseEvent(QKeyEvent *e)
+{
+    switch (e->key()) {
+    case Qt::Key_0: setEdgeWeight(0); break;
+    case Qt::Key_1: setEdgeWeight(1); break;
+    case Qt::Key_2: setEdgeWeight(2); break;
+    case Qt::Key_3: setEdgeWeight(3); break;
+    case Qt::Key_4: setEdgeWeight(4); break;
+    case Qt::Key_5: setEdgeWeight(5); break;
+    case Qt::Key_6: setEdgeWeight(6); break;
+    case Qt::Key_7: setEdgeWeight(7); break;
+    case Qt::Key_8: setEdgeWeight(8); break;
+    case Qt::Key_9: setEdgeWeight(9); break;
+    default: QMainWindow::keyReleaseEvent(e);
+    }
+}
 
 void MainWindow::on_actionDelete_triggered()
 {
