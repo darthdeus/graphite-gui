@@ -309,7 +309,7 @@ p, li { white-space: pre-wrap; }
     <string>Random edge weights</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+E, W</string>
+    <string>Ctrl+R, W</string>
    </property>
   </action>
  </widget>
