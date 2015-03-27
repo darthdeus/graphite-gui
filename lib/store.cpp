@@ -18,6 +18,7 @@ Graph store::load(const std::string filename) {
 
   std::ifstream fs(filename);
   // fs >> 
+  // TODO - figure out what to do with this
 
   return std::move(g);
 }
