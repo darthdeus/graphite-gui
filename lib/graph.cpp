@@ -267,6 +267,11 @@ void Graph::updateBridges() {
 
     for (auto& v : list) {
         v->in = undefined_in;
+        v->low = std::numeric_limits<int>::max();
+        for (auto& e : v->edges) {
+            e.bridge = false;
+            qDebug() << "reset bridges";
+        }
     }
 
     updateVertex((*list.begin()).get(),  counter);

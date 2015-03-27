@@ -121,6 +121,9 @@ void MainWindow::keyReleaseEvent(QKeyEvent *e)
     case Qt::Key_7: setEdgeWeight(7); break;
     case Qt::Key_8: setEdgeWeight(8); break;
     case Qt::Key_9: setEdgeWeight(9); break;
+    case Qt::Key_B:
+        graph_->updateBridges();
+        reloadModel();
     default: QMainWindow::keyReleaseEvent(e);
     }
 }
