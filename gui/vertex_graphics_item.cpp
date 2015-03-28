@@ -114,7 +114,7 @@ void VertexGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem
             text = text.arg(vertex->distance);
         }
 
-//        text = QString("%1 %2").arg(vertex->in).arg(vertex->low);
+        text = QString("%1 %2").arg(vertex->in).arg(vertex->low);
     } else {
         text = QString("%1").arg(vertex->value);
     }

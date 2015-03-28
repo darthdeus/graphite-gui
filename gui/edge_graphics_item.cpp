@@ -49,8 +49,10 @@ void EdgeGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
 {
     QPen pen;
     pen.setWidth(3);
-    if (edge->bridge || edge->deleted) {
+    if (edge->deleted) {
         pen.setColor(QColor(230, 230, 230));
+    } else if (edge->bridge) {
+        pen.setColor(QColor(230, 130, 130));
     } else {
         // TODO - handle bridges
         pen.setColor(QColor(180, 180, 180));

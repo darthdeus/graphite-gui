@@ -239,13 +239,22 @@ std::ostream& operator<<(std::ostream& os, Graph& g) {
 
 const int undefined_in = -1;
 
-void updateVertex(Vertex* v, int& counter) {
+void updateVertex(Vertex* v, int& counter, Edge* backEdge) {
     v->in = counter++;
+//    qDebug() << "updateVertex" << v->value << "in" << v->in;
+
     for (Edge& e : v->edges) {
+        if (e.deleted) continue;
+        if (&e == backEdge) continue;
+
         if (e.to->in == undefined_in) {
-            updateVertex(e.to, counter);
+            // dopredna hrana
+//            qDebug() << "dopredna hrana z" << v->value << "do" << e.to->value;
+            updateVertex(e.to, counter, e.reverseEdge());
 
             if (e.to->low >= e.to->in) {
+//                qDebug() << "nalezen most z" << v->value << "do" << e.to->value;
+
                 e.bridge = true;
 
                 if (Edge* reverse = e.reverseEdge()) {
@@ -256,6 +265,7 @@ void updateVertex(Vertex* v, int& counter) {
             v->low = std::min(v->low, e.to->low);
         } else if (e.to->in < v->in - 1) {
             // zpetna hrana
+//            qDebug() << "zpetna hrana z" << v->value << "do" << e.to->value;
             v->low = std::min(v->low, e.to->in);
         }
     }
@@ -263,16 +273,16 @@ void updateVertex(Vertex* v, int& counter) {
 
 
 void Graph::updateBridges() {
-    int counter = 0;
+    int counter = 1;
 
     for (auto& v : list) {
         v->in = undefined_in;
         v->low = std::numeric_limits<int>::max();
+
         for (auto& e : v->edges) {
             e.bridge = false;
-            qDebug() << "reset bridges";
         }
     }
 
-    updateVertex((*list.begin()).get(),  counter);
+    updateVertex(start_,  counter, nullptr);
 }
