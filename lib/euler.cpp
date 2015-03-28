@@ -34,7 +34,6 @@ void Euler::start() {
 }
 
 int Euler::step() {
-    g_.updateBridges();
 
     if (done) return 0;
     if (!current_) return 0;
@@ -52,6 +51,8 @@ int Euler::step() {
     if (undeleted_edge_count == 0) {
         qDebug() << "No edges left, done";
         done = true;
+
+        g_.updateBridges();
         return 0;
     }
 
@@ -72,6 +73,8 @@ int Euler::step() {
         current_->color = vertex_color::gray;
 
         qDebug() << "Only bridges left";
+
+        g_.updateBridges();
         return 0;
     }
 
@@ -87,57 +90,6 @@ int Euler::step() {
         current_->color = vertex_color::gray;
 
     qDebug() << "Non-bridge";
-
+    g_.updateBridges();
     return 0;
 }
-
-//int Euler::step() {
-//    if (done) return 0;
-//    if (!current_) return 0;
-
-//    bool found = false;
-//    for (Edge& e: current_->edges) {
-//        if (e.deleted) continue;
-
-//        found = true;
-//        e.deleted = true;
-//        if (e.reverseEdge()) {
-//            e.reverseEdge()->deleted = true;
-//        }
-//        stack_.push(current_);
-//        current_ = e.to;
-
-//        break;
-//    }
-
-//    if (!found) {
-//        circuit_.push_back(current_);
-//        qDebug() << "pushed" << current_->value;
-
-//        if (!stack_.empty()) {
-//            current_ = stack_.top();
-//            stack_.pop();
-
-//            if (!current_->undeletedEdgeCount()) step();
-//            qDebug() << "popped from the stack" << current_->value;
-
-//        } else {
-//            done = true;
-//            qDebug() << "Done, the circuit is:";
-
-//            std::reverse(begin(circuit_), end(circuit_));
-
-//            int i = 1;
-//            for (Vertex* v: circuit_) {
-//                if (v->label.length() > 0) {
-//                    v->label += ", ";
-//                }
-
-//                v->label += QString("%1").arg(i++).toStdString();
-//                qDebug() << v->value;
-//            }
-//        }
-//    }
-
-//    return 0;
-//}

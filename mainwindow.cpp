@@ -66,9 +66,6 @@ void MainWindow::reloadModel()
         }
     }
 
-    // TODO - promyslet
-//    selectedVertex_ = nullptr;
-
     vertices_.clear();
     scene->clear();
 
@@ -294,7 +291,32 @@ void MainWindow::on_actionRandomGraph_triggered()
 
 void MainWindow::on_actionRandomEulerianGraph_triggered()
 {
+    graph_ = new Graph();
+    connectionVertex_ = -1;
+    graph_->add_vertex();
 
+    int cycle_count = 5 + rand() % 3;
+
+    for (int i = 0; i < cycle_count; i++) {
+        // Pick a random vertex
+        int index = rand() % graph_->list.size();
+        auto it = graph_->list.begin();
+        std::advance(it, index);
+
+        Vertex* v = it->get();
+        Vertex* prev = v;
+
+        int cycle_length = 2 + rand() % 2;
+        for (int j = 0; j < cycle_length; j++) {
+            Vertex* v0 = graph_->add_vertex();
+            graph_->connect(prev->value, v0->value);
+            prev = v0;
+        }
+
+        graph_->connect(prev->value, v->value);
+    }
+
+    reloadModel();
 }
 
 void MainWindow::on_actionRandomEdgeWeights_triggered()
