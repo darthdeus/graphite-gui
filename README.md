@@ -20,7 +20,7 @@ Testováno na různých distribucích Linuxu, včetně labu, a OS X 10.10.
 
 Program se ovládá klávesnicí i myší, kde všechny příkazy jdou zadat buď přes hlavní menu
 
-SCREENSHOT
+![hlavni menu](http://i.imgur.com/KJaB5S6.png)
 
 a nebo pomocí klávesové zkratky. Zde je jejich úplný seznam:
 
@@ -56,9 +56,7 @@ kliknout na libovolný vrchol, vybrat ho jako počáteční (stisknutím `F`), i
 
 V libovolnou chvíli je možné znovu stiknout `R`, čímž se algoritmus resetuje a začne pracovat odznova. **Pokud uživatel graf jakkoliv změní v průběhu algoritmu, je nutné algoritmus resetovat stisktnutím `R`**.
 
-TODO - resetovat rucne
-
-TODO - popsat dalsi alg
+Většina důležitých informací které program provádí jsou vypisovány do logu v pravé straně GUI (a některé navíc na STDOUT). Log v GUI je editovatelný text, a lze ho tedy označit myší a smazat.
 
 ## Generování náhodných grafů
 
