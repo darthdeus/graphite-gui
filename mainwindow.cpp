@@ -264,7 +264,8 @@ void MainWindow::on_actionRandomGraph_triggered()
     std::queue<Vertex*> queue;
     queue.push(prev);
 
-    int count = rand() % 5 + 10;
+    // Randomized edge count, between 10-15
+    int count = rand() % 6 + 10;
 
     while (count-- ) {
         Vertex* next = graph_->add_vertex();
