@@ -42,7 +42,7 @@ a nebo pomocí klávesové zkratky. Zde je jejich úplný seznam:
 - Start/Restart algoritmu `R`.
 - Krok algoritmu `N`.
 - Změna orientace hrany `O` (nejprve je potřeba hranu vybrat kliknutím myši.)
-- Nastavení ohodnocení hrany `0-9`, nejprve je ale potřeba mít vybraný Dijkstrův algoritmus, jinak se ohodnocení hran nezobrazí, a poté kliknout na vybrané ohodnocení (*ne na hranu*).
+- Nastavení ohodnocení hrany `1-9`, nejprve je ale potřeba mít vybraný Dijkstrův algoritmus, jinak se ohodnocení hran nezobrazí, a poté kliknout na vybrané ohodnocení (*ne na hranu*).
 
 Grafy je také možné uložit do souboru `Ctrl-S` a znovu načíst `Ctrl-S`, přičemž se zachová i rozložení vrcholů v prostoru (pokud je uživatel přesunul.)
 
@@ -103,3 +103,40 @@ Pro porovnání prohledávání do hloubky a do šířky je nejlepší zvolit st
 
 Jak DFS tak BFS umí pracovat s orientovanými grafy. Orientace hrany se změní označením hrany myší a stiskem `O`. Pro vrcholy `A` a `B` se postupně mění typ hrany na `A -> B`, `A <- B`, a `A <-> B`.
 
+### Dijkstrův algoritmus
+
+Dijkstrův algoritmus opět funguje i na orientovaných grafech, pričemž navíc zobrazuje i ohodnocení hran.
+
+![ohodnocení hran](http://i.imgur.com/2d7DzOA.png)
+
+Váha hrany je vždy zobrazena ve směru kam hrana ukazuje, a tedy pro _obousměrné_, resp. _neorientované_ hrany jsou zobrazena ohodnocení dvě, každé jedním směrem.
+
+Hranám lze nastavovat hodnoty v rozsahu 1-9, což se provede kliknutím na ohodnocení hrany a stiskem patřičné klávesy 1-9. Označení se zobrazí tečkovaným čtvercem okolo ohodnocení hrany (viz. obrázek).
+
+Samotný dijkstruv algoritmus se poté zobrazuje podobně jako u DFS/BFS. Nenavštívené vrcholy jsou tmavě zelené, otevřené jsou světle zelené a uzavřené jsou černé. Navíc se však u vrcholů zobrazuje jejich vzdálenost od počátečního vrcholu, a to tak, že se v popisku vrcholu zobrazí `číslo vrcholu / vzdálenost od zdroje`. Vrcholy zatím neobjevené mají nekonečnou vzdálenost, reprezentováno stringem `inf`, viz obrázek.
+
+![Dijkstra průběh](http://i.imgur.com/OWYHOQ7.png)
+
+### Eulerovská kružnice
+
+Algoritmus pro hledání Eulerovské kružnice se trochu liší od prvních tří, a to tím, že funguje pouze na neorientovaných grafech, kde stupeň všech vrcholů je sudý. Pokud je spuštěn na grafu který není Eulerovský, nemusí správně fungovat.
+
+Pro implemntaci jsem zvolil Fleuryho algoritmus, který funguje následovně:
+
+1. začni v libovolném vrcholu
+2. vyber hranu která není most, pokud jsou všechny mosty tak vyber libovolnou
+3. označ hranu jako smazanou, a přesuň se do vrcholu kam hrana ukazuje a opakuj krok 1.
+
+Tento algoritmus je velmi přímočarý, a ze všech implementací které jsem zkoušel vede na nejnázornější vizualizaci, a to proto, že během svého průběhu může označovat hrany které jsou mosty, a uživatel tak snadno vidí, jak se algoritmus rozhoduje kudy půjde.
+
+Na začátku algoritmu sice žádné mosty nemohou existovat, ale už po prvním kroku dojde ke _smazání_ jedné hrany, a tím mohou nějaké mosty vzniknout. Viz obrázek
+
+![graf bez mostů](http://i.imgur.com/95ubo0l.png)
+
+a po prvním kroku už máme nalezeny dva mosty.
+
+![mosty jsou označeny červeně](http://i.imgur.com/Ls741t3.png)
+
+Hledání mostů je nutné provést po každém kroku algoritmu, a probíhá pomocí DFS klasifikace, konkrétně tak, že se prohledá celý graf pomocí DFS, najdou se vrcholy, které leží na nějaké kružnici (pomocí zpětných hran v DFS stromu), a ty co neleží jsou označený jako mosty.
+
+Složitost algoritmu je tedy kvadratická, protože pro každý krok je nutné provést celé DFS na odhalení mostů. Existují sice alternativní algoritmy, které jsou ve výsledku rychlejší, ale jejich vizualizace je často velmi matoucí, zatímco Fleuryho algoritmus je velmi přímočarý.
