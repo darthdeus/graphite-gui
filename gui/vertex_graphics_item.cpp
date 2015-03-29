@@ -71,7 +71,6 @@ bool VertexGraphicsItem::hasCoordinates() const
 
 void VertexGraphicsItem::markSearch(bool value) {
     vertex->target = value;
-//    vertex->color = value ? vertex_color::gray : vertex_color::white;
     update();
 }
 

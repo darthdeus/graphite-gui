@@ -10,9 +10,9 @@ Pro kompilaci je potřeba překladač který umí C++11, např. Clang/LLVM verze
 
 Kompilace a spuštění se pak provede následovně
 
-  $ qmake .
-  $ make
-  $ ./build/debug/graphite
+    $ qmake .
+    $ make
+    $ ./build/debug/graphite
 
 Testováno na různých distribucích Linuxu, včetně labu, a OS X 10.10.
 
