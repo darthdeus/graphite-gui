@@ -17,7 +17,6 @@ Kompilace a spuštění se pak provede následovně
 Testováno na různých distribucích Linuxu, včetně labu, a OS X 10.10.
 
 
-
 TODO spuštění bez Qt?
 
 
@@ -51,11 +50,11 @@ Grafy je také možné uložit do souboru `Ctrl-S` a znovu načíst `Ctrl-S`, p�
 
 Nejjednodušší je vybrat jeden z přiložených grafů v souboru, a otevřít jej přes `File -> Open`, např. kompletní graf na 5 vrcholech v souboru `examples/k5.g`
 
-![k5-screenshot](http://i.imgur.com/iYrD1VK.png)
+![K5](http://i.imgur.com/iYrD1VK.png)
 
 v seznamu algoritmů vybrat Eulerovský tah
 
-![alg-selection](http://i.imgur.com/ewrHxRO.png)
+![výběr algoritmu](http://i.imgur.com/ewrHxRO.png)
 
 kliknout na libovolný vrchol, vybrat ho jako počáteční (stisknutím `F`), inicializovat algoritmus (stisknutím `R`), a poté již krokovat stisknutím `N`.
 
@@ -82,27 +81,25 @@ Protože pro Eulerovské grafy musí platit, že každý vrchol má sudý stupe�
 
 Výsledný graf pak vypadá např. takto
 
-![random-euler](http://i.imgur.com/LQNxfKa.png)
+![náhodný Eulerovský graf](http://i.imgur.com/LQNxfKa.png)
 
 Takto vygenerovaný graf má opět výhodu, že je díky menšímu počtu hran přehledný.
 
-## Rozmístění vrcholů
+### Rozmístění vrcholů
 
-Při generování náhodného grafu jsou vrcholy vždy rozmístěny na spirálu, která se rozvijí _zevnitř ven_.
+Při generování náhodného grafu jsou vrcholy vždy rozmístěny na spirálu, která se rozvijí _zevnitř ven_. Pro grafy výše zmíněné náhodně generované grafy je toto rozložení relativně blízko tomu, co by si uživatel mohl předstatovat, a stačí zpravidla pouze přemístit pár vrcholů uvnitř spirály, aby se příliš mnoho hran nekřížilo.
 
+## Algoritmy
 
+Všechny algoritmy jsou implementované jako stavový automat, ktery se stiskem `R` přesune do počátečního stavu, a stiskem `N` postupně krokuje, až dojde do koncového stavu, kdy algoritmus doběhl.
 
-Tema: Vizualizace grafovych algoritmu
-Funkce:
-- Vygenerovani vhodne nahodneho grafu pro vybrany algoritmus
-- Nakresleni grafu zpusobem, kdy se vrcholy rozmisti do nejake nahodne mrizky, mezi ne nakresli hrany, a uzivatel pak muze vrcholy libovolne presouvat, aby graf vypadal tak jak si predstavuje.
-- Moznost rucni editace grafu - pridavani/odebirani vrcholu/hran, apod.
-- Moznost ulozeni grafu do souboru a jeho znovunacteni, napr. po tom co uzivatel nejak graf zmenil
+Proto jsem zvolil zásobníkovou variantu DFS místo rekurzivní, aby šlo jednoduše ovládat průběh algoritmu.
 
-- Moznost vybrat algoritmus ktery se bude na zadanem grafu vizualizovat. Aplikace bude obsahovat 4 algoritmy: prohledavani do hloubky a do sirky, Dijkstruv algoritmus, a nakresleni grafu jednim tahem (pruchod kazdou hranou prave jednou).
-- Prubeh zvoleneho algortimu bude zobrazovan na vybranem grafu
-- Kazdy algoritmus bude mit predpripravenou moznost vygenerovat pro nej vhodny graf (aby se usetril cas uzivateli ktery chce pouze videt jak algoritmus funguje a nechce pracne zadavat cely graf rucne)
+### DFS, BFS
 
-- Aplikace bude napsana v C++ a Qt a pobezi primarne na Linuxu
+Pro porovnání prohledávání do hloubky a do šířky je nejlepší zvolit stejný graf, a na něm pozorovat, jak se průběh jednotlivých algoritmů liší. Oba používají stejnou konvenci, a to že nenavštívený vrchol je tmavě zelený, otevřený je světle zelený a uzavřený je černý.
 
+![barvy vrcholů](http://i.imgur.com/CaAOrcu.png)
+
+Jak DFS tak BFS umí pracovat s orientovanými grafy. Orientace hrany se změní označením hrany myší a stiskem `O`. Pro vrcholy `A` a `B` se postupně mění typ hrany na `A -> B`, `A <- B`, a `A <-> B`.
 
