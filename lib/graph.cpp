@@ -230,7 +230,7 @@ std::ostream& operator<<(std::ostream& os, Graph& g) {
 
         os << vertex->edges.size() << ":";
         for (Edge& edge: vertex->edges) {
-            os << edge.to->value << " " << edge.weight << " "; // << edge.bridge << "| ";
+            os << edge.to->value << " " << edge.weight << " ";
         }
         os << std::endl;
     }
@@ -240,8 +240,9 @@ std::ostream& operator<<(std::ostream& os, Graph& g) {
 const int undefined_in = -1;
 
 void updateVertex(Vertex* v, int& counter, Edge* backEdge) {
+    if (v->in != undefined_in) return;
+
     v->in = counter++;
-//    qDebug() << "updateVertex" << v->value << "in" << v->in;
 
     for (Edge& e : v->edges) {
         if (e.deleted) continue;
@@ -249,12 +250,10 @@ void updateVertex(Vertex* v, int& counter, Edge* backEdge) {
 
         if (e.to->in == undefined_in) {
             // dopredna hrana
-//            qDebug() << "dopredna hrana z" << v->value << "do" << e.to->value;
             updateVertex(e.to, counter, e.reverseEdge());
 
             if (e.to->low >= e.to->in) {
-//                qDebug() << "nalezen most z" << v->value << "do" << e.to->value;
-
+                // nalezen most
                 e.bridge = true;
 
                 if (Edge* reverse = e.reverseEdge()) {
@@ -265,14 +264,13 @@ void updateVertex(Vertex* v, int& counter, Edge* backEdge) {
             v->low = std::min(v->low, e.to->low);
         } else if (e.to->in < v->in - 1) {
             // zpetna hrana
-//            qDebug() << "zpetna hrana z" << v->value << "do" << e.to->value;
             v->low = std::min(v->low, e.to->in);
         }
     }
 }
 
 
-void Graph::updateBridges() {
+void Graph::updateBridges(Vertex* start) {
     int counter = 1;
 
     for (auto& v : list) {
@@ -284,5 +282,7 @@ void Graph::updateBridges() {
         }
     }
 
-    updateVertex((*list.begin()).get(),  counter, nullptr);
+    for (auto& v : list) {
+        updateVertex(v.get(), counter, nullptr);
+    }
 }

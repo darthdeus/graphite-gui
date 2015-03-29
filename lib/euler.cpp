@@ -87,9 +87,9 @@ int Euler::step() {
     e.reverseEdge()->deleted = true;
 
     current_ = e.to;
-        current_->color = vertex_color::gray;
+    current_->color = vertex_color::gray;
 
     qDebug() << "Non-bridge";
-    g_.updateBridges();
+    g_.updateBridges(current_);
     return 0;
 }
