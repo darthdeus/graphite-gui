@@ -135,7 +135,6 @@
     <addaction name="actionRandomEdgeWeights"/>
     <addaction name="separator"/>
     <addaction name="actionMakeUndirected"/>
-    <addaction name="actionExportGraphvizDotFile"/>
    </widget>
    <widget class="QMenu" name="menuActions">
     <property name="title">

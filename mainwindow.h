@@ -56,7 +56,6 @@ private slots:
     void on_actionRandomEdgeWeights_triggered();
 
     void on_actionMakeUndirected_triggered();
-    void on_actionExportGraphvizDotFile_triggered();
 
 private:
     void graphConnect(VertexGraphicsItem* v1, VertexGraphicsItem* v2, Edge* edge);

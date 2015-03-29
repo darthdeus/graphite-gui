@@ -352,11 +352,6 @@ void MainWindow::on_actionMakeUndirected_triggered()
     log_event("Removed orientation");
 }
 
-void MainWindow::on_actionExportGraphvizDotFile_triggered()
-{
-
-}
-
 void MainWindow::on_actionSave_triggered()
 {
     log_event("Save");

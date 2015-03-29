@@ -16,10 +16,6 @@ Kompilace a spuštění se pak provede následovně
 
 Testováno na různých distribucích Linuxu, včetně labu, a OS X 10.10.
 
-
-TODO spuštění bez Qt?
-
-
 ## Základní ovládání
 
 Program se ovládá klávesnicí i myší, kde všechny příkazy jdou zadat buď přes hlavní menu
