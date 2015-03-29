@@ -19,7 +19,6 @@ SOURCES += \
     lib/dfs.cpp \
     lib/edge.cpp \
     lib/graph.cpp \
-    lib/store.cpp \
     lib/vertex.cpp \
     gui/edge_graphics_item.cpp \
     gui/vertex_graphics_item.cpp \
@@ -34,7 +33,6 @@ HEADERS  += \
     lib/dfs.hpp \
     lib/edge.hpp \
     lib/graph.hpp \
-    lib/store.hpp \
     lib/vertex.hpp \
     lib/bfs.hpp \
     gui/vertex_graphics_item.h \
