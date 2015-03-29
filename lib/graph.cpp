@@ -244,6 +244,7 @@ void updateVertex(Vertex* v, int& counter, Edge* backEdge) {
 //    qDebug() << "updateVertex" << v->value << "in" << v->in;
 
     for (Edge& e : v->edges) {
+        if (e.deleted) continue;
         if (&e == backEdge) continue;
 
         if (e.to->in == undefined_in) {
