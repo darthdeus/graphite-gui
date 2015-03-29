@@ -376,7 +376,6 @@ void MainWindow::on_actionSave_as_triggered()
 
 void MainWindow::on_actionOpen_triggered()
 {
-    // TODO - nastavit vsem streamum aby vyhazovaly vyjimky
     auto file = QFileDialog::getOpenFileName();
 
     if (!file.isNull()) {

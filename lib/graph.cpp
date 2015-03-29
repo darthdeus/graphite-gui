@@ -41,7 +41,6 @@ void Graph::connect_oriented(int vn1, int vn2, int weight) {
     auto v2 = find(vn2);
 
     if (!v1 || !v2) {
-        // TODO - temporary for now
         vertex_not_found("graph::connect", vn1, vn2);
         return;
     } else {
