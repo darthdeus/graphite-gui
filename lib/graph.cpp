@@ -9,7 +9,6 @@
 #include "lib/edge.hpp"
 
 static void vertex_not_found(const char *f, int vn1, int vn2) {
-    // TODO - better logging
     std::cout << f << ": vertex not found " << vn1 << " --> " << vn2
               << std::endl;
 }
@@ -124,7 +123,6 @@ void Graph::toggleEdge(int vn1, int vn2)
 }
 
 void Graph::set_start(Vertex *v) {
-    // TODO - also check if the vertex still exists
     if (start_) {
         start_->color = vertex_color::white;
         start_->target = false;
@@ -153,8 +151,6 @@ Vertex *Graph::end() const {
 }
 
 bool Graph::search_ready() const {
-    // TODO - check if this is good enough
-//    return start_ && end_;
     return start_;
 }
 

@@ -5,7 +5,6 @@ class Vertex;
 
 class Edge {
  public:
-//  Edge(Vertex* to, Vertex* from): from(from), to(to), weight(1) {}
   Edge(Vertex* to, Vertex* from, int weight): from(from), to(to), weight(weight) {}
 
   Vertex* from;
@@ -13,7 +12,7 @@ class Edge {
   int weight;
   bool deleted = false;
   bool bridge = false;
-  // TODO - show a ready status bar
+
   bool oriented = true;
   bool weighted = true;
 

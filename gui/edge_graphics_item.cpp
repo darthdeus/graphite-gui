@@ -20,12 +20,6 @@ EdgeGraphicsItem::EdgeGraphicsItem(VertexGraphicsItem* from, VertexGraphicsItem*
     setFlag(GraphicsItemFlag::ItemIsSelectable);
     weightText_ = new EdgeWeightText(this);
 
-    // Pro zlepseni citelnosti textu
-//    auto shadow = new QGraphicsDropShadowEffect();
-//    shadow->setOffset(0, 0);
-//    shadow->setBlurRadius(10);
-//    shadow->setColor(QColor(255, 255, 255));
-//    weightText_->setGraphicsEffect(shadow);
     weightText_->setFlag(QGraphicsItem::ItemIsSelectable);
     weightText_->setHtml(QString::number(edge->weight));
     weightText_->setHtml(QString("<span style='font-weight: bold;'>%1</span>").arg(edge->weight));
@@ -54,7 +48,6 @@ void EdgeGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
     } else if (edge->bridge) {
         pen.setColor(QColor(230, 130, 130));
     } else {
-        // TODO - handle bridges
         pen.setColor(QColor(180, 180, 180));
     }
     setPen(pen);
@@ -105,7 +98,6 @@ void EdgeGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
 
     if (!edge->weighted) {
         weightText_->setVisible(false);
-
     }
 
     double weightRadius = -25;
