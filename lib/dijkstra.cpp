@@ -22,12 +22,10 @@ void Dijkstra::start() {
     source_->distance = 0;
 }
 
-int Dijkstra::step() {
+void Dijkstra::step() {
     if (!queue_.empty()) {
         Vertex* v = queue_.top();
         queue_.pop();
-
-        qDebug() << "popped" << v->value << v->distance;
 
         v->color = vertex_color::black;
 
@@ -43,7 +41,7 @@ int Dijkstra::step() {
         }
     }
 
-    return 0; // TODO - handle end of input
+    return;
 }
 
 bool Dijkstra::is_closed(Vertex *v) {

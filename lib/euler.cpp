@@ -33,10 +33,10 @@ void Euler::start() {
     g_.updateBridges();
 }
 
-int Euler::step() {
+void Euler::step() {
 
-    if (done) return 0;
-    if (!current_) return 0;
+    if (done) return;
+    if (!current_) return;
 
     qDebug() << "current: " << current_->value;
 
@@ -53,7 +53,7 @@ int Euler::step() {
         done = true;
 
         g_.updateBridges();
-        return 0;
+        return;
     }
 
     bool all_bridges = std::all_of(current_->edges.begin(), current_->edges.end(), is_bridge_or_deleted);
@@ -75,7 +75,7 @@ int Euler::step() {
         qDebug() << "Only bridges left";
 
         g_.updateBridges();
-        return 0;
+        return;
     }
 
     auto res = std::find_if_not(current_->edges.begin(), current_->edges.end(), is_bridge_or_deleted);
@@ -91,5 +91,5 @@ int Euler::step() {
 
     qDebug() << "Non-bridge";
     g_.updateBridges(current_);
-    return 0;
+    return;
 }

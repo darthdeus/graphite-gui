@@ -13,7 +13,7 @@ class DFS : public Search {
   Graph& g;
 
   void start() override;
-  int step() override;
+  void step() override;
 
  private:
   Vertex* start_;

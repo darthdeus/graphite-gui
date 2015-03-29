@@ -18,7 +18,7 @@ class Dijkstra : public Search {
   Dijkstra(Graph& g, Vertex* source);
 
   void start() override;
-  int step() override;
+  void step() override;
 
  private:
   std::priority_queue<Vertex*, std::vector<Vertex*>, vertex_distance> queue_;

@@ -22,16 +22,16 @@ void DFS::start() {
     stack_.push(start_);
 }
 
-int DFS::step() {
+void DFS::step() {
     if (!stack_.empty()) {
         auto v = stack_.top();
         stack_.pop();
 
         if (v->color == vertex_color::black)
-            return -1;
+            return;
 
         if (v == end_) {
-            return v->value;
+            return;
         }
 
         for (Edge &e : v->edges) {
@@ -43,10 +43,7 @@ int DFS::step() {
         }
 
         v->color = vertex_color::black;
-
-        return 0;
     } else {
         g.clear_metadata(false);
-        return -2;
     }
 }

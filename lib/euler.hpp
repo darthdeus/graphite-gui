@@ -15,7 +15,7 @@ class Euler : public Search
   Euler(Graph& g, Vertex* start);
 
   void start() override;
-  int step() override;
+  void step() override;
 
  private:
   Graph& g_;

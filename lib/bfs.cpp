@@ -26,16 +26,16 @@ void BFS::start() {
     queue_.push(start_);
 }
 
-int BFS::step() {
+void BFS::step() {
     if (!queue_.empty()) {
         auto v = queue_.front();
         queue_.pop();
 
         if (v->color == vertex_color::black)
-            return -1;
+            return;
 
         if (v == end_) {
-            return v->value;
+            return;
         }
 
         for (Edge &e : v->edges) {
@@ -47,10 +47,7 @@ int BFS::step() {
         }
 
         v->color = vertex_color::black;
-
-        return 0;
     } else {
         g.clear_metadata(false);
-        return -2;
     }
 }
