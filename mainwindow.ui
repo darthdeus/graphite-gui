@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>753</width>
-    <height>633</height>
+    <width>838</width>
+    <height>626</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -28,6 +28,12 @@
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>150</width>
+        <height>0</height>
+       </size>
       </property>
       <property name="title">
        <string>Graph operations    </string>
@@ -110,8 +116,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>753</width>
-     <height>22</height>
+     <width>838</width>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

@@ -13,6 +13,8 @@
 #include "gui/edge_weight_text.h"
 #include "gui/vertex_graphics_item.h"
 
+double M_PI = atan(1) * 4;
+
 static int center_ = VertexGraphicsItem::GraphicSize / 2;
 
 EdgeGraphicsItem::EdgeGraphicsItem(VertexGraphicsItem* from, VertexGraphicsItem* to, Edge* edge): from(from), to(to), edge(edge)

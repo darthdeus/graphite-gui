@@ -3,3 +3,7 @@ graphite.pro.user
 .DS_Store
 .qmake.stash
 Makefile
+x64/
+release/
+debug/
+GeneratedFiles/
