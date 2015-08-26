@@ -1,5 +1,5 @@
-#ifndef VERTEX_H
-#define VERTEX_H
+#ifndef VERTEX_GRAPHICS_ITEM_H
+#define VERTEX_GRAPHICS_ITEM_H
 
 #include <QColor>
 #include <QVariant>
@@ -41,4 +41,4 @@ public:
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 };
 
-#endif // VERTEX_H
+#endif // VERTEX_GRAPHICS_ITEM_H

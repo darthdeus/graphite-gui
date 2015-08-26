@@ -7,3 +7,5 @@ x64/
 release/
 debug/
 GeneratedFiles/
+*.sdf
+*.opensdf

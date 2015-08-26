@@ -1,5 +1,5 @@
-#ifndef EDGE_H
-#define EDGE_H
+#ifndef EDGE_GRAPHICS_ITEM_H
+#define EDGE_GRAPHICS_ITEM_H
 
 #include <QGraphicsLineItem>
 #include <QGraphicsTextItem>
@@ -26,4 +26,4 @@ public:
     EdgeWeightText* weightText_;
 };
 
-#endif // EDGE_H
+#endif // EDGE_GRAPHICS_ITEM_H

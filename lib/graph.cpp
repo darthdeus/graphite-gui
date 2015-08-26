@@ -263,7 +263,7 @@ void updateVertex(Vertex* v, int& counter, Edge* backEdge) {
 }
 
 
-void Graph::updateBridges(Vertex* start) {
+void Graph::updateBridges(Vertex*) {
 	int counter = 1;
 
 	for (auto& v : list) {

@@ -8,8 +8,7 @@
 #include <string>
 
 #include "lib/edge.hpp"
-
-enum class vertex_color { white, gray, black };
+#include "vertex_color.hpp"
 
 class Vertex {
  public:
