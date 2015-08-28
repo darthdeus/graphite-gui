@@ -6,32 +6,29 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>838</width>
-    <height>626</height>
+    <width>944</width>
+    <height>744</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Graphite</string>
+   <string>Graphite - Graph Algorithm Visualization</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
-    <item>
-     <widget class="QGraphicsView" name="graphicsView"/>
-    </item>
     <item>
      <widget class="QGroupBox" name="groupBox">
       <property name="enabled">
        <bool>true</bool>
       </property>
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
       <property name="minimumSize">
        <size>
-        <width>150</width>
+        <width>210</width>
         <height>0</height>
        </size>
       </property>
@@ -43,9 +40,14 @@
         <rect>
          <x>10</x>
          <y>120</y>
-         <width>131</width>
-         <height>451</height>
+         <width>191</width>
+         <height>561</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>7</pointsize>
+        </font>
        </property>
        <property name="readOnly">
         <bool>false</bool>
@@ -104,10 +106,13 @@
         </rect>
        </property>
        <property name="text">
-        <string>Event log</string>
+        <string>Log</string>
        </property>
       </widget>
      </widget>
+    </item>
+    <item>
+     <widget class="QGraphicsView" name="graphicsView"/>
     </item>
    </layout>
   </widget>
@@ -116,7 +121,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>838</width>
+     <width>944</width>
      <height>21</height>
     </rect>
    </property>

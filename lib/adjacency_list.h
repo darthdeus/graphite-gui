@@ -2,6 +2,7 @@
 
 #include <cstddef>
 #include <vector>
+#include <list>
 #include <stack>
 #include <string>
 #include <unordered_map>
@@ -22,18 +23,10 @@ struct edge {
 	vertex* to;
 	int weight;
 
-	edge(vertex* from, vertex* to): from(from), to(to), weight(0) {
-	}
+	edge(vertex* from, vertex* to);
+	edge(const edge& rhs);
 
-	edge(const edge& rhs) : from(rhs.from), to(rhs.to), weight(rhs.weight) {
-	}
-
-	edge& operator=(const edge& rhs) {
-		from = rhs.from;
-		to = rhs.to;
-		weight = rhs.weight;
-		return *this;
-	}
+	edge& operator=(const edge& rhs);
 };
 
 class vertex {
@@ -43,18 +36,12 @@ class vertex {
 public:
 	std::vector<edge> edges;
 
-	vertex(int id, const adjacency_list& list): id_(id), list_(&list) {
-	}
+	vertex(int id, const adjacency_list& list);
 
-	int id() const {
-		return id_;
-	}
+	int id() const { return id_; }
 
 	bool operator==(const vertex& rhs) const;
-
-	bool operator!=(const vertex& rhs) const {
-		return !(*this == rhs);
-	}
+	bool operator!=(const vertex& rhs) const;
 };
 
 struct vertex_hash {
@@ -83,16 +70,12 @@ public:
 	dfs_iterator& operator++();
 
 	bool operator==(const dfs_iterator& rhs) const;
-
-	bool operator!=(const dfs_iterator& rhs) const {
-		return !(*this == rhs);
-	}
-
+	bool operator!=(const dfs_iterator& rhs) const;
 };
 
 class adjacency_list {
 	int counter_;
-	std::vector<vertex> list_;
+	std::list<vertex> list_;
 
 public:
 	friend class dfs_iterator;
@@ -100,16 +83,12 @@ public:
 	using value_type = vertex;
 	using reference = value_type&;
 	using const_reference = const reference;
-	using iterator = std::vector<vertex>::iterator;
-	using const_iterator = std::vector<vertex>::const_iterator;
-	//using iterator = adjacencey_list_iterator;
-	//using const_iterator = const adjacencey_list_iterator;
+	using iterator = std::list<vertex>::iterator;
+	using const_iterator = std::list<vertex>::const_iterator;
 	using difference_type = std::ptrdiff_t;
 	using size_type = std::size_t;
 
-	adjacency_list(): counter_(0) {
-	}
-
+	adjacency_list();
 	adjacency_list(const adjacency_list& rhs);
 	adjacency_list(adjacency_list&& rhs);
 	~adjacency_list();
@@ -117,57 +96,34 @@ public:
 	adjacency_list& operator=(const adjacency_list& rhs);
 	adjacency_list& operator=(adjacency_list&& rhs);
 
-	iterator begin() {
-		return list_.begin();
-	}
-
-	iterator end() {
-		return list_.end();
-	}
-
-	const_iterator begin() const {
-		return list_.begin();
-	}
-
-	const_iterator end() const {
-		return list_.end();
-	}
-
-	const_iterator cbegin() const {
-		return list_.cbegin();
-	}
-
-	const_iterator cend() const {
-		return list_.cend();
-	}
+	iterator begin();
+	iterator end();
+	const_iterator begin() const;
+	const_iterator end() const;
+	const_iterator cbegin() const;
+	const_iterator cend() const;
 
 	dfs_iterator dfs_begin();
 	dfs_iterator dfs_end();
 
-	bool operator==(const adjacency_list& rhs) const {
-		return list_ == rhs.list_;
-	}
-
-	bool operator!=(const adjacency_list& rhs) const {
-		return !(*this == rhs);
-	}
+	bool operator==(const adjacency_list& rhs) const;
+	bool operator!=(const adjacency_list& rhs) const;
 
 	void swap(adjacency_list& rhs);
-
-	size_type size() const {
-		return list_.size();
-	}
-
-	size_type max_size() const {
-		return list_.max_size();
-	}
-
-	bool empty() const {
-		return list_.empty();
-	}
+	size_type size() const;
+	size_type max_size() const;
+	bool empty() const;
 
 	vertex& add();
 	vertex* find_by_id(int id);
+
+	void connect(vertex& a, vertex& b, bool oriented = false);
+	// Returns true only if both vertices exist.
+	bool connect(int a, int b, bool oriented = false);
+
+	void disconnect(vertex& a, vertex& b, bool oriented = false);
+	bool disconnect(int a, int b, bool oriented = false);
+	
 };
 
 inline void swap(adjacency_list& lhs, adjacency_list& rhs) {

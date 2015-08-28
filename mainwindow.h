@@ -27,7 +27,7 @@ public:
     ~MainWindow();
 
     void reloadModel();
-    void keyReleaseEvent(QKeyEvent *);
+    void keyReleaseEvent(QKeyEvent *) override;
 
     VertexGraphicsItem *selectedVertex() const;
     Ui::MainWindow *ui;

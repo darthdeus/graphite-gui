@@ -223,7 +223,7 @@ void MainWindow::on_actionRandomDirectedEdges_triggered()
         }
     }
 
-    for (auto pair : edges) {
+    for (auto& pair : edges) {
         if (rand() % 2 == 0) {
             graph_->toggleEdge(pair.first, pair.second);
         }
@@ -343,7 +343,7 @@ void MainWindow::on_actionMakeUndirected_triggered()
         }
     }
 
-    for (auto pair : edges) {
+    for (auto& pair : edges) {
         graph_->disconnect(pair.first, pair.second);
         graph_->connect(pair.first, pair.second);
     }
