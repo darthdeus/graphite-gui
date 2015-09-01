@@ -7,11 +7,11 @@
 Dijkstra::Dijkstra(Graph& g, Vertex* source): graph_(g), source_(source) { }
 
 void Dijkstra::start() {
-    for (auto& v : graph_.list) {
-        v->distance = std::numeric_limits<int>::max();
-        v->label = "";
+    for (auto& v : graph_) {
+        v.distance = std::numeric_limits<int>::max();
+        v.label = "";
 
-        for (Edge& e: v->edges) {
+        for (Edge& e: v.edges) {
             e.oriented = true;
             e.weighted = true;
             e.deleted = false;

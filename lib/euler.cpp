@@ -15,10 +15,10 @@ void Euler::start() {
     done = false;
     current_ = start_;
 
-    for (auto& v: g_.list) {
-        v->label = "";
+    for (auto& v: g_) {
+        v.label = "";
 
-        for (Edge& e: v->edges) {
+        for (Edge& e: v.edges) {
             e.oriented = false;
             e.weighted = false;
             e.deleted = false;
@@ -46,7 +46,7 @@ void Euler::step() {
     auto is_bridge_or_deleted = [](Edge& e) { return e.bridge || e.deleted; };
     auto is_not_deleted = [](Edge& e) { return !e.deleted; };
 
-    // If all edges are deleted (used) we're done
+    // If all edges are deleted (used) we're done	
     bool undeleted_edge_count = std::count_if(current_->edges.begin(), current_->edges.end(), is_not_deleted);
     if (undeleted_edge_count == 0) {
         qDebug() << "No edges left, done";

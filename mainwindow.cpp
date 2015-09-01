@@ -72,8 +72,8 @@ void MainWindow::reloadModel()
     std::unordered_map<Vertex *, VertexGraphicsItem *> vgi_map;
 
     int i = 0;
-    for (std::unique_ptr<Vertex> &v : graph_->list) {
-        auto vgi = new VertexGraphicsItem(v.get());
+    for (auto &v : *graph_) {
+        auto vgi = new VertexGraphicsItem(&v);
 
         if (!vgi->hasCoordinates()) {
             vgi->setCoordinates(115 * (i / 5 + 1) * std::cos(i),
@@ -83,17 +83,17 @@ void MainWindow::reloadModel()
         vertices_.push_back(vgi);
         scene->addItem(vgi);
 
-        if (v->value == selectedVertexValue) {
+        if (v.value == selectedVertexValue) {
             vgi->setSelected(true);
         }
 
-        vgi_map[v.get()] = vgi;
+        vgi_map[&v] = vgi;
 
         i++;
     }
 
-    for (std::unique_ptr<Vertex> &v : graph_->list) {
-        Vertex *vertex = v.get();
+    for (auto &v : *graph_) {
+        Vertex *vertex = &v;
 
         VertexGraphicsItem *vgi = vgi_map[vertex];
         for (Edge &e : vertex->edges) {
@@ -184,16 +184,16 @@ void MainWindow::on_actionRestartAlgorithm_triggered()
         auto text = ui->algList->currentText();
         if (text == "BFS") {
             graph_->clear_metadata(false);
-            search_ = new BFS(*graph_, graph_->start(), graph_->end());
+            search_ = new BFS(*graph_, graph_->start_, graph_->end_);
         } else if (text == "DFS") {
             graph_->clear_metadata(false);
-            search_ = new DFS(*graph_, graph_->start(), graph_->end());
+            search_ = new DFS(*graph_, graph_->start_, graph_->end_);
         } else if (text == "Dijkstra") {
             graph_->clear_metadata(true);
-            search_ = new Dijkstra(*graph_, graph_->start());
+            search_ = new Dijkstra(*graph_, graph_->start_);
         } else if (text == "Euler") {
             graph_->clear_metadata(false);
-            search_ = new Euler(*graph_, graph_->start());
+            search_ = new Euler(*graph_, graph_->start_);
         } else {
             QMessageBox box;
             box.setText("No algorithm was selected.");
@@ -217,13 +217,13 @@ void MainWindow::on_actionRandomDirectedEdges_triggered()
     // We can use pairs since they already handle comparisons properly.
     std::set<std::pair<int, int>> edges;
 
-    for (auto& v: graph_->list) {
-        for (Edge& e: v->edges) {
+    for (auto& v: *graph_) {
+        for (Edge& e: v.edges) {
             edges.insert(std::make_pair(e.from->value, e.to->value));
         }
     }
 
-    for (auto pair : edges) {
+    for (auto& pair : edges) {
         if (rand() % 2 == 0) {
             graph_->toggleEdge(pair.first, pair.second);
         }
@@ -259,7 +259,7 @@ void MainWindow::on_actionRandomGraph_triggered()
     graph_ = new Graph();
     connectionVertex_ = -1;
 
-    Vertex* prev = graph_->add_vertex();
+    Vertex* prev = &graph_->add_vertex();
 
     std::queue<Vertex*> queue;
     queue.push(prev);
@@ -268,11 +268,11 @@ void MainWindow::on_actionRandomGraph_triggered()
     int count = rand() % 6 + 10;
 
     while (count-- ) {
-        Vertex* next = graph_->add_vertex();
-        queue.push(next);
+        Vertex& next = graph_->add_vertex();
+        queue.push(&next);
 
-        graph_->connect(prev->value, next->value);
-        prev = next;
+        graph_->connect(*prev, next);
+        prev = &next;
     }
 
     while (!queue.empty()) {
@@ -300,18 +300,18 @@ void MainWindow::on_actionRandomEulerianGraph_triggered()
 
     for (int i = 0; i < cycle_count; i++) {
         // Pick a random vertex
-        int index = rand() % graph_->list.size();
-        auto it = graph_->list.begin();
+        int index = rand() % graph_->size();
+        auto it = graph_->begin();
         std::advance(it, index);
 
-        Vertex* v = it->get();
+        Vertex* v = &*it;
         Vertex* prev = v;
 
         int cycle_length = 2 + rand() % 2;
         for (int j = 0; j < cycle_length; j++) {
-            Vertex* v0 = graph_->add_vertex();
-            graph_->connect(prev->value, v0->value);
-            prev = v0;
+            Vertex& v0 = graph_->add_vertex();
+            graph_->connect(*prev, v0);
+            prev = &v0;
         }
 
         graph_->connect(prev->value, v->value);
@@ -322,8 +322,8 @@ void MainWindow::on_actionRandomEulerianGraph_triggered()
 
 void MainWindow::on_actionRandomEdgeWeights_triggered()
 {
-    for (auto& v: graph_->list) {
-        for (auto& e: v->edges) {
+    for (auto& v: *graph_) {
+        for (auto& e: v.edges) {
             e.weight = 1 + rand() % 9;
         }
     }
@@ -337,13 +337,13 @@ void MainWindow::on_actionMakeUndirected_triggered()
     // We can use pairs since they already handle comparisons properly.
     std::set<std::pair<int, int>> edges;
 
-    for (auto& v: graph_->list) {
-        for (Edge& e: v->edges) {
+    for (auto& v: *graph_) {
+        for (Edge& e: v.edges) {
             edges.insert(std::make_pair(e.from->value, e.to->value));
         }
     }
 
-    for (auto pair : edges) {
+    for (auto& pair : edges) {
         graph_->disconnect(pair.first, pair.second);
         graph_->connect(pair.first, pair.second);
     }
@@ -386,10 +386,10 @@ void MainWindow::on_actionOpen_triggered()
 
 void MainWindow::on_actionAddVertex_triggered()
 {
-    auto v = graph_->add_vertex();
+    auto& v = graph_->add_vertex();
     auto pos = ui->graphicsView->mapToScene(mapFromGlobal(QCursor::pos()));
-    v->x = pos.x();
-    v->y = pos.y();
+    v.x = pos.x();
+    v.y = pos.y();
 
     reloadModel();
 }

@@ -12,11 +12,11 @@ BFS::BFS(Graph &g, Vertex* s, Vertex* e) : g(g), start_(s), end_(e) {
 }
 
 void BFS::start() {
-    for (auto &v : g.list) {
-        v->color = vertex_color::white;
-        v->label = "";
+    for (auto& v : g) {
+        v.color = vertex_color::white;
+        v.label = "";
 
-        for (Edge& e: v->edges) {
+        for (Edge& e: v.edges) {
             e.oriented = true;
             e.weighted = false;
             e.deleted = false;

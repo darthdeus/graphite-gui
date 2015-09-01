@@ -1,5 +1,4 @@
 #include <QTextBrowser>
-#include <QString>
 #include <queue>
 
 #include "lib/logger.hpp"
