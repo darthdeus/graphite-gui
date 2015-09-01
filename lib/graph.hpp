@@ -5,6 +5,11 @@
 #include <list>
 #include "vertex.hpp"
 
+template <typename T, typename... Ts>
+std::unique_ptr<T> make_unique(Ts&&... args) {
+    return std::unique_ptr<T>(new T(std::forward<Ts>(args)...));
+}
+
 class Graph {
 
 public:
@@ -12,6 +17,7 @@ public:
 	// Container requirements
 	using value_type = Vertex;
 	using reference = value_type&;
+    using const_reference = const value_type&;
 	using pointer = value_type*;
 	using iterator = adjacency_list::iterator;
 	using const_iterator = adjacency_list::const_iterator;

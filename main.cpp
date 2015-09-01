@@ -27,16 +27,6 @@ int app(int argc, char *argv[]) {
 
     w.show();
 
-	adjacency_list list;
-	list.add();
-	list.add();
-	list.add();
-
-	for (auto it = list.dfs_begin(); it != list.dfs_end(); ++it) {
-		std::string m = std::to_string((*it).id());
-		log_event(m.c_str());
-	}
-
     return a.exec();
 }
 

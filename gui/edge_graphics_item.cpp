@@ -13,9 +13,8 @@
 #include "gui/edge_weight_text.h"
 #include "gui/vertex_graphics_item.h"
 
-double M_PI = atan(1) * 4;
-
-static int center_ = VertexGraphicsItem::GraphicSize / 2;
+const double PI = atan(1) * 4;
+constexpr int center_ = VertexGraphicsItem::GraphicSize / 2;
 
 EdgeGraphicsItem::EdgeGraphicsItem(VertexGraphicsItem* from, VertexGraphicsItem* to, Edge* edge): from(from), to(to), edge(edge)
 {
@@ -38,7 +37,7 @@ void EdgeGraphicsItem::updatePosition() {
 }
 
 double deg(double x) {
-    return 360 * x / (2 * M_PI);
+    return 360 * x / (2 * PI);
 }
 
 void EdgeGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -84,10 +83,10 @@ void EdgeGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
     /// Pro zjednoduseni abychom nemuseli resit otaceni uhlu
     float arrowSize = -15;
 
-    double arrowAngle = 1 * M_PI / 3;
+    double arrowAngle = 1 * PI / 3;
 
     QPointF arrowP1 = line.p2() + QPointF(sin(angle + arrowAngle) * arrowSize, cos(angle + arrowAngle) * arrowSize);
-    QPointF arrowP2 = line.p2() + QPointF(sin(angle + M_PI - arrowAngle) * arrowSize, cos(angle + M_PI - arrowAngle) * arrowSize);
+    QPointF arrowP2 = line.p2() + QPointF(sin(angle + PI - arrowAngle) * arrowSize, cos(angle + PI - arrowAngle) * arrowSize);
     arrowHead << line.p2() << arrowP1 << arrowP2;
 
     pen.setWidth(1);
@@ -103,7 +102,7 @@ void EdgeGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
     }
 
     double weightRadius = -25;
-    double x_offset = std::abs(M_PI - std::abs(angle));
+    double x_offset = std::abs(PI - std::abs(angle));
 
     QPointF offset{x_offset * 4, 10};
 

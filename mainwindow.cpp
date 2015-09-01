@@ -247,7 +247,7 @@ VertexGraphicsItem* MainWindow::selectedVertex() const
 
 void MainWindow::on_actionNew_triggered()
 {
-	graph_ = std::make_unique<Graph>();
+    graph_ = make_unique<Graph>();
     connectionVertex_ = -1;
     reloadModel();
     log_event("New graph");
@@ -256,7 +256,7 @@ void MainWindow::on_actionNew_triggered()
 
 void MainWindow::on_actionRandomGraph_triggered()
 {
-	graph_ = std::make_unique<Graph>();
+    graph_ = make_unique<Graph>();
     connectionVertex_ = -1;
 
     Vertex* prev = &graph_->add_vertex();
@@ -292,7 +292,7 @@ void MainWindow::on_actionRandomGraph_triggered()
 
 void MainWindow::on_actionRandomEulerianGraph_triggered()
 {
-	graph_ = std::make_unique<Graph>();
+    graph_ = make_unique<Graph>();
     connectionVertex_ = -1;
     graph_->add_vertex();
 

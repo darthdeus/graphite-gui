@@ -178,7 +178,7 @@ std::unique_ptr<Graph> Graph::parse_stream(std::istream& is) {
 	int size;
 	is >> size;
 
-	auto g = std::make_unique<Graph>();
+    auto g = make_unique<Graph>();
 	g->vertex_counter_ = 0;
 
 	// Napred musime vytvorit vrcholy, aby je bylo mozne pospojovat

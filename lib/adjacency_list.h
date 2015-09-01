@@ -22,11 +22,9 @@ struct edge {
 	vertex* to;
 	int weight;
 
-	edge(vertex* from, vertex* to): from(from), to(to), weight(0) {
-	}
+    edge(vertex* from, vertex* to): from(from), to(to), weight(0) {}
 
-	edge(const edge& rhs) : from(rhs.from), to(rhs.to), weight(rhs.weight) {
-	}
+    edge(const edge& rhs) : from(rhs.from), to(rhs.to), weight(rhs.weight) {}
 
 	edge& operator=(const edge& rhs) {
 		from = rhs.from;
@@ -99,14 +97,13 @@ public:
 
 	using value_type = vertex;
 	using reference = value_type&;
-	using const_reference = const reference;
+    using const_reference = const value_type&;
 	using iterator = std::vector<vertex>::iterator;
 	using const_iterator = std::vector<vertex>::const_iterator;
 	using difference_type = std::ptrdiff_t;
 	using size_type = std::size_t;
 
-	adjacency_list(): counter_(0) {
-	}
+    adjacency_list(): counter_(0) {}
 
 	adjacency_list(const adjacency_list& rhs);
 	adjacency_list(adjacency_list&& rhs);
@@ -115,54 +112,24 @@ public:
 	adjacency_list& operator=(const adjacency_list& rhs);
 	adjacency_list& operator=(adjacency_list&& rhs);
 
-	iterator begin() {
-		return list_.begin();
-	}
-
-	iterator end() {
-		return list_.end();
-	}
-
-	const_iterator begin() const {
-		return list_.begin();
-	}
-
-	const_iterator end() const {
-		return list_.end();
-	}
-
-	const_iterator cbegin() const {
-		return list_.cbegin();
-	}
-
-	const_iterator cend() const {
-		return list_.cend();
-	}
+    iterator begin() { return list_.begin(); }
+    iterator end() { return list_.end(); }
+    const_iterator begin() const { return list_.begin(); }
+    const_iterator end() const { return list_.end(); }
+    const_iterator cbegin() const { return list_.cbegin(); }
+    const_iterator cend() const { return list_.cend(); }
 
 	dfs_iterator dfs_begin();
 	dfs_iterator dfs_end();
 
-	bool operator==(const adjacency_list& rhs) const {
-		return list_ == rhs.list_;
-	}
-
-	bool operator!=(const adjacency_list& rhs) const {
-		return !(*this == rhs);
-	}
+    bool operator==(const adjacency_list& rhs) const { return list_ == rhs.list_; }
+    bool operator!=(const adjacency_list& rhs) const { return !(*this == rhs); }
 
 	void swap(adjacency_list& rhs);
 
-	size_type size() const {
-		return list_.size();
-	}
-
-	size_type max_size() const {
-		return list_.max_size();
-	}
-
-	bool empty() const {
-		return list_.empty();
-	}
+    size_type size() const { return list_.size(); }
+    size_type max_size() const { return list_.max_size(); }
+    bool empty() const { return list_.empty(); }
 
 	vertex& add();
 	vertex* find_by_id(int id);
