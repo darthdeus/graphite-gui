@@ -22,7 +22,7 @@ Vertex* Graph::add_vertex(int n) {
 		return &*found;
 	} else {
 		qDebug() << "Added vertex" << n;
-		list.push_back(std::make_unique<Vertex>(n));
+		//list.push_back(std::make_unique<Vertex>(n));
 		return list.back().get();
 	}
 }
@@ -64,7 +64,7 @@ void Graph::disconnect_oriented(int vn1, int vn2) {
 
 	if (is_connected(vn1, vn2)) {
 		v1->edges.remove_if([vn2](Edge& e) {
-			return e.to->value == vn2;
+			return e.to->id() == vn2;
 		});
 		qDebug() << "Disconnected" << vn1 << vn2;
 	} else {
@@ -92,13 +92,13 @@ bool Graph::is_connected(int vn1, int vn2) const {
 void Graph::removeVertex(Vertex* v) {
 	for (auto& vv : list) {
 		vv->edges.remove_if([v](Edge& edge) {
-			return edge.to->value == v->value;
+			return edge.to->id() == v->id();
 		});
 	}
 
-	qDebug() << "Removing vertex" << v->value << " ... current count is " << list.size();
+	qDebug() << "Removing vertex" << v->id() << " ... current count is " << list.size();
 	list.remove_if([v](std::unique_ptr<Vertex>& p) {
-		return p->value == v->value;
+		return p->id() == v->id();
 	});
 }
 
@@ -156,7 +156,7 @@ bool Graph::search_ready() const {
 
 Vertex* Graph::find(int v) const {
 	for (auto& vert : list) {
-		if (vert->value == v) {
+		if (vert->id() == v) {
 			return vert.get();
 		}
 	}
@@ -168,7 +168,7 @@ void Graph::clear_metadata(bool showDistance) {
 	for (auto& v : list) {
 		v->color = vertex_color::white;
 		v->distance = std::numeric_limits<int>::max();
-		v->metadata = nullptr;
+		//v->metadata = nullptr;
 		v->showDistance = showDistance;
 	}
 }
@@ -213,17 +213,17 @@ std::ostream& operator<<(std::ostream& os, Graph& g) {
 	os << size << std::endl;
 
 	for (auto& vertex: g.list) {
-		os << vertex->value << " " << vertex->x << " " << vertex->y << std::endl;
+		os << vertex->id() << " " << vertex->x << " " << vertex->y << std::endl;
 	}
 	os << std::endl;
 
 	for (auto& vertex: g.list) {
-		qDebug() << "saving" << vertex->value << " = " << vertex.get()->value;
-		os << vertex->value << ":";
+		qDebug() << "saving" << vertex->id() << " = " << vertex.get()->id();
+		os << vertex->id() << ":";
 
 		os << vertex->edges.size() << ":";
 		for (Edge& edge: vertex->edges) {
-			os << edge.to->value << " " << edge.weight << " ";
+			os << edge.to->id() << " " << edge.weight << " ";
 		}
 		os << std::endl;
 	}
@@ -243,13 +243,13 @@ void updateVertex(Vertex* v, int& counter, Edge* backEdge) {
 
 		if (e.to->in == undefined_in) {
 			// dopredna hrana
-			updateVertex(e.to, counter, e.reverseEdge());
+			updateVertex(e.to, counter, e.reverse_edge());
 
 			if (e.to->low >= e.to->in) {
 				// nalezen most
 				e.bridge = true;
 
-				if (Edge* reverse = e.reverseEdge()) {
+				if (Edge* reverse = e.reverse_edge()) {
 					reverse->bridge = true;
 				}
 			}

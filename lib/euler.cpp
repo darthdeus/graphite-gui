@@ -7,38 +7,37 @@
 #include "lib/edge.hpp"
 #include "lib/vertex.hpp"
 #include "lib/euler.hpp"
-#include "lib/graph.hpp"
+#include "lib/adjacency_list.h"
 
-Euler::Euler(Graph& g, Vertex* start): g_(g), start_(start) { }
+Euler::Euler(adjacency_list& g, Vertex* start): g_(g), start_(start) { }
 
 void Euler::start() {
     done = false;
     current_ = start_;
 
-    for (auto& v: g_.list) {
-        v->label = "";
+    for (auto& v: g_) {
+        v.label = "";
 
-        for (Edge& e: v->edges) {
+        for (Edge& e: v.edges) {
             e.oriented = false;
             e.weighted = false;
             e.deleted = false;
             e.bridge = false;
 
-            if (!e.reverseEdge()) {
-                g_.connect_oriented(e.to->value, e.from->value);
+            if (!e.reverse_edge()) {
+				g_.connect(*e.to, *e.from, true);
             }
        }
     }
 
-    g_.updateBridges();
+    g_.update_bridges();
 }
 
 void Euler::step() {
-
     if (done) return;
     if (!current_) return;
 
-    qDebug() << "current: " << current_->value;
+    qDebug() << "current: " << current_->id();
 
     circuit_.push_back(current_);
     current_->color = vertex_color::white;
@@ -52,7 +51,7 @@ void Euler::step() {
         qDebug() << "No edges left, done";
         done = true;
 
-        g_.updateBridges();
+        g_.update_bridges();
         return;
     }
 
@@ -67,14 +66,14 @@ void Euler::step() {
 
         assert(edge.bridge);
         edge.deleted = true;
-        edge.reverseEdge()->deleted = true;
+        edge.reverse_edge()->deleted = true;
 
         current_ = edge.to;
         current_->color = vertex_color::gray;
 
         qDebug() << "Only bridges left";
 
-        g_.updateBridges();
+        g_.update_bridges();
         return;
     }
 
@@ -84,12 +83,12 @@ void Euler::step() {
 
     Edge& e = *res;
     e.deleted = true;
-    e.reverseEdge()->deleted = true;
+    e.reverse_edge()->deleted = true;
 
     current_ = e.to;
     current_->color = vertex_color::gray;
 
     qDebug() << "Non-bridge";
-    g_.updateBridges(current_);
+    g_.update_bridges(current_);
     return;
 }

@@ -5,7 +5,7 @@
 #include <QGraphicsTextItem>
 
 #include "gui/edge_weight_text.h"
-#include "lib/edge.hpp"
+#include "lib/adjacency_list.h"
 
 class VertexGraphicsItem;
 
@@ -18,12 +18,10 @@ public:
     VertexGraphicsItem* from;
     VertexGraphicsItem* to;
     Edge* edge;
+	EdgeWeightText* weightText_;
 
-    // QGraphicsItem interface
-public:
-    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 
-    EdgeWeightText* weightText_;
 };
 
 #endif // EDGE_GRAPHICS_ITEM_H

@@ -5,9 +5,8 @@
 #include <vector>
 
 #include "lib/bfs.hpp"
-#include "lib/dfs.hpp"
-#include "lib/dijkstra.hpp"
 #include "lib/graph.hpp"
+#include "lib/adjacency_list.h"
 
 class QGraphicsLineItem;
 class QGraphicsScene;
@@ -23,7 +22,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(Graph* graph, QWidget *parent = 0);
+    explicit MainWindow(adjacency_list* graph, QWidget *parent = 0);
     ~MainWindow();
 
     void reloadModel();
@@ -57,6 +56,9 @@ private slots:
 
     void on_actionMakeUndirected_triggered();
 
+	void set_start(Vertex* v);
+	void set_end(Vertex* v);
+
 private:
     void graphConnect(VertexGraphicsItem* v1, VertexGraphicsItem* v2, Edge* edge);
     void searchToggle(bool start);
@@ -66,7 +68,10 @@ private:
     QGraphicsScene *scene;
     Search* search_ = nullptr;
 
-    Graph* graph_;
+	Vertex* start_;
+	Vertex* end_;
+
+    adjacency_list* graph_;
     std::vector<VertexGraphicsItem*> vertices_;
 
     /// Used for adding an edge, should be always nullified afterwards

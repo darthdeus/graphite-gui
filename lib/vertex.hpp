@@ -1,46 +1,82 @@
-#ifndef GUARD_VERTEX
-#define GUARD_VERTEX
+#pragma once
 
-#include <iostream>
 #include <ostream>
 #include <list>
 #include <limits>
-#include <string>
 
 #include "lib/edge.hpp"
 #include "vertex_color.hpp"
 
+//class Vertex {
+// public:
+//  explicit Vertex(int v) : value(v), x(0), y(0), color(vertex_color::white) {}
+//
+//  Vertex(const Vertex& v) = delete;
+//  Vertex& operator=(const Vertex& v) = delete;
+//
+//  int value;
+//
+//  std::list<Edge> edges;
+//
+//  float x;
+//  float y;
+//
+//  int distance = std::numeric_limits<int>::max();
+//
+//  vertex_color color;
+//  bool selected = false;
+//  bool target = false;
+//  bool showDistance = false;
+//
+//  int low;
+//  int in;
+//
+//  int undeletedEdgeCount();
+//
+//  std::string label;
+//  void* metadata;
+//};
+//
+//std::ostream& operator<<(std::ostream& os, const Vertex& v);
+
+class adjacency_list;
+
 class Vertex {
- public:
-  explicit Vertex(int v) : value(v), x(0), y(0), color(vertex_color::white) {}
+	int id_;
+	const adjacency_list* list_;
 
-  Vertex(const Vertex& v) = delete;
-  Vertex& operator=(const Vertex& v) = delete;
+public:
+	// TODO - remove these later
+	float x;
+	float y;
+	int distance = std::numeric_limits<int>::max();
+	std::string label;
+	vertex_color color;
 
-  int value;
+	bool selected = false;
+	bool target = false;
+	bool showDistance = false;
+	int low;
+	int in;
+	int out;
 
-  std::list<Edge> edges;
+	// TODO - remove list here
+	std::list<Edge> edges;
 
-  float x;
-  float y;
+	Vertex(int id, const adjacency_list& list);
 
-  int distance = std::numeric_limits<int>::max();
+	int id() const { return id_; }
 
-  vertex_color color;
-  bool selected = false;
-  bool target = false;
-  bool showDistance = false;
-
-  int low;
-  int in;
-
-  int undeletedEdgeCount();
-
-  std::string label;
-  void* metadata;
+	bool operator==(const Vertex& rhs) const;
+	bool operator!=(const Vertex& rhs) const;
 };
 
-std::ostream& operator<<(std::ostream& os, const Vertex& v);
-
-#endif
-
+namespace std {
+	template <>
+	class hash<Vertex> {
+	public:
+		std::size_t operator()(const Vertex& v) {
+			return v.id();
+		}
+	};
+}

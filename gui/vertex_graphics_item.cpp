@@ -19,7 +19,7 @@
 #include "gui/vertex_graphics_item.h"
 
 VertexGraphicsItem::VertexGraphicsItem(Vertex *vertex, QGraphicsItem *parent)
-    : QGraphicsEllipseItem(parent), vertex(vertex)
+    : QGraphicsEllipseItem(parent), vertex_(vertex)
 {
     setPen(QPen(QColor(90, 90, 90)));
     setFlag(QGraphicsItem::ItemIsMovable);
@@ -41,8 +41,8 @@ QVariant VertexGraphicsItem::itemChange(QGraphicsItem::GraphicsItemChange change
 
 void VertexGraphicsItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
     QGraphicsItem::mouseReleaseEvent(event);
-    vertex->x = x();
-    vertex->y = y();
+    vertex_->x = x();
+    vertex_->y = y();
 }
 
 void VertexGraphicsItem::repaintEdges()
@@ -58,31 +58,31 @@ void VertexGraphicsItem::setCoordinates(float x, float y)
 {
     setX(x);
     setY(y);
-    vertex->x = x;
-    vertex->y = y;
+    vertex_->x = x;
+    vertex_->y = y;
 }
 
-int VertexGraphicsItem::value() const { return vertex->value; }
+int VertexGraphicsItem::value() const { return vertex_->id(); }
 
 bool VertexGraphicsItem::hasCoordinates() const
 {
-    return std::abs((long)x()) > 0.001 && std::abs((long)y()) > 0.001;
+    return std::abs(static_cast<long>(x())) > 0.001 && std::abs(static_cast<long>(y())) > 0.001;
 }
 
 void VertexGraphicsItem::markSearch(bool value) {
-    vertex->target = value;
+    vertex_->target = value;
     update();
 }
 
 void VertexGraphicsItem::selected(bool value) {
     setSelected(value);
-    vertex->selected = value;
+    vertex_->selected = value;
 }
 
 void VertexGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    int opacity = vertex->selected ? 100 : 255;
-    switch (vertex->color) {
+    int opacity = vertex_->selected ? 100 : 255;
+    switch (vertex_->color) {
     case vertex_color::white:
         setBrush(QBrush(QColor(120, 150, 130, opacity)));
         break;
@@ -94,7 +94,7 @@ void VertexGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem
         break;
     }
 
-    if (vertex->target) {
+    if (vertex_->target) {
         QPen pen = QPen(QColor(100, 50, 50));
         pen.setWidth(2);
         setPen(pen);
@@ -104,23 +104,23 @@ void VertexGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem
 
 
     QString text;
-    if (vertex->showDistance) {
-        text = QString("%1 / %2").arg(vertex->value);
+    if (vertex_->showDistance) {
+        text = QString("%1 / %2").arg(vertex_->id());
 
-        if (vertex->distance == std::numeric_limits<int>::max()) {
+        if (vertex_->distance == std::numeric_limits<int>::max()) {
             text = text.arg("inf");
         } else {
-            text = text.arg(vertex->distance);
+            text = text.arg(vertex_->distance);
         }
     } else {
-        text = QString("%1").arg(vertex->value);
+        text = QString("%1").arg(vertex_->id());
     }
 
 //    text = QString("%1 %2").arg(vertex->in).arg(vertex->low);
 
-    if (vertex->label.length() > 0) {
+    if (vertex_->label.length() > 0) {
         painter->setPen(QColor(Qt::black));
-        QString label(vertex->label.c_str());
+        QString label(vertex_->label.c_str());
 
         auto rect = this->boundingRect();
         rect.setLeft(rect.left() + 50);

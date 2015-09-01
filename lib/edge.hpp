@@ -1,24 +1,21 @@
-#ifndef GUARD_EDGE
-#define GUARD_EDGE
+#pragma once
 
 class Vertex;
 
-class Edge {
- public:
-  Edge(Vertex* to, Vertex* from, int weight): from(from), to(to), weight(weight) {}
+struct Edge {
+	Vertex* from;
+	Vertex* to;
+	int weight;
 
-  Vertex* from;
-  Vertex* to;
-  int weight;
-  bool deleted = false;
-  bool bridge = false;
+	bool deleted = false;
+	bool bridge = false;
+	bool oriented = false;
+	bool weighted = false;
 
-  bool oriented = true;
-  bool weighted = true;
+	Edge(Vertex* from, Vertex* to);
+	Edge(const Edge& rhs);
 
-  /// Returns the other side of the edge in an undirected graph,
-  /// otherwise nullptr.
-  Edge* reverseEdge();
+	Edge& operator=(const Edge& rhs);
+	// Returns the other side of the edge in an undirected graph, otherwise nullptr.
+	Edge* reverse_edge();
 };
-
-#endif

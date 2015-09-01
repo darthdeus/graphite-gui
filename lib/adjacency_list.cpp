@@ -3,30 +3,6 @@
 #include <list>
 #include "adjacency_list.h"
 
-edge::edge(vertex* from, vertex* to): from(from), to(to), weight(0) {
-}
-
-edge::edge(const edge& rhs): from(rhs.from), to(rhs.to), weight(rhs.weight) {
-}
-
-edge& edge::operator=(const edge& rhs) {
-	from = rhs.from;
-	to = rhs.to;
-	weight = rhs.weight;
-	return *this;
-}
-
-vertex::vertex(int id, const adjacency_list& list): id_(id), list_(&list) {
-}
-
-bool vertex::operator==(const vertex& rhs) const {
-	return id() == rhs.id() && list_ == rhs.list_;
-}
-
-bool vertex::operator!=(const vertex& rhs) const {
-	return !(*this == rhs);
-}
-
 dfs_iterator::dfs_iterator(adjacency_list& list) : list_(list) {
 }
 
@@ -37,7 +13,8 @@ dfs_iterator dfs_iterator::create_begin(adjacency_list& list) {
 	it.stack_.push_back(&list.list_.front());
 
 	for (auto& v : list) {
-		it.metadata_map_[v] = {vertex_color::white, ""};
+		v.color = vertex_color::white;
+		v.label = "";
 	}
 
 	return it;
@@ -49,10 +26,18 @@ dfs_iterator dfs_iterator::create_end(adjacency_list& list) {
 
 dfs_iterator::reference dfs_iterator::operator*() {
 	if (stack_.empty()) {
-		throw std::exception("dereferencing dfs iterator when there is no current item");
+		throw std::exception("dereferencing end() iterator");
 	}
 
 	return *stack_.back();
+}
+
+dfs_iterator::pointer dfs_iterator::operator->() const {
+	if (stack_.empty()) {
+		throw std::exception("dereferencing end() iterator");
+	}
+
+	return stack_.back();
 }
 
 dfs_iterator& dfs_iterator::operator++() {
@@ -66,15 +51,14 @@ dfs_iterator& dfs_iterator::operator++() {
 	// TODO - handle when a black vertex is popped off the stack
 	for (auto& e: current->edges) {
 		auto& neighbour = *e.to;
-		auto& neighbour_metadata = metadata_map_[neighbour];
 
-		if (neighbour_metadata.color == vertex_color::white) {
+		if (neighbour.color == vertex_color::white) {
 			stack_.push_back(&neighbour);
-			neighbour_metadata.color = vertex_color::gray;
+			neighbour.color = vertex_color::gray;
 		}
 	}
 
-	metadata_map_[*current].color = vertex_color::black;
+	current->color = vertex_color::black;
 
 	return *this;
 }
@@ -141,27 +125,27 @@ adjacency_list& adjacency_list::operator=(adjacency_list&& rhs) {
 	return *this;
 }
 
-adjacency_list::iterator adjacency_list::begin() {
+auto adjacency_list::begin() -> iterator {
 	return list_.begin();
 }
 
-adjacency_list::iterator adjacency_list::end() {
+auto adjacency_list::end() -> iterator {
 	return list_.end();
 }
 
-adjacency_list::const_iterator adjacency_list::begin() const {
+auto adjacency_list::begin() const -> const_iterator {
 	return list_.begin();
 }
 
-adjacency_list::const_iterator adjacency_list::end() const {
+auto adjacency_list::end() const -> const_iterator {
 	return list_.end();
 }
 
-adjacency_list::const_iterator adjacency_list::cbegin() const {
+auto adjacency_list::cbegin() const -> const_iterator {
 	return list_.cbegin();
 }
 
-adjacency_list::const_iterator adjacency_list::cend() const {
+auto adjacency_list::cend() const -> const_iterator {
 	return list_.cend();
 }
 
@@ -200,13 +184,13 @@ bool adjacency_list::empty() const {
 	return list_.empty();
 }
 
-vertex& adjacency_list::add() {
+auto adjacency_list::add() -> reference {
 	list_.emplace_back(counter_++, *this);
 	return list_.back();
 }
 
-vertex* adjacency_list::find_by_id(int id) {
-	auto f = [id](const vertex& v) {
+auto adjacency_list::find_by_id(int id) -> pointer {
+	auto f = [id](const reference v) {
 		return v.id() == id;
 	};
 
@@ -219,7 +203,21 @@ vertex* adjacency_list::find_by_id(int id) {
 	}
 }
 
-void adjacency_list::connect(vertex& a, vertex& b, bool oriented) {
+void adjacency_list::remove(reference v) {
+	list_.remove(v);
+}
+
+bool adjacency_list::remove(int id) {
+	auto* v = find_by_id(id);
+	if (v) {
+		list_.remove(*v);
+		return true;
+	} else {
+		return false;
+	}
+}
+
+void adjacency_list::connect(reference a, reference b, bool oriented) {
 	a.edges.emplace_back(&a, &b);
 	if (!oriented) {
 		b.edges.emplace_back(&b, &a);
@@ -242,10 +240,10 @@ bool adjacency_list::connect(int a, int b, bool oriented) {
 	}
 }
 
-void adjacency_list::disconnect(vertex& a, vertex& b, bool oriented) {
+void adjacency_list::disconnect(reference a, reference b, bool oriented) {
 	// The a->b direction is always removed
 	{
-		auto f = [b](edge& e) {
+		auto f = [b](Edge& e) {
 			return e.to == &b;
 		};
 
@@ -257,7 +255,7 @@ void adjacency_list::disconnect(vertex& a, vertex& b, bool oriented) {
 
 	// but a<-b only if the disconnect is not oriented
 	if (!oriented) {
-		auto f = [a](edge& e) {
+		auto f = [a](Edge& e) {
 			return e.to == &a;
 		};
 		auto it = std::find_if(b.edges.begin(), b.edges.end(), f);

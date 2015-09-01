@@ -16,34 +16,26 @@ int app(int argc, char *argv[]) {
 
     QApplication a(argc, argv);
 
-    Graph* g = new Graph;
-    Vertex *v1 = g->add_vertex();
-    Vertex *v2 = g->add_vertex();
-    Vertex *v3 = g->add_vertex();
-    Vertex *v4 = g->add_vertex();
-    Vertex *v5 = g->add_vertex();
+	adjacency_list graph;
+	auto& v1 = graph.add();
+	auto& v2 = graph.add();
+	auto& v3 = graph.add();
+	auto& v4 = graph.add();
+	auto& v5 = graph.add();
 
-    g->connect(v1->value, v2->value);
-//    g->toggleEdge(v1->value, v2->value);
-    g->connect(v2->value, v3->value);
-    g->connect(v3->value, v4->value);
-    g->connect(v4->value, v5->value);
+	graph.connect(v1, v2);
+	graph.connect(v2, v3);
+	graph.connect(v3, v4);
+	graph.connect(v4, v5);
 
-    MainWindow w{g};
-
+    MainWindow w{&graph};
     w.show();
 
-	adjacency_list list;
-	list.add();
-	list.add();
-	list.add();
-
-	for (auto it = list.dfs_begin(); it != list.dfs_end(); ++it) {
-		std::string m = std::to_string((*it).id());
+	for (auto it = graph.dfs_begin(); it != graph.dfs_end(); ++it) {
+		std::string m = std::to_string(it->id());
 		log_event(m.c_str());
 	}
 	log_event("hehe");
-
 
     return a.exec();
 }

@@ -1,60 +1,29 @@
 #pragma once
 
-#include <cstddef>
 #include <vector>
 #include <list>
-#include <stack>
-#include <string>
-#include <unordered_map>
-#include "vertex_color.hpp"
 
-class vertex;
-struct edge;
+#include "lib/vertex.hpp"
+
 class adjacency_list;
-struct vertex_metadata;
-
-struct vertex_metadata {
-	vertex_color color;
-	std::string label;
-};
-
-struct edge {
-	vertex* from;
-	vertex* to;
-	int weight;
-
-	edge(vertex* from, vertex* to);
-	edge(const edge& rhs);
-
-	edge& operator=(const edge& rhs);
-};
-
-class vertex {
-	int id_;
-	const adjacency_list* list_;
-
-public:
-	std::vector<edge> edges;
-
-	vertex(int id, const adjacency_list& list);
-
-	int id() const { return id_; }
-
-	bool operator==(const vertex& rhs) const;
-	bool operator!=(const vertex& rhs) const;
-};
-
-struct vertex_hash {
-	std::size_t operator()(const vertex& v) {
-		return v.id();
-	}
-};
 
 class dfs_iterator {
+public:
+	using pointer = Vertex*;
+	using reference = Vertex&;
+
+	reference operator*();
+	dfs_iterator& operator++();
+
+	bool operator==(const dfs_iterator& rhs) const;
+	bool operator!=(const dfs_iterator& rhs) const;
+
+	pointer operator->() const;
+
+private:
 	// TODO - store this as a pointer
 	adjacency_list& list_;
-	std::vector<vertex*> stack_;
-	std::unordered_map<vertex, vertex_metadata, vertex_hash> metadata_map_;
+	std::vector<Vertex*> stack_;
 
 	// This way the only one who can create the iterator is the container itself.
 	friend class adjacency_list;
@@ -62,29 +31,21 @@ class dfs_iterator {
 
 	static dfs_iterator create_begin(adjacency_list& list);
 	static dfs_iterator create_end(adjacency_list& list);
-public:
-
-	using reference = vertex&;
-
-	reference operator*();
-	dfs_iterator& operator++();
-
-	bool operator==(const dfs_iterator& rhs) const;
-	bool operator!=(const dfs_iterator& rhs) const;
 };
 
 class adjacency_list {
 	int counter_;
-	std::list<vertex> list_;
+	std::list<Vertex> list_;
 
 public:
 	friend class dfs_iterator;
 
-	using value_type = vertex;
+	using value_type = Vertex;
 	using reference = value_type&;
+	using pointer = value_type*;
 	using const_reference = const reference;
-	using iterator = std::list<vertex>::iterator;
-	using const_iterator = std::list<vertex>::const_iterator;
+	using iterator = std::list<Vertex>::iterator;
+	using const_iterator = std::list<Vertex>::const_iterator;
 	using difference_type = std::ptrdiff_t;
 	using size_type = std::size_t;
 
@@ -114,18 +75,29 @@ public:
 	size_type max_size() const;
 	bool empty() const;
 
-	vertex& add();
-	vertex* find_by_id(int id);
+	reference add();
+	pointer find_by_id(int id);
 
-	void connect(vertex& a, vertex& b, bool oriented = false);
+	void remove(reference v);
+	bool remove(int id);
+
+	void connect(reference a, reference b, bool oriented = false);
 	// Returns true only if both vertices exist.
 	bool connect(int a, int b, bool oriented = false);
 
-	void disconnect(vertex& a, vertex& b, bool oriented = false);
+	void disconnect(reference a, reference b, bool oriented = false);
 	bool disconnect(int a, int b, bool oriented = false);
-	
+
+	void toggle_edge(reference a, reference b);
+	bool toggle_edge(int a, int b);
+
+	// TODO
+	void update_bridges(Vertex* start = nullptr);
+	void clear_metadata(bool showDistance);
 };
 
 inline void swap(adjacency_list& lhs, adjacency_list& rhs) {
 	lhs.swap(rhs);
 }
+
+
