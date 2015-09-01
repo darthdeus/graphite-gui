@@ -102,8 +102,6 @@ public:
 	using const_reference = const reference;
 	using iterator = std::vector<vertex>::iterator;
 	using const_iterator = std::vector<vertex>::const_iterator;
-	//using iterator = adjacencey_list_iterator;
-	//using const_iterator = const adjacencey_list_iterator;
 	using difference_type = std::ptrdiff_t;
 	using size_type = std::size_t;
 

@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <vector>
+#include <memory>
 
 #include "lib/bfs.hpp"
 #include "lib/dfs.hpp"
@@ -66,7 +67,7 @@ private:
     QGraphicsScene *scene;
     Search* search_ = nullptr;
 
-    Graph* graph_;
+    std::unique_ptr<Graph> graph_;
     std::vector<VertexGraphicsItem*> vertices_;
 
     /// Used for adding an edge, should be always nullified afterwards

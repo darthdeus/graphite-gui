@@ -174,11 +174,11 @@ void Graph::clear_metadata(bool showDistance) {
 	}
 }
 
-Graph* Graph::parse_stream(std::istream& is) {
+std::unique_ptr<Graph> Graph::parse_stream(std::istream& is) {
 	int size;
 	is >> size;
 
-	Graph* g = new Graph;
+	auto g = std::make_unique<Graph>();
 	g->vertex_counter_ = 0;
 
 	// Napred musime vytvorit vrcholy, aby je bylo mozne pospojovat

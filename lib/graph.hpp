@@ -3,7 +3,6 @@
 
 #include <memory>
 #include <list>
-#include <ostream>
 #include "vertex.hpp"
 
 class Graph {
@@ -45,7 +44,7 @@ public:
 	void clear_metadata(bool showDistance);
 	void updateBridges(Vertex* start = nullptr);
 
-	static Graph* parse_stream(std::istream& is);
+	static std::unique_ptr<Graph> parse_stream(std::istream& is);
 
 	iterator begin() { return list.begin(); }
 	iterator end() { return list.end(); }
