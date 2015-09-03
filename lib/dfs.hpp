@@ -1,5 +1,4 @@
-#ifndef GUARD_DFS
-#define GUARD_DFS
+#pragma once
 
 #include <stack>
 #include "lib/search.hpp"
@@ -20,5 +19,3 @@ class DFS : public Search {
   Vertex* end_;
   std::stack<Vertex*> stack_;
 };
-
-#endif

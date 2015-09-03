@@ -4,8 +4,6 @@
 #include "lib/graph.hpp"
 #include "mainwindow.h"
 
-#include "lib/adjacency_list.h"
-
 int app(int argc, char *argv[]) {
 
     QApplication a(argc, argv);
@@ -18,7 +16,6 @@ int app(int argc, char *argv[]) {
     Vertex& v5 = g->add_vertex();
 
     g->connect(v1, v2);
-//    g->toggleEdge(v1->value, v2->value);
     g->connect(v2, v3);
     g->connect(v3, v4);
     g->connect(v4, v5);

@@ -7,6 +7,7 @@
 
 #include "lib/graph.hpp"
 #include "lib/edge.hpp"
+#include "utils.h"
 
 static void vertex_not_found(const char* f, int vn1, int vn2) {
 	std::cout << f << ": vertex not found " << vn1 << " --> " << vn2

@@ -1,4 +1,3 @@
-#include <algorithm>
 #include "lib/edge.hpp"
 #include "lib/vertex.hpp"
 

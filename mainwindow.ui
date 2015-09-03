@@ -80,6 +80,11 @@
          <string>Euler</string>
         </property>
        </item>
+       <item>
+        <property name="text">
+         <string>Jarnik</string>
+        </property>
+       </item>
       </widget>
       <widget class="QLabel" name="label">
        <property name="geometry">

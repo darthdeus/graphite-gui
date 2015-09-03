@@ -1,6 +1,6 @@
 #include <algorithm>
 #include <assert.h>
-#include "adjacency_list.h"
+#include "adjacency_list.hpp"
 
 bool vertex::operator==(const vertex& rhs) const {
 	return id() == rhs.id() && list_ == rhs.list_;

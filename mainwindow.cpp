@@ -27,6 +27,8 @@
 #include "lib/dijkstra.hpp"
 #include "lib/euler.hpp"
 #include "lib/logger.hpp"
+#include "lib/jarnik.hpp"
+#include "utils.h"
 
 MainWindow::MainWindow(Graph *graph, QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow), graph_(graph)
@@ -40,7 +42,7 @@ MainWindow::MainWindow(Graph *graph, QWidget *parent)
     ui->graphicsView->setDragMode(QGraphicsView::ScrollHandDrag);
     ui->graphicsView->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
 
-    global_logger_logView_ = ui->txtLogView;
+	event_log.enable(*ui->txtLogView);
 
     reloadModel();
 }
@@ -151,8 +153,9 @@ void MainWindow::on_actionDelete_triggered()
 void MainWindow::searchToggle(bool isStart)
 {
     VertexGraphicsItem* current = selectedVertex();
-    if (current) {
-        log_event(QString("searchToggle(%1) on vertex %2").arg(isStart).arg(current->vertex->value).toStdString().c_str());
+    if (current) {		
+		auto msg = QString("searchToggle(%1) on vertex %2").arg(isStart).arg(current->vertex->value);
+		event_log << msg.toStdString();
         if (isStart) {
             graph_->set_start(current->vertex);
         } else {
@@ -191,9 +194,13 @@ void MainWindow::on_actionRestartAlgorithm_triggered()
         } else if (text == "Dijkstra") {
             graph_->clear_metadata(true);
             search_ = new Dijkstra(*graph_, graph_->start_);
-        } else if (text == "Euler") {
-            graph_->clear_metadata(false);
-            search_ = new Euler(*graph_, graph_->start_);
+		}
+		else if (text == "Euler") {
+			graph_->clear_metadata(false);
+			search_ = new Euler(*graph_, graph_->start_);
+		} else if (text == "Jarnik") {
+			graph_->clear_metadata(false);
+			search_ = new Jarnik(*graph_, *graph_->start_);
         } else {
             QMessageBox box;
             box.setText("No algorithm was selected.");
@@ -230,7 +237,7 @@ void MainWindow::on_actionRandomDirectedEdges_triggered()
     }
 
     reloadModel();
-    log_event("Randomized edges");
+    event_log << "Randomized edges";
 }
 
 /// Returns a selected vertex if there is one, otherwise nullptr.
@@ -250,7 +257,7 @@ void MainWindow::on_actionNew_triggered()
     graph_ = make_unique<Graph>();
     connectionVertex_ = -1;
     reloadModel();
-    log_event("New graph");
+	event_log << "New graph";
 }
 
 
@@ -329,7 +336,7 @@ void MainWindow::on_actionRandomEdgeWeights_triggered()
     }
 
     reloadModel();
-    log_event("edge weights randomized");
+	event_log << "Edge weights randomized";
 }
 
 void MainWindow::on_actionMakeUndirected_triggered()
@@ -349,12 +356,12 @@ void MainWindow::on_actionMakeUndirected_triggered()
     }
 
     reloadModel();
-    log_event("Removed orientation");
+	event_log << "Removed orientation";
 }
 
 void MainWindow::on_actionSave_triggered()
 {
-    log_event("Save");
+	event_log << "Save";
 }
 
 void MainWindow::on_actionSave_as_triggered()
@@ -364,9 +371,10 @@ void MainWindow::on_actionSave_as_triggered()
     if (!file.isNull()) {
         std::ofstream fs(file.toStdString());
         fs << *graph_;
-        log_event("Graph saved");
+		event_log << "Graph saved";
     } else {
-        log_event("Dialog canceled"); }
+		event_log << "Dialog cancelled";
+	}
 }
 
 void MainWindow::on_actionOpen_triggered()
@@ -379,9 +387,10 @@ void MainWindow::on_actionOpen_triggered()
         connectionVertex_ = -1;
         reloadModel();
 
-        log_event("Graph loaded");
+        event_log << "Graph loaded";
     } else {
-        log_event("Dialog canceled"); }
+        event_log << "Dialog canceled";
+	}
 }
 
 void MainWindow::on_actionAddVertex_triggered()
@@ -410,7 +419,7 @@ void MainWindow::on_actionConnectWithEdge_triggered()
                 // Reset the selection after we connect the vertices
                 connectionVertex_ = -1;
                 reloadModel();
-                log_event("Edge added");
+				event_log << "Edge added";
             }
         } else {
             current->selected(true);
@@ -424,8 +433,10 @@ void MainWindow::setEdgeWeight(int value) {
     EdgeWeightText *ewt;
     if (scene->selectedItems().count() == 1 && (ewt = dynamic_cast<EdgeWeightText*>(scene->selectedItems().at(0)))) {
         ewt->edge->weight = value;
-        log_event(QString("Set edge weight %1").arg(value).toStdString().c_str());
+		ewt->edge->reverseEdge()->weight = value;
         reloadModel();
+
+		event_log << QString("Set edge weight %1").arg(value).toStdString();
     }
 }
 
@@ -445,9 +456,10 @@ void MainWindow::on_actionChangeOrientation_triggered()
     if (scene->selectedItems().size() > 0 && (egi = dynamic_cast<EdgeGraphicsItem*>(scene->selectedItems().at(0)))) {
         graph_->toggleEdge(egi->from->value(), egi->to->value());
         reloadModel();
-        log_event("Changed orientation");
+
+        event_log << "Changed orientation";
     } else {
-        log_event("Failed to change, it aint an edge");
+        event_log << "Failed to change, it aint an edge";
     }
 }
 

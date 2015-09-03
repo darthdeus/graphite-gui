@@ -41,24 +41,16 @@ class vertex {
 public:
 	std::vector<edge> edges;
 
-	vertex(int id, const adjacency_list& list): id_(id), list_(&list) {
-	}
+	vertex(int id, const adjacency_list& list): id_(id), list_(&list) {}
 
-	int id() const {
-		return id_;
-	}
+	int id() const { return id_; }
 
 	bool operator==(const vertex& rhs) const;
-
-	bool operator!=(const vertex& rhs) const {
-		return !(*this == rhs);
-	}
+	bool operator!=(const vertex& rhs) const { return !(*this == rhs); }
 };
 
 struct vertex_hash {
-	std::size_t operator()(const vertex& v) {
-		return v.id();
-	}
+	std::size_t operator()(const vertex& v) { return v.id(); }
 };
 
 class dfs_iterator {

@@ -47,8 +47,8 @@ void Euler::step() {
     auto is_not_deleted = [](Edge& e) { return !e.deleted; };
 
     // If all edges are deleted (used) we're done	
-    bool undeleted_edge_count = std::count_if(current_->edges.begin(), current_->edges.end(), is_not_deleted);
-    if (undeleted_edge_count == 0) {
+    bool undeleted_count = std::count_if(current_->edges.begin(), current_->edges.end(), is_not_deleted);
+    if (undeleted_count == 0) {
         qDebug() << "No edges left, done";
         done = true;
 

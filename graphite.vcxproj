@@ -151,6 +151,7 @@
     <ClCompile Include="gui\edge_weight_text.cpp" />
     <ClCompile Include="lib\euler.cpp" />
     <ClCompile Include="lib\graph.cpp" />
+    <ClCompile Include="lib\jarnik.cpp" />
     <ClCompile Include="lib\logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mainwindow.cpp" />
@@ -159,7 +160,7 @@
     <ClCompile Include="gui\vertex_graphics_item.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="lib\adjacency_list.h" />
+    <ClInclude Include="lib\adjacency_list.hpp" />
     <ClInclude Include="GeneratedFiles\ui_mainwindow.h" />
     <ClInclude Include="lib\bfs.hpp" />
     <ClInclude Include="lib\dfs.hpp" />
@@ -169,8 +170,10 @@
     <ClInclude Include="gui\edge_weight_text.h" />
     <ClInclude Include="lib\euler.hpp" />
     <ClInclude Include="lib\graph.hpp" />
+    <ClInclude Include="lib\jarnik.hpp" />
     <ClInclude Include="lib\logger.hpp" />
     <ClInclude Include="lib\vertex_color.hpp" />
+    <ClInclude Include="utils.h" />
     <CustomBuild Include="mainwindow.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
 if errorlevel 1 goto VCEnd

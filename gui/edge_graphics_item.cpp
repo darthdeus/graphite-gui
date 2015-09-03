@@ -12,9 +12,11 @@
 #include "gui/edge_graphics_item.h"
 #include "gui/edge_weight_text.h"
 #include "gui/vertex_graphics_item.h"
+#include <lib/logger.hpp>
+#include <sstream>
 
 const double PI = atan(1) * 4;
-constexpr int center_ = VertexGraphicsItem::GraphicSize / 2;
+const int center_ = VertexGraphicsItem::GraphicSize / 2;
 
 EdgeGraphicsItem::EdgeGraphicsItem(VertexGraphicsItem* from, VertexGraphicsItem* to, Edge* edge): from(from), to(to), edge(edge)
 {
@@ -40,6 +42,10 @@ double deg(double x) {
     return 360 * x / (2 * PI);
 }
 
+std::ostream& operator<<(std::ostream& os, QPointF point) {
+	return os << "(" << point.x() << "," << point.y() << ")";
+}
+
 void EdgeGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     QPen pen;
@@ -53,11 +59,13 @@ void EdgeGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
     }
     setPen(pen);
 
-    QLineF line(this->mapFromItem(from, center_, center_), this->mapFromItem(to, center_, center_));
+	auto line_start = this->mapFromItem(from, center_, center_);
+	auto line_end = this->mapFromItem(to, center_, center_);
+    QLineF line(line_start, line_end);
     setZValue(-1);
     double angle = std::acos(line.dx() / line.length());
 
-    /// Protoze QT je hloupe a ma obracene osu Y
+    // Because the Qt y-axis is reversed
     double dy = -line.dy();
 
     double radius = VertexGraphicsItem::GraphicSize / 2;
@@ -101,13 +109,43 @@ void EdgeGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
         weightText_->setVisible(false);
     }
 
-    double weightRadius = -25;
-    double x_offset = std::abs(PI - std::abs(angle));
+	if (edge->oriented) {
+		double weightRadius = -25;
+		double x_offset = std::abs(PI - std::abs(angle));
 
-    QPointF offset{x_offset * 4, 10};
+		QPointF offset{ x_offset * 4, 10 };
 
-    QPointF textPoint = line.p2() + QPointF(sin(angle + arrowAngle) * weightRadius, cos(angle + arrowAngle) * weightRadius) - offset;
-    weightText_->setPos(textPoint);
+		QPointF textPoint = line.p2() - offset + QPointF(sin(angle + arrowAngle) * weightRadius,
+														 cos(angle + arrowAngle) * weightRadius);
+		weightText_->setPos(textPoint);
+	} else {
+		auto x1 = line.p1().x();
+		auto x2 = line.p2().x();
+
+		auto y1 = line.p1().y();
+		auto y2 = line.p2().y();
+
+		auto max_x = std::max(x1, x2);
+		auto max_y = std::max(y1, y2);
+
+		auto min_x = std::min(x1, x2);
+		auto min_y = std::min(y1, y2);
+
+		auto dx = (max_x - min_x) / 2.0;
+		auto dy = (max_y - min_y) / 2.0;
+
+		QPointF line_center{ max_x - dx, max_y - dy };
+
+		//std::stringstream ss;
+		//ss << "p1 " << line.p1() << std::endl;
+		//ss << "p2 " << line.p2() << std::endl;
+		//ss << "ct " << line_center << std::endl;
+
+		//log_event(ss.str());
+		//log_event("\n");
+
+		weightText_->setPos(line_center);
+	}
 
     QGraphicsLineItem::paint(painter, option, widget);
 }
