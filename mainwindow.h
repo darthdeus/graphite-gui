@@ -5,10 +5,10 @@
 #include <vector>
 #include <memory>
 
-#include "lib/bfs.hpp"
-#include "lib/dfs.hpp"
-#include "lib/dijkstra.hpp"
-#include "lib/graph.hpp"
+#include "bfs.h"
+#include "dfs.h"
+#include "dijkstra.h"
+#include "graph.h"
 
 class QGraphicsLineItem;
 class QGraphicsScene;

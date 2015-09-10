@@ -1,5 +1,5 @@
-#ifndef SEARCH_HPP
-#define SEARCH_HPP
+#ifndef SEARCH_H
+#define SEARCH_H
 
 class Search
 {
@@ -9,4 +9,4 @@ public:
     virtual void step() = 0;
 };
 
-#endif // SEARCH_HPP
+#endif /* SEARCH_H */

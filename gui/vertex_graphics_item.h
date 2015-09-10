@@ -9,7 +9,7 @@
 
 #include <vector>
 
-#include "lib/vertex.hpp"
+#include "vertex.h"
 #include "gui/edge_graphics_item.h"
 
 class VertexGraphicsItem : public QGraphicsEllipseItem

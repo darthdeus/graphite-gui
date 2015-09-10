@@ -1,9 +1,9 @@
 #include <queue>
 #include <iostream>
 
-#include "lib/vertex.hpp"
-#include "lib/graph.hpp"
-#include "lib/bfs.hpp"
+#include "vertex.h"
+#include "graph.h"
+#include "bfs.h"
 
 using std::cout;
 using std::endl;

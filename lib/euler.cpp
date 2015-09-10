@@ -4,10 +4,10 @@
 #include <unordered_map>
 #include <utility>
 
-#include "lib/edge.hpp"
-#include "lib/vertex.hpp"
-#include "lib/euler.hpp"
-#include "lib/graph.hpp"
+#include "edge.h"
+#include "vertex.h"
+#include "euler.h"
+#include "graph.h"
 
 Euler::Euler(Graph& g, Vertex* start): g_(g), start_(start) { }
 

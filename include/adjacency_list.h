@@ -1,11 +1,12 @@
-#pragma once
+#ifndef ADJACENCY_LIST_H
+#define ADJACENCY_LIST_H
 
 #include <cstddef>
 #include <vector>
 #include <stack>
 #include <string>
 #include <unordered_map>
-#include "vertex_color.hpp"
+#include "vertex_color.h"
 
 class vertex;
 struct edge;
@@ -130,3 +131,5 @@ public:
 inline void swap(adjacency_list& lhs, adjacency_list& rhs) {
 	lhs.swap(rhs);
 }
+
+#endif /* ADJACENCY_LIST_H */

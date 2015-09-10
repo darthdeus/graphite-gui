@@ -1,13 +1,13 @@
-#ifndef EULER_HPP
-#define EULER_HPP
+#ifndef EULER_H
+#define EULER_H
 
 #include <algorithm>
 #include <stack>
 #include <vector>
 
-#include "lib/vertex.hpp"
-#include "lib/search.hpp"
-#include "lib/graph.hpp"
+#include "vertex.h"
+#include "search.h"
+#include "graph.h"
 
 class Euler : public Search
 {
@@ -28,4 +28,4 @@ class Euler : public Search
   bool done = false;
 };
 
-#endif // EULER_HPP
+#endif /* EULER_H */

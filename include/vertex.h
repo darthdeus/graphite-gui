@@ -1,5 +1,5 @@
-#ifndef GUARD_VERTEX
-#define GUARD_VERTEX
+#ifndef VERTEX_H
+#define VERTEX_H
 
 #include <iostream>
 #include <ostream>
@@ -7,8 +7,8 @@
 #include <limits>
 #include <string>
 
-#include "lib/edge.hpp"
-#include "vertex_color.hpp"
+#include "edge.h"
+#include "vertex_color.h"
 
 class Vertex {
  public:
@@ -42,5 +42,5 @@ class Vertex {
 
 std::ostream& operator<<(std::ostream& os, const Vertex& v);
 
-#endif
+#endif /* VERTEX_H */
 

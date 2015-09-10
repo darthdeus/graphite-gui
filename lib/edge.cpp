@@ -1,5 +1,5 @@
-#include "lib/edge.hpp"
-#include "lib/vertex.hpp"
+#include "edge.h"
+#include "vertex.h"
 
 Edge *Edge::reverseEdge()
 {

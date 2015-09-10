@@ -1,8 +1,8 @@
 #include <QDebug>
 #include <limits>
-#include "lib/dijkstra.hpp"
-#include "lib/vertex.hpp"
-#include "lib/graph.hpp"
+#include "dijkstra.h"
+#include "vertex.h"
+#include "graph.h"
 
 Dijkstra::Dijkstra(Graph& g, Vertex* source): graph_(g), source_(source) { }
 

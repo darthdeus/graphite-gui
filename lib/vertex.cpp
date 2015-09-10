@@ -1,8 +1,8 @@
 #include <algorithm>
 #include <ostream>
 
-#include "lib/vertex.hpp"
-#include "lib/edge.hpp"
+#include "vertex.h"
+#include "edge.h"
 
 std::ostream& operator<<(std::ostream& os, const Vertex& v) {
   os << v.value << "\t";

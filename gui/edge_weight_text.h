@@ -3,7 +3,7 @@
 
 #include <QGraphicsTextItem>
 #include <QGraphicsItem>
-#include "lib/edge.hpp"
+#include "edge.h"
 
 class EdgeWeightText : public QGraphicsTextItem
 {

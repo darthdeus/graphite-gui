@@ -1,10 +1,10 @@
-#ifndef GUARD_BFS
-#define GUARD_BFS
+#ifndef BFS_H
+#define BFS_H
 
-#include "search.hpp"
-#include "graph.hpp"
-#include "vertex.hpp"
 #include <queue>
+#include "search.h"
+#include "graph.h"
+#include "vertex.h"
 
 class BFS : public Search {
  public:
@@ -21,4 +21,4 @@ class BFS : public Search {
   std::queue<Vertex*> queue_;
 };
 
-#endif
+#endif /* BFS_H */

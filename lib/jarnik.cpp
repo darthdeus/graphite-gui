@@ -1,8 +1,8 @@
 #include <assert.h>
-#include "lib/jarnik.hpp"
-#include "lib/graph.hpp"
-#include "lib/vertex.hpp"
-#include "lib/logger.hpp"
+#include "jarnik.h"
+#include "graph.h"
+#include "vertex.h"
+#include "logger.h"
 
 Jarnik::Jarnik(Graph& g, Vertex& start): g_(g), start_(&start) {
 }

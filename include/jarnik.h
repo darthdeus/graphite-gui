@@ -1,7 +1,10 @@
-#pragma once
+#ifndef JARNIK_H
+#define JARNIK_H
+
 #include <queue>
-#include "search.hpp"
-#include "edge.hpp"
+
+#include "search.h"
+#include "edge.h"
 
 class Graph;
 class Vertex;
@@ -25,3 +28,5 @@ private:
 	Vertex* start_;
 	std::priority_queue<Edge*, std::vector<Edge*>, EdgeWeightComparator> queue_;
 };
+
+#endif /* JARNIK_H */

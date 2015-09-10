@@ -2,9 +2,9 @@
 #define DIJKSTRA_H
 
 #include <queue>
-#include "lib/vertex.hpp"
-#include "lib/graph.hpp"
-#include "lib/search.hpp"
+#include "vertex.h"
+#include "graph.h"
+#include "search.h"
 
 class vertex_distance {
 public:
@@ -29,4 +29,4 @@ class Dijkstra : public Search {
 
 };
 
-#endif // DIJKSTRA_H
+#endif /* DIJKSTRA_H */

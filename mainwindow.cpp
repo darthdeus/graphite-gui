@@ -22,12 +22,12 @@
 #include "gui/vertex_graphics_item.h"
 #include "gui/edge_graphics_item.h"
 #include "gui/edge_weight_text.h"
-#include "lib/bfs.hpp"
-#include "lib/dfs.hpp"
-#include "lib/dijkstra.hpp"
-#include "lib/euler.hpp"
-#include "lib/logger.hpp"
-#include "lib/jarnik.hpp"
+#include "bfs.h"
+#include "dfs.h"
+#include "dijkstra.h"
+#include "euler.h"
+#include "logger.h"
+#include "jarnik.h"
 #include "utils.h"
 
 MainWindow::MainWindow(Graph *graph, QWidget *parent)

@@ -8,12 +8,12 @@
 #include <QGraphicsDropShadowEffect>
 
 #include <cmath>
+#include <sstream>
 
 #include "gui/edge_graphics_item.h"
 #include "gui/edge_weight_text.h"
 #include "gui/vertex_graphics_item.h"
-#include <lib/logger.hpp>
-#include <sstream>
+#include "logger.h"
 
 const double PI = atan(1) * 4;
 const int center_ = VertexGraphicsItem::GraphicSize / 2;

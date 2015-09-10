@@ -20,30 +20,30 @@ SOURCES += \
     lib/edge.cpp \
     lib/graph.cpp \
     lib/vertex.cpp \
-    gui/edge_graphics_item.cpp \
-    gui/vertex_graphics_item.cpp \
-    gui/edge_weight_text.cpp \
     lib/dijkstra.cpp \
     lib/search.cpp \
     lib/euler.cpp \
-    lib/jarnik.cpp
+    lib/jarnik.cpp \
+    gui/edge_graphics_item.cpp \
+    gui/vertex_graphics_item.cpp \
+    gui/edge_weight_text.cpp \
 
 HEADERS  += \
     mainwindow.h \
-    lib/logger.hpp \
-    lib/dfs.hpp \
-    lib/edge.hpp \
-    lib/graph.hpp \
-    lib/vertex.hpp \
-    lib/bfs.hpp \
+    include/logger.h \
+    include/dfs.h \
+    include/edge.h \
+    include/graph.h \
+    include/vertex.h \
+    include/bfs.h \
+    include/dijkstra.h \
+    include/search.h \
+    include/euler.h \
+    include/jarnik.h \
+    include/utils.h \
     gui/vertex_graphics_item.h \
     gui/edge_graphics_item.h \
     gui/edge_weight_text.h \
-    lib/dijkstra.hpp \
-    lib/search.hpp \
-    lib/euler.hpp \
-    lib/jarnik.hpp \
-    lib/utils.h
 
 FORMS    += \
     mainwindow.ui
@@ -52,6 +52,8 @@ CONFIG += c++11
 
 release: DESTDIR = build/release
 debug:   DESTDIR = build/debug
+
+INCLUDEPATH += $$PWD/include
 
 OBJECTS_DIR = $$DESTDIR/.obj
 MOC_DIR = $$DESTDIR/.moc

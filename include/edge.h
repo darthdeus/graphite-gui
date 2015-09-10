@@ -1,5 +1,5 @@
-#ifndef GUARD_EDGE
-#define GUARD_EDGE
+#ifndef EDGE_H
+#define EDGE_H
 
 class Vertex;
 
@@ -21,4 +21,4 @@ class Edge {
   Edge* reverseEdge();
 };
 
-#endif
+#endif /* EDGE_H */

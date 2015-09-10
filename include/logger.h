@@ -1,4 +1,7 @@
-#pragma once
+#ifndef LOGGER_H
+#define LOGGER_H
+
+
 #include <QTextBrowser>
 #include <memory>
 #include <queue>
@@ -67,3 +70,5 @@ Logger<T, A>& operator<<(Logger<T, A>& l, std::string msg) {
 	}
 	return l;
 }
+
+#endif /* LOGGER_H */

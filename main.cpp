@@ -1,7 +1,7 @@
 #include <QDebug>
 #include <QApplication>
-#include "lib/logger.hpp"
-#include "lib/graph.hpp"
+#include "logger.h"
+#include "graph.h"
 #include "mainwindow.h"
 
 int app(int argc, char *argv[]) {

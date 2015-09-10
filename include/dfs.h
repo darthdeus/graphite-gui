@@ -1,9 +1,10 @@
-#pragma once
+#ifndef DFS_H
+#define DFS_H
 
 #include <stack>
-#include "lib/search.hpp"
-#include "lib/graph.hpp"
-#include "lib/vertex.hpp"
+#include "search.h"
+#include "graph.h"
+#include "vertex.h"
 
 class DFS : public Search {
  public:
@@ -19,3 +20,5 @@ class DFS : public Search {
   Vertex* end_;
   std::stack<Vertex*> stack_;
 };
+
+#endif /* DFS_H */

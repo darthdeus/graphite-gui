@@ -1,9 +1,9 @@
-#ifndef GUARD_GRAPH
-#define GUARD_GRAPH
+#ifndef GRAPH_H
+#define GRAPH_H
 
 #include <memory>
 #include <list>
-#include "vertex.hpp"
+#include "vertex.h"
 
 class Graph {
 
@@ -71,4 +71,4 @@ private:
 
 std::ostream& operator<<(std::ostream& os, Graph& g);
 
-#endif
+#endif /* GRAPH_H */

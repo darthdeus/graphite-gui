@@ -5,7 +5,7 @@
 #include <QGraphicsTextItem>
 
 #include "gui/edge_weight_text.h"
-#include "lib/edge.hpp"
+#include "edge.h"
 
 class VertexGraphicsItem;
 

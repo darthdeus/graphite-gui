@@ -5,8 +5,8 @@
 #include <limits>
 #include <iostream>
 
-#include "lib/graph.hpp"
-#include "lib/edge.hpp"
+#include "graph.h"
+#include "edge.h"
 #include "utils.h"
 
 static void vertex_not_found(const char* f, int vn1, int vn2) {

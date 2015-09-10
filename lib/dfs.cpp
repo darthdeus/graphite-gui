@@ -1,8 +1,8 @@
 #include <stack>
 
-#include "lib/vertex.hpp"
-#include "lib/graph.hpp"
-#include "lib/dfs.hpp"
+#include "vertex.h"
+#include "graph.h"
+#include "dfs.h"
 
 DFS::DFS(Graph& g, Vertex* start, Vertex* end) : g(g), start_(start), end_(end) {
 }
