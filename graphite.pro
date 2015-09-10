@@ -25,7 +25,8 @@ SOURCES += \
     gui/edge_weight_text.cpp \
     lib/dijkstra.cpp \
     lib/search.cpp \
-    lib/euler.cpp
+    lib/euler.cpp \
+    lib/jarnik.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -40,7 +41,9 @@ HEADERS  += \
     gui/edge_weight_text.h \
     lib/dijkstra.hpp \
     lib/search.hpp \
-    lib/euler.hpp
+    lib/euler.hpp \
+    lib/jarnik.hpp \
+    lib/utils.h
 
 FORMS    += \
     mainwindow.ui

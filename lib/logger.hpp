@@ -2,6 +2,7 @@
 #include <QTextBrowser>
 #include <memory>
 #include <queue>
+#include "utils.h"
 
 class QTextBrowserAppender {
 	using Target = QTextBrowser;
@@ -41,10 +42,11 @@ public:
 
 extern Logger<QTextBrowser> event_log;
 
+class multiple_log_enable_error : public std::exception {};
 
 template <typename Target, typename Appender>
 void Logger<Target, Appender>::enable(Target& t) {
-	if (enabled_) throw std::exception("Logger enabled multiple times.");
+	if (enabled_) throw multiple_log_enable_error();
 
 	appender_ = make_unique<Appender>(t);
 	enabled_ = true;

@@ -42,7 +42,7 @@ MainWindow::MainWindow(Graph *graph, QWidget *parent)
     ui->graphicsView->setDragMode(QGraphicsView::ScrollHandDrag);
     ui->graphicsView->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
 
-	event_log.enable(*ui->txtLogView);
+  	event_log.enable(*ui->txtLogView);
 
     reloadModel();
 }
