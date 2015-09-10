@@ -13,7 +13,7 @@ TEMPLATE = app
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp \
+    src/mainwindow.cpp \
     src/logger.cpp \
     src/bfs.cpp \
     src/dfs.cpp \
@@ -29,7 +29,7 @@ SOURCES += \
     src/gui/edge_weight_text.cpp \
 
 HEADERS  += \
-    mainwindow.h \
+    include/mainwindow.h \
     include/logger.h \
     include/dfs.h \
     include/edge.h \
@@ -46,7 +46,7 @@ HEADERS  += \
     include/gui/edge_weight_text.h \
 
 FORMS    += \
-    mainwindow.ui
+    forms/mainwindow.ui \
 
 CONFIG += c++11
 
