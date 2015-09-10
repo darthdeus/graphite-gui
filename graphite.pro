@@ -14,19 +14,19 @@ TEMPLATE = app
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
-    lib/logger.cpp \
-    lib/bfs.cpp \
-    lib/dfs.cpp \
-    lib/edge.cpp \
-    lib/graph.cpp \
-    lib/vertex.cpp \
-    lib/dijkstra.cpp \
-    lib/search.cpp \
-    lib/euler.cpp \
-    lib/jarnik.cpp \
-    gui/edge_graphics_item.cpp \
-    gui/vertex_graphics_item.cpp \
-    gui/edge_weight_text.cpp \
+    src/logger.cpp \
+    src/bfs.cpp \
+    src/dfs.cpp \
+    src/edge.cpp \
+    src/graph.cpp \
+    src/vertex.cpp \
+    src/dijkstra.cpp \
+    src/search.cpp \
+    src/euler.cpp \
+    src/jarnik.cpp \
+    src/gui/edge_graphics_item.cpp \
+    src/gui/vertex_graphics_item.cpp \
+    src/gui/edge_weight_text.cpp \
 
 HEADERS  += \
     mainwindow.h \
@@ -41,9 +41,9 @@ HEADERS  += \
     include/euler.h \
     include/jarnik.h \
     include/utils.h \
-    gui/vertex_graphics_item.h \
-    gui/edge_graphics_item.h \
-    gui/edge_weight_text.h \
+    include/gui/vertex_graphics_item.h \
+    include/gui/edge_graphics_item.h \
+    include/gui/edge_weight_text.h \
 
 FORMS    += \
     mainwindow.ui
