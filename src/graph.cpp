@@ -97,7 +97,7 @@ bool Graph::is_connected(Vertex& v1, Vertex& v2) {
   return found != std::end(v1.edges);
 }
 
-void Graph::removeVertex(Vertex& v) {
+void Graph::remove_vertex(Vertex& v) {
   for (auto& vv : list) {
     vv.edges.remove_if([&v](Edge& edge) { return edge.to->value == v.value; });
   }
@@ -106,7 +106,7 @@ void Graph::removeVertex(Vertex& v) {
   list.remove_if([&v](Vertex& p) { return p.value == v.value; });
 }
 
-void Graph::toggleEdge(int vn1, int vn2) {
+void Graph::toggle_edge(int vn1, int vn2) {
   bool left = is_connected(vn1, vn2);
   bool right = is_connected(vn2, vn1);
 
@@ -167,18 +167,17 @@ void Graph::clear_metadata(bool showDistance) {
   }
 }
 
-std::unique_ptr<Graph> Graph::parse_stream(std::istream& is) {
+std::istream& operator>>(std::istream& is, Graph& g) {
   int size;
   is >> size;
 
-  auto g = make_unique<Graph>();
-  g->vertex_counter_ = 0;
+  g.vertex_counter_ = 0;
 
   // First we need to create the vertices in order to connect them
   for (int i = 0; i < size; i++) {
     int n;
     is >> n;
-    auto& v = g->add_vertex(n);
+    auto& v = g.add_vertex(n);
     is >> v.x;
     is >> v.y;
   }
@@ -195,11 +194,11 @@ std::unique_ptr<Graph> Graph::parse_stream(std::istream& is) {
       is >> edge_to;
       is >> weight;
       qDebug() << "trying to connect" << vertex << edge_to;
-      g->connect_oriented(vertex, edge_to, weight);
+      g.connect_oriented(vertex, edge_to, weight);
     }
   }
 
-  return g;
+  return is;
 }
 
 std::ostream& operator<<(std::ostream& os, Graph& g) {

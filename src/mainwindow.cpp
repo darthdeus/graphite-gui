@@ -157,7 +157,7 @@ void MainWindow::on_actionDelete_triggered() {
         connectionVertex_ = -1;
       }
 
-      graph_->removeVertex(*vgi->vertex);
+      graph_->remove_vertex(*vgi->vertex);
     } else if (EdgeGraphicsItem* egi =
                    dynamic_cast<EdgeGraphicsItem*>(selectedItem)) {
       auto from = egi->from;
@@ -175,6 +175,7 @@ void MainWindow::on_actionDelete_triggered() {
 /// isStart - true for start vertex, false for end vertex
 void MainWindow::searchToggle(bool isStart) {
   VertexGraphicsItem* current = selectedVertex();
+
   if (current) {
     auto msg = QString("searchToggle(%1) on vertex %2")
                    .arg(isStart)
@@ -250,7 +251,7 @@ void MainWindow::on_actionRandomDirectedEdges_triggered() {
 
   for (auto& pair : edges) {
     if (rand() % 2 == 0) {
-      graph_->toggleEdge(pair.first, pair.second);
+      graph_->toggle_edge(pair.first, pair.second);
     }
   }
 
@@ -364,6 +365,7 @@ void MainWindow::on_actionMakeUndirected_triggered() {
   for (auto& pair : edges) {
     graph_->disconnect(pair.first, pair.second);
     graph_->connect(pair.first, pair.second);
+    // TODO - set the actual ORIENTED flag
   }
 
   reloadModel();
@@ -389,11 +391,19 @@ void MainWindow::on_actionOpen_triggered() {
 
   if (!file.isNull()) {
     std::ifstream fs(file.toStdString());
-    graph_ = Graph::parse_stream(fs);
-    connectionVertex_ = -1;
-    reloadModel();
+    auto g = make_unique<Graph>();
+    fs >> *g;
 
-    event_log << "Graph loaded";
+    if (fs) {
+      graph_ = std::move(g);
+      connectionVertex_ = -1;
+      reloadModel();
+
+      event_log << "Graph loaded";
+    } else {
+      event_log << "Error loading from file";
+    }
+
   } else {
     event_log << "Dialog canceled";
   }
@@ -463,7 +473,7 @@ void MainWindow::on_actionChangeOrientation_triggered() {
   EdgeGraphicsItem* egi;
   if (scene->selectedItems().size() > 0 &&
       (egi = dynamic_cast<EdgeGraphicsItem*>(scene->selectedItems().at(0)))) {
-    graph_->toggleEdge(egi->from->value(), egi->to->value());
+    graph_->toggle_edge(egi->from->value(), egi->to->value());
     reloadModel();
 
     event_log << "Changed orientation";

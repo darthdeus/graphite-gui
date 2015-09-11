@@ -29,13 +29,13 @@ class Graph {
 
   bool is_connected(int v1, int v2);
   bool is_connected(Vertex& v1, Vertex& v2);
-  void removeVertex(Vertex& v);
+  void remove_vertex(Vertex& v);
 
   // Toggle edge orientation in the following order
   // v1 <-> v2
   // v1  -> v2
   // v1 <-  v2
-  void toggleEdge(int v1, int v2);
+  void toggle_edge(int v1, int v2);
 
   void set_start(Vertex* v);
   void set_end(Vertex* v);
@@ -43,8 +43,6 @@ class Graph {
 
   void clear_metadata(bool showDistance);
   void update_bridges(Vertex* start = nullptr);
-
-  static std::unique_ptr<Graph> parse_stream(std::istream& is);
 
   iterator begin() { return list.begin(); }
   iterator end() { return list.end(); }
@@ -60,6 +58,7 @@ class Graph {
   Vertex* start_ = nullptr;
   Vertex* end_ = nullptr;
 
+  friend std::istream& operator>>(std::istream& is, Graph& g);
  private:
   // Try to find a vertex in the graph, otherwise return nullptr.
   Vertex* find(int n);
@@ -71,5 +70,6 @@ class Graph {
 };
 
 std::ostream& operator<<(std::ostream& os, Graph& g);
+std::istream& operator>>(std::istream& is, Graph& g);
 
 #endif /* GRAPH_H */
