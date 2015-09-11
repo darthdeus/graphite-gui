@@ -28,7 +28,8 @@ class Graph {
   void disconnect_oriented(int vn1, int vn2);
 
   bool is_connected(int v1, int v2);
-  void removeVertex(Vertex* v);
+  bool is_connected(Vertex& v1, Vertex& v2);
+  void removeVertex(Vertex& v);
 
   // Toggle edge orientation in the following order
   // v1 <-> v2
@@ -41,7 +42,7 @@ class Graph {
   bool search_ready() const;
 
   void clear_metadata(bool showDistance);
-  void updateBridges(Vertex* start = nullptr);
+  void update_bridges(Vertex* start = nullptr);
 
   static std::unique_ptr<Graph> parse_stream(std::istream& is);
 

@@ -140,7 +140,7 @@ void MainWindow::keyReleaseEvent(QKeyEvent* e) {
       setEdgeWeight(9);
       break;
     case Qt::Key_B:
-      graph_->updateBridges();
+      graph_->update_bridges();
       reloadModel();
     default:
       QMainWindow::keyReleaseEvent(e);
@@ -157,7 +157,7 @@ void MainWindow::on_actionDelete_triggered() {
         connectionVertex_ = -1;
       }
 
-      graph_->removeVertex(vgi->vertex);
+      graph_->removeVertex(*vgi->vertex);
     } else if (EdgeGraphicsItem* egi =
                    dynamic_cast<EdgeGraphicsItem*>(selectedItem)) {
       auto from = egi->from;

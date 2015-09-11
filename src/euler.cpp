@@ -30,7 +30,7 @@ void Euler::start() {
     }
   }
 
-  g_.updateBridges();
+  g_.update_bridges();
 }
 
 void Euler::step() {
@@ -52,7 +52,7 @@ void Euler::step() {
     qDebug() << "No edges left, done";
     done = true;
 
-    g_.updateBridges();
+    g_.update_bridges();
     return;
   }
 
@@ -74,7 +74,7 @@ void Euler::step() {
 
     qDebug() << "Only bridges left";
 
-    g_.updateBridges();
+    g_.update_bridges();
     return;
   }
 
@@ -91,6 +91,6 @@ void Euler::step() {
   current_->color = vertex_color::gray;
 
   qDebug() << "Non-bridge";
-  g_.updateBridges(current_);
+  g_.update_bridges(current_);
   return;
 }

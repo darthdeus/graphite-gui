@@ -87,20 +87,23 @@ bool Graph::is_connected(int vn1, int vn2) {
     return false;
   }
 
-  auto p = [v2](Edge& e) { return e.to == v2; };
-  auto found = std::find_if(std::begin(v1->edges), std::end(v1->edges), p);
-
-  return found != std::end(v1->edges);
+  return is_connected(*v1, *v2);
 }
 
-void Graph::removeVertex(Vertex* v) {
+bool Graph::is_connected(Vertex& v1, Vertex& v2) {
+  auto p = [&v2](Edge& e) { return e.to->value == v2.value; };
+  auto found = std::find_if(std::begin(v1.edges), std::end(v1.edges), p);
+
+  return found != std::end(v1.edges);
+}
+
+void Graph::removeVertex(Vertex& v) {
   for (auto& vv : list) {
-    vv.edges.remove_if([v](Edge& edge) { return edge.to->value == v->value; });
+    vv.edges.remove_if([&v](Edge& edge) { return edge.to->value == v.value; });
   }
 
-  qDebug() << "Removing vertex" << v->value << " ... current count is "
-           << size();
-  list.remove_if([v](Vertex& p) { return p.value == v->value; });
+  qDebug() << "Removing vertex" << v.value << " ... current count is " << size();
+  list.remove_if([&v](Vertex& p) { return p.value == v.value; });
 }
 
 void Graph::toggleEdge(int vn1, int vn2) {
@@ -253,7 +256,7 @@ static void updateVertex(Vertex& v, int& counter, Edge* backEdge) {
   }
 }
 
-void Graph::updateBridges(Vertex*) {
+void Graph::update_bridges(Vertex*) {
   int counter = 1;
 
   for (auto& v : list) {
