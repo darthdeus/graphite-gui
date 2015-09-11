@@ -8,15 +8,16 @@
 class Graph {
  public:
   using adjacency_list = std::list<Vertex>;
+
   // Container requirements
-  using value_type = Vertex;
-  using reference = value_type&;
+  using value_type      = Vertex;
+  using reference       = value_type&;
   using const_reference = const value_type&;
-  using pointer = value_type*;
-  using iterator = adjacency_list::iterator;
-  using const_iterator = adjacency_list::const_iterator;
+  using pointer         = value_type*;
+  using iterator        = adjacency_list::iterator;
+  using const_iterator  = adjacency_list::const_iterator;
   using difference_type = adjacency_list::difference_type;
-  using size_type = adjacency_list::size_type;
+  using size_type       = adjacency_list::size_type;
 
   Vertex& add_vertex();
   void connect(Vertex& v1, Vertex& v2);
@@ -29,13 +30,11 @@ class Graph {
   bool is_connected(int v1, int v2);
   void removeVertex(Vertex* v);
 
-  /// Pro dva vrcholy prepina orientaci hrany, v nasledujicim poradi
-  /// v1 <-> v2
-  /// v1  -> v2
-  /// v1 <-  v2
+  // Toggle edge orientation in the following order
+  // v1 <-> v2
+  // v1  -> v2
+  // v1 <-  v2
   void toggleEdge(int v1, int v2);
-
-  adjacency_list list;
 
   void set_start(Vertex* v);
   void set_end(Vertex* v);
@@ -64,6 +63,8 @@ class Graph {
   // Try to find a vertex in the graph, otherwise return nullptr.
   Vertex* find(int n);
   Vertex& add_vertex(int n);
+
+  adjacency_list list;
 
   int vertex_counter_ = 0;
 };

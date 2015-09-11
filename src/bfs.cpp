@@ -8,8 +8,6 @@
 using std::cout;
 using std::endl;
 
-BFS::BFS(Graph& g, Vertex* s, Vertex* e) : g(g), start_(s), end_(e) {}
-
 void BFS::start() {
   for (auto& v : g) {
     v.color = vertex_color::white;

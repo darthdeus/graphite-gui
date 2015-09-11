@@ -99,7 +99,7 @@ void Graph::removeVertex(Vertex* v) {
   }
 
   qDebug() << "Removing vertex" << v->value << " ... current count is "
-           << list.size();
+           << size();
   list.remove_if([v](Vertex& p) { return p.value == v->value; });
 }
 
@@ -171,7 +171,7 @@ std::unique_ptr<Graph> Graph::parse_stream(std::istream& is) {
   auto g = make_unique<Graph>();
   g->vertex_counter_ = 0;
 
-  // Napred musime vytvorit vrcholy, aby je bylo mozne pospojovat
+  // First we need to create the vertices in order to connect them
   for (int i = 0; i < size; i++) {
     int n;
     is >> n;
@@ -200,15 +200,15 @@ std::unique_ptr<Graph> Graph::parse_stream(std::istream& is) {
 }
 
 std::ostream& operator<<(std::ostream& os, Graph& g) {
-  std::size_t size = g.list.size();
+  std::size_t size = g.size();
   os << size << std::endl;
 
-  for (auto& vertex : g.list) {
+  for (auto& vertex : g) {
     os << vertex.value << " " << vertex.x << " " << vertex.y << std::endl;
   }
   os << std::endl;
 
-  for (auto& vertex : g.list) {
+  for (auto& vertex : g) {
     qDebug() << "saving vertex.value = " << vertex.value;
     os << vertex.value << ":";
 

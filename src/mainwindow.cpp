@@ -300,7 +300,7 @@ void MainWindow::on_actionRandomGraph_triggered() {
     Vertex* top = queue.front();
     queue.pop();
 
-    int index = (rand() % (graph_->list.size() - 1)) + 1;
+    int index = (rand() % (graph_->size() - 1)) + 1;
     int dice = rand() % 6;
 
     if (top->value != index && dice > 2) {

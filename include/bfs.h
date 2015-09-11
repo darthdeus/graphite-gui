@@ -8,7 +8,7 @@
 
 class BFS : public Search {
  public:
-  BFS(Graph& g, Vertex* start, Vertex* end);
+  BFS(Graph& g, Vertex* s, Vertex* e) : g(g), start_(s), end_(e) {}
 
   Graph& g;
 

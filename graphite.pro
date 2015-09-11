@@ -49,6 +49,8 @@ FORMS    += \
     forms/mainwindow.ui \
 
 CONFIG += c++11
+# Uncomment to enable debugging
+# CONFIG += debug
 
 release: DESTDIR = build/release
 debug:   DESTDIR = build/debug
