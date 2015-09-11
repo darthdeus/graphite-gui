@@ -15,7 +15,6 @@ std::ostream& operator<<(std::ostream& os, const Vertex& v) {
 }
 
 int Vertex::undeletedEdgeCount() {
-    return std::count_if(begin(edges), end(edges), [](Edge& e) {
-        return !e.deleted;
-    });
+  return std::count_if(begin(edges), end(edges),
+                       [](Edge& e) { return !e.deleted; });
 }

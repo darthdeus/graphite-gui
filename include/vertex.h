@@ -43,4 +43,3 @@ class Vertex {
 std::ostream& operator<<(std::ostream& os, const Vertex& v);
 
 #endif /* VERTEX_H */
-

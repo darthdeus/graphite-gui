@@ -9,8 +9,7 @@
 #include "search.h"
 #include "graph.h"
 
-class Euler : public Search
-{
+class Euler : public Search {
  public:
   Euler(Graph& g, Vertex* start);
 

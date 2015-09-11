@@ -7,10 +7,10 @@
 #include "search.h"
 
 class vertex_distance {
-public:
-    bool operator() (const Vertex* lhs, const Vertex* rhs) const {
-       return lhs->distance > rhs->distance;
-    }
+ public:
+  bool operator()(const Vertex* lhs, const Vertex* rhs) const {
+    return lhs->distance > rhs->distance;
+  }
 };
 
 class Dijkstra : public Search {
@@ -26,7 +26,6 @@ class Dijkstra : public Search {
   Vertex* source_ = nullptr;
 
   bool is_closed(Vertex* v);
-
 };
 
 #endif /* DIJKSTRA_H */
