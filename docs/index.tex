@@ -48,7 +48,7 @@ přes hlavní menu
 \begin{figure}
   \centering
     \includegraphics[width=0.5\textwidth]{KJaB5S6.png}
-  \caption{hlavni menu TODO}
+  \caption{Hlavní menu}
 \end{figure}
 
 a nebo pomocí klávesové zkratky. Zde je jejich úplný seznam:
@@ -77,29 +77,25 @@ přesunul.)
 
 Nejjednodušší je vybrat jeden z přiložených grafů v souboru, a otevřít
 jej přes \code{File -> Open}, např. kompletní graf na 5 vrcholech v souboru
-\code{examples/k5.g}
+\code{examples/k5.g}.
 
-\begin{figure}
-  \centering
-    \includegraphics[width=0.5\textwidth]{iYrD1VK.png}
-  \caption{K5}
-\end{figure}
+\begin{center}
+	\includegraphics[width=0.8\textwidth]{iYrD1VK.png}	
+\end{center}
 
-v seznamu algoritmů vybrat Eulerovský tah
+V seznamu algoritmů vybrat Eulerovský tah.
 
-\begin{figure}
-  \centering
-    \includegraphics[width=0.5\textwidth]{ewrHxRO.png}
-  \caption{výběr algoritmu}
-\end{figure}
+\vspace{10pt}
+\begin{center}
+	\includegraphics[width=0.5\textwidth]{ewrHxRO.png}
+\end{center}
+\vspace{10pt}
 
-kliknout na libovolný vrchol, vybrat ho jako počáteční (stisknutím \code{F}),
+A kliknout na libovolný vrchol, vybrat ho jako počáteční (stisknutím \code{F}),
 inicializovat algoritmus (stisknutím \code{R}), a poté již krokovat
-stisknutím \code{N}.
-
-V libovolnou chvíli je možné znovu stiknout \code{R}, čímž se algoritmus
-resetuje a začne pracovat odznova. **Pokud uživatel graf jakkoliv změní
-v průběhu algoritmu, je nutné algoritmus resetovat stisktnutím \code{R}**.
+stisknutím \code{N}. V libovolnou chvíli je možné znovu stiknout \code{R}, čímž se algoritmus
+resetuje a začne pracovat odznova. \emph{Pokud uživatel graf jakkoliv změní
+v průběhu algoritmu, je nutné algoritmus resetovat stisktnutím \code{R}}.
 
 Většina důležitých informací které program provádí jsou vypisovány do
 logu v pravé straně GUI (a některé navíc na STDOUT). Log v GUI je
@@ -135,7 +131,7 @@ Výsledný graf pak vypadá např. takto
 \begin{figure}
   \centering
     \includegraphics[width=0.5\textwidth]{LQNxfKa.png}
-  \caption{náhodný Eulerovský graf}
+  \caption{Náhodný Eulerovský graf}
 \end{figure}
 
 Takto vygenerovaný graf má opět výhodu, že je díky menšímu počtu hran přehledný.
@@ -157,7 +153,7 @@ krokuje, až dojde do koncového stavu, kdy algoritmus doběhl.
 Proto jsem zvolil zásobníkovou variantu DFS místo rekurzivní, aby šlo
 jednoduše ovládat průběh algoritmu.
 
-\section{DFS, BFS}
+\subsection{DFS, BFS}
 
 Pro porovnání prohledávání do hloubky a do šířky je nejlepší zvolit
 stejný graf, a na něm pozorovat, jak se průběh jednotlivých algoritmů
@@ -167,14 +163,14 @@ tmavě zelený, otevřený je světle zelený a uzavřený je černý.
 \begin{figure}
   \centering
     \includegraphics[width=0.5\textwidth]{CaAOrcu.png}
-  \caption{barvy vrcholů}
+  \caption{Barvy vrcholů}
 \end{figure}
 
 Jak DFS tak BFS umí pracovat s orientovanými grafy. Orientace hrany se
 změní označením hrany myší a stiskem \code{O}. Pro vrcholy \code{A} a \code{B} se
 postupně mění typ hrany na \code{A -> B}, \code{A <- B}, a \code{A <-> B}.
 
-\section{Dijkstrův algoritmus}
+\subsection{Dijkstrův algoritmus}
 
 Dijkstrův algoritmus opět funguje i na orientovaných grafech, pričemž
 navíc zobrazuje i ohodnocení hran.
@@ -182,7 +178,7 @@ navíc zobrazuje i ohodnocení hran.
 \begin{figure}
   \centering
     \includegraphics[width=0.5\textwidth]{2d7DzOA.png}
-  \caption{ohodnocení hran}
+  \caption{Ohodnocení hran}
 \end{figure}
 
 Váha hrany je vždy zobrazena ve směru kam hrana ukazuje, a tedy pro
@@ -203,10 +199,10 @@ nekonečnou vzdálenost, reprezentováno stringem \code{inf}, viz obrázek.
 \begin{figure}
   \centering
     \includegraphics[width=0.5\textwidth]{OWYHOQ7.png}
-  \caption{Dijkstra průběh}
+  \caption{Průběh Dijkstrova algoritmu}
 \end{figure}
 
-\section{Eulerovská kružnice}
+\subsection{Eulerovská kružnice}
 
 Algoritmus pro hledání Eulerovské kružnice se trochu liší od prvních
 tří, a to tím, že funguje pouze na neorientovaných grafech, kde stupeň
@@ -230,19 +226,18 @@ Na začátku algoritmu sice žádné mosty nemohou existovat, ale už po
 prvním kroku dojde ke \emph{smazání} jedné hrany, a tím mohou nějaké mosty
 vzniknout. Viz obrázek
 
-\begin{figure}
-  \centering
+\begin{center}
     \includegraphics[width=0.5\textwidth]{95ubo0l.png}
-  \caption{graf bez mostů}
-\end{figure}
+\end{center}
+\vspace{10pt}
 
 a po prvním kroku už máme nalezeny dva mosty.
 
-\begin{figure}
-  \centering
+\vspace{10pt}
+\begin{center}
     \includegraphics[width=0.5\textwidth]{Ls741t3.png}
-  \caption{mosty jsou označeny červeně}
-\end{figure}
+\end{center}
+\vspace{10pt}
 
 Hledání mostů je nutné provést po každém kroku algoritmu, a probíhá
 pomocí DFS klasifikace, konkrétně tak, že se prohledá celý graf pomocí
@@ -253,5 +248,10 @@ Složitost algoritmu je tedy kvadratická, protože pro každý krok je nutné
 provést celé DFS na odhalení mostů. Existují sice alternativní
 algoritmy, které jsou ve výsledku rychlejší, ale jejich vizualizace je
 často velmi matoucí, zatímco Fleuryho algoritmus je velmi přímočarý.
+
+\subsection{Jarníkův algoritmus}
+
+Poslední algoritmus který program implementuje je Jarníkův-Primův algoritmus
+pro hledání nejlehčí kostry neorientovaného grafu.
 
 \end{document}
