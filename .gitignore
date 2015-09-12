@@ -9,3 +9,6 @@ debug/
 GeneratedFiles/
 *.sdf
 *.opensdf
+
+*.aux
+*.log

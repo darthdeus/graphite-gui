@@ -1,12 +1,18 @@
 # Vizualizace grafovych algoritmů
 
-Tématem práce je vizualizace grafových algoritmů, konkrétně prohledávání do hloubky, do šířky, Dijkstrův algoritmus a hledání Eulerovské kružnice v neorientovaných grafech (nakreslení grafu jedním tahem).
+Tématem práce je vizualizace grafových algoritmů, konkrétně prohledávání
+do hloubky, do šířky, Dijkstrův algoritmus a hledání Eulerovské kružnice
+v neorientovaných grafech (nakreslení grafu jedním tahem).
 
-Všechny algoritmy jsou krokovatelné uživatelem, který zadá libovolný graf (viz dále), a poté může krok po kroku sledovat, jak algoritmus probíhá, a případně ho může pustit znovu z jiného počátečního vrcholu.
+Všechny algoritmy jsou krokovatelné uživatelem, který zadá libovolný
+graf (viz dále), a poté může krok po kroku sledovat, jak algoritmus
+probíhá, a případně ho může pustit znovu z jiného počátečního vrcholu.
 
 ## Kompilace & spuštění
 
-Pro kompilaci je potřeba překladač který umí C++11, např. Clang/LLVM verze 3.5, který je dostupný v labu. Dále je potřeba Qt5, zde by na konkrétní verzi nemělo záležet, ale Qt4 nestačí.
+Pro kompilaci je potřeba překladač který umí C++11, např. Clang/LLVM
+verze 3.5, který je dostupný v labu. Dále je potřeba Qt5, zde by na
+konkrétní verzi nemělo záležet, ale Qt4 nestačí.
 
 Kompilace a spuštění se pak provede následovně
 
@@ -18,7 +24,8 @@ Testováno na různých distribucích Linuxu, včetně labu, a OS X 10.10.
 
 ## Základní ovládání
 
-Program se ovládá klávesnicí i myší, kde všechny příkazy jdou zadat buď přes hlavní menu
+Program se ovládá klávesnicí i myší, kde všechny příkazy jdou zadat buď
+přes hlavní menu
 
 ![hlavni menu](http://i.imgur.com/KJaB5S6.png)
 
@@ -37,14 +44,21 @@ a nebo pomocí klávesové zkratky. Zde je jejich úplný seznam:
 - Označení počátečního vrcholu `S`.
 - Start/Restart algoritmu `R`.
 - Krok algoritmu `N`.
-- Změna orientace hrany `O` (nejprve je potřeba hranu vybrat kliknutím myši.)
-- Nastavení ohodnocení hrany `1-9`, nejprve je ale potřeba mít vybraný Dijkstrův algoritmus, jinak se ohodnocení hran nezobrazí, a poté kliknout na vybrané ohodnocení (*ne na hranu*).
+- Změna orientace hrany `O` (nejprve je potřeba hranu vybrat kliknutím
+  myši.)
+- Nastavení ohodnocení hrany `1-9`, nejprve je ale potřeba mít vybraný
+  Dijkstrův algoritmus, jinak se ohodnocení hran nezobrazí, a poté
+  kliknout na vybrané ohodnocení (*ne na hranu*).
 
-Grafy je také možné uložit do souboru `Ctrl-S` a znovu načíst `Ctrl-S`, přičemž se zachová i rozložení vrcholů v prostoru (pokud je uživatel přesunul.)
+Grafy je také možné uložit do souboru `Ctrl-S` a znovu načíst `Ctrl-S`,
+přičemž se zachová i rozložení vrcholů v prostoru (pokud je uživatel
+přesunul.)
 
 ## Používání
 
-Nejjednodušší je vybrat jeden z přiložených grafů v souboru, a otevřít jej přes `File -> Open`, např. kompletní graf na 5 vrcholech v souboru `examples/k5.g`
+Nejjednodušší je vybrat jeden z přiložených grafů v souboru, a otevřít
+jej přes `File -> Open`, např. kompletní graf na 5 vrcholech v souboru
+`examples/k5.g`
 
 ![K5](http://i.imgur.com/iYrD1VK.png)
 
