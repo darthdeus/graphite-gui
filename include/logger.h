@@ -39,8 +39,6 @@ class Logger {
   }
 
  public:
-  Logger() {}
-
   void enable(Target& t);
 
   template <typename T, typename A>

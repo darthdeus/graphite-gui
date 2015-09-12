@@ -9,6 +9,7 @@
 #include "search.h"
 #include "graph.h"
 
+// TODO - rewrite using recursive dfs loops
 class Euler : public Search {
  public:
   Euler(Graph& g, Vertex* start);
