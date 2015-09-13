@@ -26,9 +26,8 @@ probíhá, a případně ho může pustit znovu z jiného počátečního vrchol
 
 \section{Kompilace a spuštění}
 
-Pro kompilaci je potřeba překladač, který umí C++11 (testováno na GCC 5.x, Clang 3.6, MSVC 14).
-Dále je potřeba Qt5 (Qt4 nestačí), ale na konkrétní minor verzi by nemělo záležet.
-
+Pro kompilaci je potřeba překladač, který umí C++11 (testováno na GCC 5.x, Clang 3.6 a MSVC 14).
+Dále je potřeba Qt, ideálně verze 5, ale program funguje i pod verzí 4 (která je např. v labu).
 Kompilace a spuštění se pak provede následovně:
 
 \begin{itemize}
@@ -198,11 +197,13 @@ od počátečního vrcholu, a to tak, že se v popisku vrcholu zobrazí \code{č
 vrcholu / vzdálenost od zdroje}. Vrcholy zatím neobjevené mají
 nekonečnou vzdálenost, reprezentováno stringem \code{inf}, viz obrázek.
 
-\begin{figure}
+\begin{figure}[!h]
   \centering
-    \includegraphics[width=0.5\textwidth]{OWYHOQ7.png}
+    \includegraphics[width=0.40\textwidth]{OWYHOQ7.png}
   \caption{Průběh Dijkstrova algoritmu}
 \end{figure}
+
+\pagebreak
 
 \subsection{Eulerovská kružnice}
 

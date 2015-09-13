@@ -1,8 +1,6 @@
 #ifndef ADJACENCY_LIST_H
 #define ADJACENCY_LIST_H
 
-#pragma once
-
 #include <cstddef>
 #include <vector>
 #include <stack>
