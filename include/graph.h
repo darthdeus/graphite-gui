@@ -20,10 +20,13 @@ class Graph {
   using size_type       = adjacency_list::size_type;
 
   Vertex& add_vertex();
-  void connect(Vertex& v1, Vertex& v2);
+
   void connect(int v1, int v2);
+  Edge& connect(Vertex& v1, Vertex& v2);
+
   void connect_oriented(int vn1, int vn2, int weight = 1);
-  void connect_oriented(Vertex& v1, Vertex& v2, int weight = 1);
+  Edge& connect_oriented(Vertex& v1, Vertex& v2, int weight = 1);
+
   void disconnect(int v1, int v2);
   void disconnect_oriented(int vn1, int vn2);
 

@@ -29,9 +29,12 @@ Vertex& Graph::add_vertex(int n) {
 
 Vertex& Graph::add_vertex() { return add_vertex(++vertex_counter_); }
 
-void Graph::connect(Vertex& v1, Vertex& v2) {
+Edge& Graph::connect(Vertex& v1, Vertex& v2) {
   connect_oriented(v1, v2);
-  connect_oriented(v2, v1);
+
+  // It shouldn't matter which one is being returned here,
+  // the user is responsible for handling both ends of the edge.
+  return connect_oriented(v2, v1);
 }
 
 void Graph::connect(int vn1, int vn2) {
@@ -51,9 +54,10 @@ void Graph::connect_oriented(int vn1, int vn2, int weight) {
   }
 }
 
-void Graph::connect_oriented(Vertex& v1, Vertex& v2, int weight) {
+Edge& Graph::connect_oriented(Vertex& v1, Vertex& v2, int weight) {
   v1.edges.emplace_back(&v2, &v1, weight);
   qDebug() << "Connected" << v1.value << v2.value;
+  return v1.edges.back();
 }
 
 void Graph::disconnect(int vn1, int vn2) {

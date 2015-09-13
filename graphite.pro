@@ -49,8 +49,16 @@ FORMS    += \
     forms/mainwindow.ui \
 
 CONFIG += c++11
+
+###
 # Uncomment to enable debugging
 # CONFIG += debug
+
+###
+# This is only needed for Qt4 as it doesn't understand
+# the CONFIG += c++11. It can be safely left out when compiling
+# with Qt5, or changed to -std=c++0x for older compilers.
+QMAKE_CXXFLAGS += -std=c++11
 
 release: DESTDIR = build/release
 debug:   DESTDIR = build/debug

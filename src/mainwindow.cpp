@@ -354,18 +354,20 @@ void MainWindow::on_actionRandomEdgeWeights_triggered() {
 
 void MainWindow::on_actionMakeUndirected_triggered() {
   // We can use pairs since they already handle comparisons properly.
-  std::set<std::pair<int, int> > edges;
+  std::set<std::pair<Vertex*, Vertex*> > edges;
 
   for (auto& v : *graph_) {
     for (Edge& e : v.edges) {
-      edges.insert(std::make_pair(e.from->value, e.to->value));
+      edges.insert(std::make_pair(e.from, e.to));
     }
   }
 
   for (auto& pair : edges) {
-    graph_->disconnect(pair.first, pair.second);
-    graph_->connect(pair.first, pair.second);
-    // TODO - set the actual ORIENTED flag
+    graph_->disconnect(pair.first->value, pair.second->value);
+    auto& edge = graph_->connect(*pair.first, *pair.second);
+
+    edge.oriented = false;
+    edge.reverseEdge()->oriented = false;
   }
 
   reloadModel();
