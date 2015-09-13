@@ -17,8 +17,8 @@
 \maketitle
 
 Tématem práce je vizualizace grafových algoritmů, konkrétně prohledávání
-do hloubky, do šířky, Dijkstrův algoritmus a hledání Eulerovské kružnice
-v neorientovaných grafech (nakreslení grafu jedním tahem).
+do hloubky, do šířky, Dijkstrův algoritmus, hledání Eulerovské kružnice (nakreslení grafu jedním tahem)
+v neorientovaných grafech, a Jarníkův algoritmus.
 
 Všechny algoritmy jsou krokovatelné uživatelem, který zadá libovolný
 graf (viz dále), a poté může krok po kroku sledovat, jak algoritmus
@@ -26,9 +26,8 @@ probíhá, a případně ho může pustit znovu z jiného počátečního vrchol
 
 \section{Kompilace a spuštění}
 
-Pro kompilaci je potřeba překladač který umí C++11, např. Clang/LLVM
-verze 3.5, který je dostupný v labu. Dále je potřeba Qt5, zde by na
-konkrétní verzi nemělo záležet, ale Qt4 nestačí.
+Pro kompilaci je potřeba překladač který umí C++11 (testováno na GCC 5.x, Clang 3.6, MSVC 14)
+Dále je potřeba Qt5 (Qt4 nestačí), ale na konkrétní minor verzi by nemělo záležet.
 
 Kompilace a spuštění se pak provede následovně:
 
@@ -38,20 +37,20 @@ Kompilace a spuštění se pak provede následovně:
   \item \code{\$ ./build/debug/graphite}
 \end{itemize}
 
-Testováno na různých distribucích Linuxu, včetně labu, a OS X 10.10.
+Testováno na různých distribucích Linuxu, včetně labu, OS X a zlehka na Windows.
+
+\pagebreak
 
 \section{Základní ovládání}
 
 Program se ovládá klávesnicí i myší, kde všechny příkazy jdou zadat buď
-přes hlavní menu
+přes hlavní menu a nebo pomocí klávesových zkratek.
 
-\begin{figure}
-  \centering
+\begin{center}
     \includegraphics[width=0.5\textwidth]{KJaB5S6.png}
-  \caption{Hlavní menu}
-\end{figure}
+\end{center}
 
-a nebo pomocí klávesové zkratky. Zde je jejich úplný seznam:
+Zde je úplný seznam klávesových zkratek:
 
 \begin{itemize}
   \item Vygenerování náhodného grafu \code{Ctrl-R G}.
@@ -73,7 +72,9 @@ Grafy je také možné uložit do souboru \code{Ctrl-S} a znovu načíst \code{C
 přičemž se zachová i rozložení vrcholů v prostoru (pokud je uživatel
 přesunul.)
 
-\section{Používání}
+\pagebreak
+
+\section{Používání programu}
 
 Nejjednodušší je vybrat jeden z přiložených grafů v souboru, a otevřít
 jej přes \code{File -> Open}, např. kompletní graf na 5 vrcholech v souboru
@@ -87,7 +88,7 @@ V seznamu algoritmů vybrat Eulerovský tah.
 
 \vspace{10pt}
 \begin{center}
-	\includegraphics[width=0.5\textwidth]{ewrHxRO.png}
+	\includegraphics[width=0.25\textwidth]{ewrHxRO.png}
 \end{center}
 \vspace{10pt}
 
@@ -101,13 +102,13 @@ Většina důležitých informací které program provádí jsou vypisovány do
 logu v pravé straně GUI (a některé navíc na STDOUT). Log v GUI je
 editovatelný text, a lze ho tedy označit myší a smazat.
 
+\pagebreak
+
 \section{Generování náhodných grafů}
 
 Aby bylo možné aplikaci jednoduše používat, obsahuje možnost
 vygenerování náhodného souvislého grafu (žádný ze zabudovaných algoritmů
-nedává smysl vizualizovat na nesouvislých grafech.)
-
-Graf je generován následujícím způsobem:
+nedává smysl vizualizovat na nesouvislých grafech.) Graf je generován následujícím způsobem:
 
 \begin{itemize}
   \item vygeneruje se 10-15 vrcholů, které se postupně spojí hranami, dohromady tvořící jednu velkou cestu
@@ -124,11 +125,9 @@ Protože pro Eulerovské grafy musí platit, že každý vrchol má sudý
 stupeň, je také jednoduché nahlédnout, že musí ležet na nějaké kružnici.
 Generování grafu tedy probíhá tak, že se nejprve vytvoří jednovrcholový
 hraf, a potom se 5-7krát vybere náhodný vrchol z grafu, a přilepí se na
-něj další kružnice délky 3-5 (pro přehlednost.)
+něj další kružnice délky 3-5 (pro přehlednost.) Výsledný graf pak vypadá např. takto
 
-Výsledný graf pak vypadá např. takto
-
-\begin{figure}
+\begin{figure}[!h]
   \centering
     \includegraphics[width=0.5\textwidth]{LQNxfKa.png}
   \caption{Náhodný Eulerovský graf}
@@ -148,10 +147,13 @@ vrcholů uvnitř spirály, aby se příliš mnoho hran nekřížilo.
 
 Všechny algoritmy jsou implementované jako stavový automat, ktery se
 stiskem \code{R} přesune do počátečního stavu, a stiskem \code{N} postupně
-krokuje, až dojde do koncového stavu, kdy algoritmus doběhl.
+krokuje, až dojde do koncového stavu, kdy algoritmus doběhl. Proto jsem zvolil
+zásobníkovou variantu DFS místo rekurzivní, aby šlo jednoduše ovládat průběh algoritmu.
 
-Proto jsem zvolil zásobníkovou variantu DFS místo rekurzivní, aby šlo
-jednoduše ovládat průběh algoritmu.
+Všechny algoritmy pracují pouze na souvislých grafech. Pokud je graf nesouvislý,
+algoritmus proběhne pouze na komponentě souvislosti ve které leží počáteční vrchol.
+Toto řešení jsem zvolil převážně proto, že umožnuje uživateli větší graf rozpojit a sledovat
+průběh pouze na části grafu, aniž by ho musel celý smazat a pak znovu vytvářet.
 
 \subsection{DFS, BFS}
 
@@ -160,7 +162,7 @@ stejný graf, a na něm pozorovat, jak se průběh jednotlivých algoritmů
 liší. Oba používají stejnou konvenci, a to že nenavštívený vrchol je
 tmavě zelený, otevřený je světle zelený a uzavřený je černý.
 
-\begin{figure}
+\begin{figure}[!h]
   \centering
     \includegraphics[width=0.5\textwidth]{CaAOrcu.png}
   \caption{Barvy vrcholů}
@@ -175,7 +177,7 @@ postupně mění typ hrany na \code{A -> B}, \code{A <- B}, a \code{A <-> B}.
 Dijkstrův algoritmus opět funguje i na orientovaných grafech, pričemž
 navíc zobrazuje i ohodnocení hran.
 
-\begin{figure}
+\begin{figure}[!h]
   \centering
     \includegraphics[width=0.5\textwidth]{2d7DzOA.png}
   \caption{Ohodnocení hran}
@@ -246,12 +248,27 @@ hran v DFS stromu), a ty co neleží jsou označený jako mosty.
 
 Složitost algoritmu je tedy kvadratická, protože pro každý krok je nutné
 provést celé DFS na odhalení mostů. Existují sice alternativní
-algoritmy, které jsou ve výsledku rychlejší, ale jejich vizualizace je
-často velmi matoucí, zatímco Fleuryho algoritmus je velmi přímočarý.
+algoritmy, které jsou ve výsledku rychlejší, ale z hlediska vizualizace mi přišel
+Fleuryho algoritmus nejlepší.
+
+\pagebreak
 
 \subsection{Jarníkův algoritmus}
 
 Poslední algoritmus který program implementuje je Jarníkův-Primův algoritmus
-pro hledání nejlehčí kostry neorientovaného grafu.
+pro hledání nejlehčí kostry neorientovaného grafu. Při spuštění algoritmus automaticky
+odstraní orientace všech hran, a není tedy nutné graf nijak dopředu opravovat.
+
+Algoritmus lze spustit z libovolného vrcholu a vždy by se měl dobrat správného cíle,
+a to najít nejlehčí kostru.
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.7\textwidth]{kostra.png}
+	\caption{Nalezená nejlehčí kostra}
+\end{figure}
+
+Samotná kostra je poté zobrazena červeně, a hrany které v kostře neleží jsou šedivé. Během průběhu
+algoritmu jsou otevřené vrcholy obarveny světle zelenou, a uzavřené vrcholy černé.
 
 \end{document}
