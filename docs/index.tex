@@ -1,9 +1,11 @@
 \documentclass{article}
 
+
 \usepackage[T1]{fontenc}
 \usepackage[czech]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
+\usepackage{biblatex}
 
 \graphicspath{ {imgs/} }
 
@@ -36,7 +38,10 @@ Kompilace a spuštění se pak provede následovně:
   \item \code{\$ ./build/debug/graphite}
 \end{itemize}
 
-Testováno na různých distribucích Linuxu, včetně labu, OS X a zlehka na Windows.
+Testováno na různých distribucích Linuxu, včetně labu, OS X a zlehka na Windows. U starších překladačů
+(které neumí \code{-std=c++11}, ale umí \code{-std=c++0x}) je možné tento flag změnit v souboru \code{graphite.pro}, viz. komentáře uvnitř souboru u položky \code{QMAKE\_CXXFLAGS}.
+
+Na konci dokumentu je případně odkaz na zkompilovanou 64bit verzi pro Linux.
 
 \pagebreak
 
@@ -271,5 +276,9 @@ a to najít nejlehčí kostru.
 
 Samotná kostra je poté zobrazena červeně, a hrany které v kostře neleží jsou šedivé. Během průběhu
 algoritmu jsou otevřené vrcholy obarveny světle zelenou, a uzavřené vrcholy černé.
+
+\begin{thebibliography}{5}
+	\bibitem{compiled} \texttt{https://github.com/darthdeus/graphite-gui/releases/download/v0.1.0/graphite-x86\_64}
+\end{thebibliography}
 
 \end{document}
