@@ -17,6 +17,7 @@ void BFS::start() {
       e.oriented = true;
       e.weighted = false;
       e.deleted = false;
+      e.bridge = false;
     }
   }
 

@@ -15,6 +15,7 @@ void Dijkstra::start() {
       e.oriented = true;
       e.weighted = true;
       e.deleted = false;
+      e.bridge = false;
     }
   }
 
