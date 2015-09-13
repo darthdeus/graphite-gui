@@ -57,7 +57,9 @@ class MainWindow : public QMainWindow {
 
   void on_actionMakeUndirected_triggered();
 
- private:
+  void on_algList_currentIndexChanged(int index);
+
+private:
   void graphConnect(VertexGraphicsItem* v1, VertexGraphicsItem* v2, Edge* edge);
   void searchToggle(bool start);
   void searchStep();

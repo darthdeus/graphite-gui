@@ -485,3 +485,12 @@ void MainWindow::on_actionChangeOrientation_triggered() {
 void MainWindow::on_actionSearchFrom_triggered() { searchToggle(true); }
 
 void MainWindow::on_actionSearchTo_triggered() { searchToggle(false); }
+
+void MainWindow::on_algList_currentIndexChanged(int) {
+  if (!vertices_.empty()) {
+    auto v = vertices_[0];
+    v->setSelected(true);
+    searchToggle(true);
+    on_actionRestartAlgorithm_triggered();
+  }
+}
